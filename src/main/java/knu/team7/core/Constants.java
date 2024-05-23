@@ -16,7 +16,23 @@ public class Constants {
             "STCU001100028"  // 첨성인핵심(자연과학)
     };
 
+    public static final String[] SUBCODES = {
+            "STCU000800002",  // 전공기초
+            "STCU000800003",  // 기초공통
+            "STCU000800004",  // 전공
+            "STCU000800007",  // 교직
+            "STCU000800010",  // 연계전공
+            "STCU000800011",  // 전공선택
+            "STCU000800012",  // 전공필수
+            "STCU000800023",  // 융합전공
+            "STCU000800024",  // 전공심화
+            "STCU000800025",  // 일반선택
+            "STCU000800026",  // 공학전공
+            "STCU000800027"   // 전공기반
+    };
+
     public static final String LISTURL = "https://knuin.knu.ac.kr/public/cmmnn/cmmbs/code/selectListCode";
     public static final String CLASSURL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInqr/selectListLectPlnInqr";
     public static final String[] GELIST_KEYS = {"STCU0011", "STCU0012"};
+    public static final String SUBLIST_KEY = "STCU0008";
 }

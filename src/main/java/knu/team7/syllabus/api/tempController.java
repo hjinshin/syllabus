@@ -1,9 +1,10 @@
 package knu.team7.syllabus.api;
 
 import com.google.gson.JsonObject;
-import knu.team7.syllabus.application.port.in.command.GECodeCommand;
-import knu.team7.syllabus.application.usecase.GEClassUseCase;
-import knu.team7.syllabus.application.usecase.GEListUseCase;
+import knu.team7.core.Constants;
+import knu.team7.syllabus.application.port.in.command.CodeCommand;
+import knu.team7.syllabus.application.usecase.ClassUseCase;
+import knu.team7.syllabus.application.usecase.ListUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,16 +18,40 @@ import java.util.List;
 @RequestMapping("/api/test")
 public class tempController {
 
-    private final GEListUseCase geListUseCase;
-    private final GEClassUseCase geClassUseCase;
-    @GetMapping
+    private final ListUseCase listUseCase;
+    private final ClassUseCase classUseCase;
+    @GetMapping("/ge")
     public ResponseEntity<String> tempGetGEList() {
         try {
             String year = "2024";
             String season = "CMBS001400001"; // 1학기
-            List<GECodeCommand> list = geListUseCase.getGEList(year);
-            List<JsonObject> classes = geClassUseCase.getGEClass(list, year, season);
+            List<CodeCommand> geList = listUseCase.getGEList();
+            List<JsonObject> classes = classUseCase.getClassList(geList, year, season);
             return ResponseEntity.ok(classes.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok("error");
+        }
+    }
+    @GetMapping("/other")
+    public ResponseEntity<String> tempGetOtherList() {
+        try {
+            String year = "2024";
+            String season = "CMBS001400001"; // 1학기
+            String[] otherList = Constants.SUBCODES;
+            List<JsonObject> classes = classUseCase.getClassList(otherList, year, season);
+            return ResponseEntity.ok(classes.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok("error");
+        }
+    }
+
+    @GetMapping("/syllabus")
+    public ResponseEntity<String> tempGetSyllabus() {
+        try {
+
+            return ResponseEntity.ok("success");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok("error");
