@@ -3,12 +3,16 @@
 import Link from "next/link";
 
 import { IMenuItem } from "@/types/IMenuItem";
-import { CommandIcon } from "lucide-react";
+import { CommandIcon, Plus, Squirrel } from "lucide-react";
 import { useAtom } from "jotai";
 import { showCommandAtom } from "@/atoms";
 
 const Title = () => {
-  return <div className="flex flex-row space-x-2.5 italic">logo</div>;
+  return (
+    <div className="flex flex-row space-x-2.5 italic">
+      <Squirrel className="h-5 w-5 cursor-pointer stroke-neutral-700 hover:stroke-neutral-500" />
+    </div>
+  );
 };
 
 const menuItems: IMenuItem[] = [
@@ -35,19 +39,26 @@ const MenuItem = ({ item }: { item: IMenuItem }) => {
 };
 
 const InvokeCommand = () => {
-  const [showCommand, setShowCommand] = useAtom(showCommandAtom);
+  const [, setShowCommand] = useAtom(showCommandAtom);
   return (
-    <div className="flex cursor-pointer select-none flex-row items-center space-x-1 rounded-md p-1.5 hover:bg-neutral-200">
-      <CommandIcon
-        className="h-4 w-4 stroke-neutral-600"
-        onClick={() => {
-          setShowCommand(true);
-        }}
-      />
-      <p className="text-xs text-neutral-500">명령 열기</p>
+    <div
+      className="flex cursor-pointer select-none flex-row items-center space-x-1.5 rounded-md p-1.5 hover:bg-neutral-200"
+      onClick={() => {
+        setShowCommand(true);
+      }}
+    >
+      <p className="text-xs text-neutral-500">명령창</p>
+      <div className="flex flex-row items-center space-x-0.5">
+        <CommandIcon className="rounded-md bg-neutral-300 stroke-neutral-600 p-1" />
+        {/* <Plus className="h-2.5 w-2.5 stroke-neutral-600" /> */}
+        <div className="flex h-6 w-6 flex-row items-center justify-center rounded-md bg-neutral-300 p-1 text-xs text-neutral-600">
+          K
+        </div>
+      </div>
     </div>
   );
 };
+
 const MenuItems = () => {
   return (
     <div className="flex flex-row items-center space-x-4">

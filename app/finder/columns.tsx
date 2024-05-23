@@ -50,12 +50,12 @@ export const columns: ColumnDef<ISubject>[] = [
       <DataTableColumnHeader column={column} title="과목 이름" />
     ),
   },
-  {
-    accessorKey: "subjectNameEn",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="과목 이름(영어)" />
-    ),
-  },
+  // {
+  //   accessorKey: "subjectNameEn",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="과목 이름(영어)" />
+  //   ),
+  // },
   {
     accessorKey: "subnjectCode",
     header: ({ column }) => (

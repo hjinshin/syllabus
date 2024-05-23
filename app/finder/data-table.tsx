@@ -23,9 +23,12 @@ import {
 } from "@/components/ui/table";
 import { DataTableViewOptions } from "@/components/ui/column-toggle";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
+import { motion } from "framer-motion";
 
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useAtom } from "jotai";
+import { showMapPopupAtom } from "@/atoms/map-popup-atoms";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -35,6 +38,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [showMapPopup, setShowMapPopup] = useAtom(showMapPopupAtom);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -57,7 +61,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="flex flex-col space-y-4">
+    <motion.div className="flex flex-col space-y-4">
       <div className="flex items-center py-0.5">
         <Input
           placeholder="검색..."
@@ -119,6 +123,6 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <DataTablePagination table={table} />
-    </div>
+    </motion.div>
   );
 }
