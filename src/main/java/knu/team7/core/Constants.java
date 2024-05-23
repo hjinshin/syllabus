@@ -17,6 +17,7 @@ public class Constants {
     };
 
     public static final String[] SUBCODES = {
+//            "STCU000800001",  // 교양
             "STCU000800002",  // 전공기초
             "STCU000800003",  // 기초공통
             "STCU000800004",  // 전공
@@ -31,8 +32,10 @@ public class Constants {
             "STCU000800027"   // 전공기반
     };
 
-    public static final String LISTURL = "https://knuin.knu.ac.kr/public/cmmnn/cmmbs/code/selectListCode";
-    public static final String CLASSURL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInqr/selectListLectPlnInqr";
+    public static final String LIST_URL = "https://knuin.knu.ac.kr/public/cmmnn/cmmbs/code/selectListCode";
+    public static final String CLASS_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInqr/selectListLectPlnInqr";
+    public static final String SYLLABUS_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInputDtl/selectListLectPlnInputDtl";
+    public static final String SCHEDULE_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInputDtl/selectListLectPlnInputDtlWekCntns";
     public static final String[] GELIST_KEYS = {"STCU0011", "STCU0012"};
     public static final String SUBLIST_KEY = "STCU0008";
 }

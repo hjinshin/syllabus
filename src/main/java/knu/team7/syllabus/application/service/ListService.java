@@ -46,8 +46,10 @@ public class ListService implements ListUseCase {
 
     private String requestList(Search search) throws Exception {
         return ApiUtil.post(
-                Constants.LISTURL,
-                GsonUtil.toJson(SearchPayload.builder().search(search).build()),
+                Constants.LIST_URL,
+                GsonUtil.toJson(SearchPayload.builder()
+                        .search(search)
+                        .build()),
                 null);
     }
 

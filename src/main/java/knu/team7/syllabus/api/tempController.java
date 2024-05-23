@@ -5,6 +5,7 @@ import knu.team7.core.Constants;
 import knu.team7.syllabus.application.port.in.command.CodeCommand;
 import knu.team7.syllabus.application.usecase.ClassUseCase;
 import knu.team7.syllabus.application.usecase.ListUseCase;
+import knu.team7.syllabus.application.usecase.SyllabusUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,11 +21,12 @@ public class tempController {
 
     private final ListUseCase listUseCase;
     private final ClassUseCase classUseCase;
+    private final SyllabusUseCase syllabusUseCase;
     @GetMapping("/ge")
     public ResponseEntity<String> tempGetGEList() {
         try {
             String year = "2024";
-            String season = "CMBS001400001"; // 1학기
+            String season = Constants.SEASONCODES[0]; // 1학기
             List<CodeCommand> geList = listUseCase.getGEList();
             List<JsonObject> classes = classUseCase.getClassList(geList, year, season);
             return ResponseEntity.ok(classes.toString());
@@ -37,7 +39,7 @@ public class tempController {
     public ResponseEntity<String> tempGetOtherList() {
         try {
             String year = "2024";
-            String season = "CMBS001400001"; // 1학기
+            String season = Constants.SEASONCODES[0]; // 1학기
             String[] otherList = Constants.SUBCODES;
             List<JsonObject> classes = classUseCase.getClassList(otherList, year, season);
             return ResponseEntity.ok(classes.toString());
@@ -50,8 +52,25 @@ public class tempController {
     @GetMapping("/syllabus")
     public ResponseEntity<String> tempGetSyllabus() {
         try {
+            String year = "2024";
+            String season = Constants.SEASONCODES[0]; // 1학기
+            String subjectCode = "CLTR0090"; // 현대사회와법
+            String syllabus = syllabusUseCase.getSyllabus(year, season, subjectCode);
+            return ResponseEntity.ok(syllabus);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok("error");
+        }
+    }
 
-            return ResponseEntity.ok("success");
+    @GetMapping("/syllabus/schedule")
+    public ResponseEntity<String> tempGetSyllabusSchedule() {
+        try {
+            String year = "2024";
+            String season = Constants.SEASONCODES[0]; // 1학기
+            String subjectCode = "CLTR0090"; // 현대사회와법
+            List<JsonObject> schedule = syllabusUseCase.getSchedule(year, season, subjectCode);
+            return ResponseEntity.ok(schedule.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok("error");

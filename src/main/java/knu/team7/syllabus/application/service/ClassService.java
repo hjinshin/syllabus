@@ -25,7 +25,7 @@ public class ClassService implements ClassUseCase {
     public List<JsonObject> getClassList(List<CodeCommand> codeCommandList, String year, String season) throws Exception {
         List<JsonObject> list = new ArrayList<>();
         for (CodeCommand item : codeCommandList) {
-            Search search = getClass(item.codeId(), year, season);
+            Search search = getGEClass(item.codeId(), year, season);
             String response = requestClass(search);
             list.addAll(parsingData(response));
         }
@@ -36,30 +36,41 @@ public class ClassService implements ClassUseCase {
     public List<JsonObject> getClassList(String[] codeList, String year, String season) throws Exception {
         List<JsonObject> list = new ArrayList<>();
         for (String code : codeList) {
-            Search search = getClass(code, year, season);
+            Search search = getOtherClass(code, year, season);
             String response = requestClass(search);
             list.addAll(parsingData(response));
         }
         return list;
     }
     @Override
-    public Search getClass(String code, String year, String season) {
-        Search search = SearchClass.builder()
+    public Search getGEClass(String code, String year, String season) {
+        return SearchClass.builder()
+                .estblYear(year)
+                .estblSmstrSctcd(season)
+                .sbjetRelmCd(code)
+                .gubun("01")
+                .isApi("Y")
+                .build();
+    }
+
+    @Override
+    public Search getOtherClass(String code, String year, String season) {
+        return SearchClass.builder()
                 .estblYear(year)
                 .estblSmstrSctcd(season)
                 .sbjetSctcd2(code)
                 .gubun("01")
                 .isApi("Y")
                 .build();
-        System.out.println(search);
-        return search;
     }
 
 
     private String requestClass(Search search) throws Exception {
             return ApiUtil.post(
-                Constants.CLASSURL,
-                GsonUtil.toJson(SearchPayload.builder().search(search).build()),
+                    Constants.CLASS_URL,
+                GsonUtil.toJson(SearchPayload.builder()
+                        .search(search)
+                        .build()),
                 null);
     }
 
