@@ -9,9 +9,9 @@ import knu.team7.core.util.ApiUtil;
 import knu.team7.core.util.GsonUtil;
 import knu.team7.syllabus.application.port.in.command.CodeCommand;
 import knu.team7.syllabus.application.usecase.ListUseCase;
-import knu.team7.syllabus.domain.model.Search;
-import knu.team7.syllabus.domain.model.SearchList;
-import knu.team7.syllabus.domain.model.SearchPayload;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.Search;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchListCommand;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchPayloadCommand;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class ListService implements ListUseCase {
     public List<CodeCommand> getGEList() throws Exception {
         List<CodeCommand> list = new ArrayList<>();
         for (String gelist_key : Constants.GELIST_KEYS) {
-            Search search = SearchList.builder()
+            Search search = SearchListCommand.builder()
                     .key(gelist_key)
                     .build();
             String response = requestList(search);
@@ -36,7 +36,7 @@ public class ListService implements ListUseCase {
 
     @Override
     public List<CodeCommand> getSubjectList() throws Exception {
-        Search search = SearchList.builder()
+        Search search = SearchListCommand.builder()
                 .key(Constants.SUBLIST_KEY)
                 .build();
         String response = requestList(search);
@@ -47,7 +47,7 @@ public class ListService implements ListUseCase {
     private String requestList(Search search) throws Exception {
         return ApiUtil.post(
                 Constants.LIST_URL,
-                GsonUtil.toJson(SearchPayload.builder()
+                GsonUtil.toJson(SearchPayloadCommand.builder()
                         .search(search)
                         .build()),
                 null);

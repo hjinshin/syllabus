@@ -8,9 +8,9 @@ import knu.team7.core.annotation.UseCase;
 import knu.team7.core.util.ApiUtil;
 import knu.team7.core.util.GsonUtil;
 import knu.team7.syllabus.application.usecase.SyllabusUseCase;
-import knu.team7.syllabus.domain.model.Search;
-import knu.team7.syllabus.domain.model.SearchPayload;
-import knu.team7.syllabus.domain.model.SearchSyllabus;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.Search;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchPayloadCommand;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchSyllabusCommand;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.List;
 public class SyllabusService implements SyllabusUseCase {
     @Override
     public String getSyllabus(String year, String season, String subjectCode) throws Exception {
-        Search search = SearchSyllabus.builder()
+        Search search = SearchSyllabusCommand.builder()
                 .estblYear(year)
                 .estblSmstrSctcd(season)
                 .sbjetCd(subjectCode)
@@ -35,7 +35,7 @@ public class SyllabusService implements SyllabusUseCase {
 
     @Override
     public List<JsonObject> getSchedule(String year, String season, String subjectCode) throws Exception {
-        Search search = SearchSyllabus.builder()
+        Search search = SearchSyllabusCommand.builder()
                 .estblYear(year)
                 .estblSmstrSctcd(season)
                 .sbjetCd(subjectCode)
@@ -50,7 +50,7 @@ public class SyllabusService implements SyllabusUseCase {
     private String requestSyllabus(Search search, String url) throws Exception {
         return ApiUtil.post(
                 url,
-                GsonUtil.toJson(SearchPayload.builder()
+                GsonUtil.toJson(SearchPayloadCommand.builder()
                         .search(search)
                         .build()),
                 null);

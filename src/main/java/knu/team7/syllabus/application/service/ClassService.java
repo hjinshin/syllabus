@@ -9,9 +9,9 @@ import knu.team7.core.util.ApiUtil;
 import knu.team7.core.util.GsonUtil;
 import knu.team7.syllabus.application.port.in.command.CodeCommand;
 import knu.team7.syllabus.application.usecase.ClassUseCase;
-import knu.team7.syllabus.domain.model.Search;
-import knu.team7.syllabus.domain.model.SearchClass;
-import knu.team7.syllabus.domain.model.SearchPayload;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.Search;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchClassCommand;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchPayloadCommand;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class ClassService implements ClassUseCase {
     }
     @Override
     public Search getGEClass(String code, String year, String season) {
-        return SearchClass.builder()
+        return SearchClassCommand.builder()
                 .estblYear(year)
                 .estblSmstrSctcd(season)
                 .sbjetRelmCd(code)
@@ -55,7 +55,7 @@ public class ClassService implements ClassUseCase {
 
     @Override
     public Search getOtherClass(String code, String year, String season) {
-        return SearchClass.builder()
+        return SearchClassCommand.builder()
                 .estblYear(year)
                 .estblSmstrSctcd(season)
                 .sbjetSctcd2(code)
@@ -68,7 +68,7 @@ public class ClassService implements ClassUseCase {
     private String requestClass(Search search) throws Exception {
             return ApiUtil.post(
                     Constants.CLASS_URL,
-                GsonUtil.toJson(SearchPayload.builder()
+                GsonUtil.toJson(SearchPayloadCommand.builder()
                         .search(search)
                         .build()),
                 null);

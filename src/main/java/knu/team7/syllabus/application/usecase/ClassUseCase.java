@@ -2,7 +2,7 @@ package knu.team7.syllabus.application.usecase;
 
 import com.google.gson.JsonObject;
 import knu.team7.syllabus.application.port.in.command.CodeCommand;
-import knu.team7.syllabus.domain.model.Search;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.Search;
 
 import java.util.List;
 

@@ -1,9 +1,5 @@
 package knu.team7.core.util;
 
-import knu.team7.core.Constants;
-import knu.team7.syllabus.domain.model.Search;
-import knu.team7.syllabus.domain.model.SearchPayload;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
