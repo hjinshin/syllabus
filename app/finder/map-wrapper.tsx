@@ -29,69 +29,10 @@ const MapWrapper = () => {
     >
       <div className="flex h-full w-full flex-col items-center">
         <motion.div
-          // className="rounded-lg bg-red-500/60 shadow-2xl backdrop-blur-2xl"
-          // initial={{
-          //   position: "absolute",
-          //   width: "100%",
-          //   height: "100%",
-          // }}
-          // animate={
-          //   showMapPopup === true
-          //     ? {
-          //         position: "fixed",
-          //         top: 0,
-          //         left: 0,
-          //         right: 0,
-          //         bottom: 0,
-          //         width: "400px",
-          //         height: "400px",
-          //         zIndex: 60,
-          //         backgroundColor: "rgba(255,255,255,0.6)",
-          //         backdropFilter: "blur(10px)",
-          //       }
-          //     : {
-          //         // position: "relative",
-          //         width: "400px",
-          //         height: "400px",
-          //       }
-          // }
           onClick={clickHandler}
           // ref={mapScope}
           className={`relative h-80 w-80 overflow-hidden rounded-lg bg-white shadow-2xl backdrop-blur-2xl ${showMapPopup === true ? `` : ``}`}
-          // initial={{
-          //   position: "relative",
-          //   // width: "100%",
-          //   // height: "100%",
-          // }}
-          // animate={
-          //   showMapPopup
-          //     ? {
-          //         // position: "fixed",
-          //         // top: 0,
-          //         // left: 0,
-          //         // right: 0,
-          //         // bottom: 0,
-          //         width: "80%",
-          //         height: "55%",
-          //         zIndex: 60,
-          //         backgroundColor: "white",
-          //         backdropFilter: "blur(10px)",
-          //       }
-          //     : {}
-          // }
-          // onClick={clickHandler}
         >
-          {/* <input
-        type="range"
-        min="0"
-        max="1000"
-        value={mapWidth}
-        onChange={(e) => {
-          setMapWidth(parseInt(e.target.value));
-          console.log(`mapWidth: ${mapWidth}  `);
-        }} */}
-          {/* /> */}
-          {/* <Card className="absolute "> */}
           <div className="absolute z-50 flex w-full select-none flex-row items-center space-x-2">
             <p className="m-2 rounded-lg bg-white/60 px-2 py-1.5 text-base font-semibold text-neutral-700 backdrop-blur-2xl">
               {selectedSubject ? `강의 위치` : `전체보기`}
