@@ -70,10 +70,28 @@ const MenuItems = () => {
   );
 };
 
+const SearchBar = () => {
+  return (
+    <div className="flex flex-row items-center space-x-2">
+      <input
+        className="h-7 w-48 rounded-md border border-neutral-300 px-2 text-sm"
+        type="text"
+        placeholder="검색"
+      />
+      <button className="flex h-7 w-7 items-center justify-center rounded-md bg-neutral-200 hover:bg-neutral-300">
+        <Plus className="h-4 w-4 stroke-neutral-600" />
+      </button>
+    </div>
+  );
+};
+
 const Header = () => {
   return (
     <nav className="sticky top-0 flex h-12 w-full flex-row items-center justify-between border-b bg-white/70 px-4 backdrop-blur-xl">
-      <Title />
+      <div className="flex flex-row items-center space-x-4">
+        <Title />
+        <SearchBar />
+      </div>
       <MenuItems />
     </nav>
   );

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import { CommandDemo } from "@/components/command";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${inter.className} relative h-full w-full flex-col`}>
-        <Header />
-        {children}
-        <CommandDemo />
+      <body
+        className={`${inter.className} relative h-screen w-full flex-col justify-between`}
+      >
+        <div className="flex h-full w-full flex-col">
+          <Header />
+          {children}
+          <CommandDemo />
+        </div>
+        <Footer />
       </body>
     </html>
   );

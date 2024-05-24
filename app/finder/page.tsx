@@ -28,7 +28,7 @@ const Finder = () => {
     <main className="container h-full w-full max-w-5xl flex-col space-y-4 px-8 py-5">
       <Title />
       <div
-        className={`flex w-full h-full flex-row items-start ${showMapPopup === true ? `` : ``}`}
+        className={`relative flex h-full w-full space-x-12 flex-row items-start ${showMapPopup === true ? `` : ``}`}
       >
         <DataTable columns={columns} data={timeTables} />
         <MapWrapper />

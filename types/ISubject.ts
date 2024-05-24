@@ -1,8 +1,11 @@
+import { IGeoData } from "./IGeoData";
+
 export interface ISubject {
   subjectName: string; // "수학", "과학", ...
   subjectNameEn: string; // "Mathematics", "Science", ...
   subnjectCode: string; // "MATH", "SCI", ...
   time: AssignedTime;
+  building: IGeoData;
 }
 
 export interface AssignedTime {

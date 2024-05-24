@@ -29,6 +29,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useAtom } from "jotai";
 import { showMapPopupAtom } from "@/atoms/map-popup-atoms";
+import { selectedSubjectAtom } from "@/atoms";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -39,6 +40,7 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [showMapPopup, setShowMapPopup] = useAtom(showMapPopupAtom);
+  const [, setSelectedSubject] = useAtom(selectedSubjectAtom);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -96,6 +98,11 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                  className="cursor-pointer transition-colors duration-200 ease-in-out hover:bg-neutral-100"
+                  onClick={() => {
+                    setSelectedSubject(row.original as any);
+                    // setShowMapPopup(true);
+                  }}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >

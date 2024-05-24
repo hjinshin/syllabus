@@ -1,3 +1,4 @@
+import { IGeoData, IT1, IT5 } from "@/types/IGeoData";
 import { ISubject } from "@/types/ISubject";
 
 export const getTimeTables: () => ISubject[] = () => [
@@ -12,6 +13,7 @@ export const getTimeTables: () => ISubject[] = () => [
         { name: "0B", actualTime: "9:00 - 10:00" },
       ],
     },
+    building: IT1,
   },
   {
     subjectName: "과학",
@@ -24,6 +26,7 @@ export const getTimeTables: () => ISubject[] = () => [
         { name: "0B", actualTime: "9:00 - 10:00" },
       ],
     },
+    building: IT5,
   },
   {
     subjectName: "영어",
@@ -36,5 +39,6 @@ export const getTimeTables: () => ISubject[] = () => [
         { name: "0B", actualTime: "9:00 - 10:00" },
       ],
     },
+    building: IT5,
   },
 ];
