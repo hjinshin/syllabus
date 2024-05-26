@@ -1,8 +1,8 @@
 import { IGeoData } from "./IGeoData";
 
-export interface ISubject {
-  subjectName: string; // "수학", "과학", ...
-  subjectNameEn: string; // "Mathematics", "Science", ...
+export interface ICourse {
+  courseName: string; // "수학", "과학", ...
+  courseNameEn: string; // "Mathematics", "Science", ...
   subnjectCode: string; // "MATH", "SCI", ...
   time: AssignedTime;
   building: IGeoData;
@@ -10,7 +10,7 @@ export interface ISubject {
 
 // 교양, 군사학, 교직, 연구산학처, 대학, 대학원, 전문대학원, 원격수업, 원격강의, 플립드러닝 강좌, 거점국립대 원격강좌, 대구경북권원격강좌, SU평가강좌, 실험실습실기강좌, KNU미래설계, 인문교양, SDG교양
 // represents in english
-export enum ESubjectType {
+export enum ECourseType {
   General = "General",
   Military = "Military",
   Teaching = "Teaching",
@@ -31,7 +31,7 @@ export enum ESubjectType {
 }
 
 // 첨성인기초, 첨성인핵심, 첨성인일반, 첨성인소양
-export enum GeneralSubjectType {
+export enum GeneralCourseType {
   Basic = "Basic",
   Core = "Core",
   General = "General",
@@ -39,7 +39,7 @@ export enum GeneralSubjectType {
 }
 
 // 독서와토론, 사고교육, 글쓰기, 외국어, 수리, 기초과학, 실용영어, 소프트웨어
-export enum HumanitiesGeneralSubjectType {
+export enum HumanitiesGeneralCourseType {
   ReadingAndDiscussion = "ReadingAndDiscussion",
   ThinkingEducation = "ThinkingEducation",
   Writing = "Writing",
@@ -82,19 +82,14 @@ export interface ITime {
     | "9B";
 }
 
-export type ActualTime =
-  | "8:00 - 9:00"
-  | "9:00 - 10:00"
-  | "10:00 - 11:00"
-  | "11:00 - 12:00"
-  | "13:00 - 14:00"
-  | "14:00 - 15:00";
+export type ActualTime = [number, number]; // [epoch, epoch]
 
-export type Day =
-  | "Monday"
-  | "Tuesday"
-  | "Wednesday"
-  | "Thursday"
-  | "Friday"
-  | "Saturday"
-  | "Sunday";
+export enum Day {
+  Monday = "Monday",
+  Tuesday = "Tuesday",
+  Wednesday = "Wednesday",
+  Thursday = "Thursday",
+  Friday = "Friday",
+  Saturday = "Saturday",
+  Sunday = "Sunday",
+}

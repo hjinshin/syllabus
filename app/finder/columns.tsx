@@ -1,7 +1,7 @@
 "use client";
 
 import { getTimeTables } from "@/lib/dummy-data-provider";
-import { ISubject } from "@/types/ISubject";
+import { ICourse } from "@/types/ICourse";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,12 +18,12 @@ import { DataTableColumnHeader } from "@/components/ui/column-header";
 
 const timeTable = getTimeTables();
 
-// export const colums: ColumnDef<ISubject>[] = timeTable.map(subject=>({
-//   accessorKey: subject.subjectName,
+// export const colums: ColumnDef<ICourse>[] = timeTable.map(course=>({
+//   accessorKey: course.courseName,
 //   header:
 // }))
 
-export const columns: ColumnDef<ISubject>[] = [
+export const columns: ColumnDef<ICourse>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -45,13 +45,13 @@ export const columns: ColumnDef<ISubject>[] = [
     ),
   },
   {
-    accessorKey: "subjectName",
+    accessorKey: "courseName",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="과목 이름" />
     ),
   },
   // {
-  //   accessorKey: "subjectNameEn",
+  //   accessorKey: "courseNameEn",
   //   header: ({ column }) => (
   //     <DataTableColumnHeader column={column} title="과목 이름(영어)" />
   //   ),

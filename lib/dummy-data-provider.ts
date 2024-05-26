@@ -1,10 +1,10 @@
 import { IGeoData, IT1, IT5 } from "@/types/IGeoData";
-import { ISubject } from "@/types/ISubject";
+import { ICourse } from "@/types/ICourse";
 
-export const getTimeTables: () => ISubject[] = () => [
+export const getTimeTables: () => ICourse[] = () => [
   {
-    subjectName: "수학",
-    subjectNameEn: "Mathematics",
+    courseName: "수학",
+    courseNameEn: "Mathematics",
     subnjectCode: "MATH",
     time: {
       day: ["Monday", "Wednesday", "Friday"],
@@ -16,8 +16,8 @@ export const getTimeTables: () => ISubject[] = () => [
     building: IT1,
   },
   {
-    subjectName: "과학",
-    subjectNameEn: "Science",
+    courseName: "과학",
+    courseNameEn: "Science",
     subnjectCode: "SCI",
     time: {
       day: ["Tuesday", "Thursday"],
@@ -29,8 +29,8 @@ export const getTimeTables: () => ISubject[] = () => [
     building: IT5,
   },
   {
-    subjectName: "영어",
-    subjectNameEn: "English",
+    courseName: "영어",
+    courseNameEn: "English",
     subnjectCode: "ENG",
     time: {
       day: ["Monday", "Wednesday", "Friday"],

@@ -1,0 +1,15 @@
+{
+  "yaml.schemas": {
+    "openapi:v3": [
+      "untitled:Untitled-2",
+      "file:///Users/ruby/github/neon/docs/api/course/index.yml",
+      "file:///Users/ruby/github/neon/docs/api/user/index.yml",
+      "file:///Users/ruby/github/neon/docs/api/building/buildings.yml"
+    ],
+    "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json": [
+      "file:///Users/ruby/github/neon/docs/api/types.yml",
+      "file:///Users/ruby/github/neon/docs/api/department.yml",
+      "file:///Users/ruby/github/neon/docs/api/professor.yml"
+    ]
+  }
+}
