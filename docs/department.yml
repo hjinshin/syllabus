@@ -1,0 +1,68 @@
+openapi: "3.0.2"
+info:
+  title: 학과 리스트
+  version: "1"
+paths:
+  /department:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/department"
+components:
+  schemas:
+    department:
+      type: object
+      properties:
+        langMode:
+          $ref: "#/components/schemas"
+        # id:
+        #   type: string
+        #   description: 학과 ID
+        name:
+          type: string
+          description: 학과 이름
+        # code:
+        #   type: string
+        #   description: 학과 코드
+        college:
+          type: string
+          description: 소속 대학
+        location:
+          type: string
+          description: 학과 위치
+        geoLocation:
+          $ref: "./types.yml#/components/schemas/geoLocation"
+        phone:
+          type: string
+          description: 학과 전화번호
+        fax:
+          type: string
+          description: 학과 팩스번호
+        homepage:
+          type: string
+          description: 학과 홈페이지
+        email:
+          type: string
+          description: 학과 이메일
+        description:
+          type: string
+          description: 학과 설명
+        createdAt:
+          type: string
+          format: date-time
+          description: 학과 데이터 생성일
+        updatedAt:
+          type: string
+          format: date-time
+          description: 학과 데이터 수정일
+
+    openDepartment:
+      type: string
+      description: 개설학과
+      $ref: "./department.yml#/components/schemas/department"

@@ -1,0 +1,58 @@
+openapi: "3.0.2"
+info:
+  title: type 정의
+  version: "1"
+
+paths:
+  /type:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "../types.yml#/components/schemas/type"
+
+components:
+  schemas:
+    day:
+      type: string
+      description: 요일
+      enum:
+        - MON
+        - TUE
+        - WED
+        - THU
+        - FRI
+        - SAT
+        - SUN
+
+    days:
+      type: object
+      properties:
+        actualDay:
+          type: array
+          description: 실제 요일
+          example: ["MON", "TUE"]
+
+    time:
+      type: object
+      properties:
+        code:
+          type: object
+          $ref: "./timeCode.yml#/components/schemas/timeCode"
+        actualTime:
+          type: array
+          format: time-time
+          description: 실제 시간
+          example: ["09:00", "10:00"]
+    schedule:
+      type: object
+      properties:
+        time:
+          $ref: "#/components/schemas/time"
+        day:
+          $ref: "#/components/schemas/day"

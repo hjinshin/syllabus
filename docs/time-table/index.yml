@@ -1,0 +1,67 @@
+openapi: "3.0.2"
+info:
+  title: "시간표 정의"
+  version: "1"
+
+paths:
+  /timeTable:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/timeTable"
+    post:
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/timeTable"
+  /timeTable/{timeTableId}:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/timeTable"
+    put:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/timeTable"
+    delete:
+      responses:
+        "204":
+          description: No Content
+
+
+components:
+  schemas:
+    timeTable:
+      type: object
+      description: 시간표 데이터 구조
+      required:
+        - langMode
+        - title
+        - includingCourses
+      properties:
+        langMode:
+          $ref: "../types.yml#/components/schemas/langMode"
+        title:
+          type: string
+          description: 시간표 제목
+        includingCourses:
+          type: array
+          items:
+            $ref: "../course/index.yml#/components/schemas/course"

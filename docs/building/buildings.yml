@@ -1,0 +1,924 @@
+openapi: "3.0.2"
+info:
+  title: 건물 목록
+  version: "1"
+
+paths:
+  /building:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "./index.yml#/components/schemas/building"
+
+components:
+  schemas:
+    humanity:
+      $ref: "./index.yml#/components/schemas/building"
+      properties:
+        code:
+          $ref: "#/components/schemas/building"
+          name: 인문대학
+          geoLocation:
+            latitude: 37.566295
+            longitude: 126.938047
+        description: 인문대학 건물
+        createdAt: "2020-01-01T00:00:00Z"
+        updatedAt: "2020-01-01T00:00:00Z"
+        campus:
+          $ref: "./index.yml#/components/schemas/campus"
+
+    chem:
+      $ref: "./index.yml#/components/schemas/building"
+      properties:
+        code:
+          $ref: "#/components/schemas/building"
+          name: 화학관
+          geoLocation:
+            latitude: 37.566295
+            longitude: 126.938047
+        description: 화학관 건물
+        createdAt: "2020-01-01T00:00:00Z"
+        updatedAt: "2020-01-01T00:00:00Z"
+        campus:
+          $ref: "./index.yml#/components/schemas/campus"
+
+    social:
+      $ref: "./index.yml#/components/schemas/building"
+      properties:
+        code:
+          $ref: "#/components/schemas/building"
+          name: 사회과학대학
+          geoLocation:
+            latitude: 37.566295
+            longitude: 126.938047
+        description: 사회과학대학 건물
+        createdAt: "2020-01-01T00:00:00Z"
+        updatedAt: "2020-01-01T00:00:00Z"
+        campus:
+          $ref: "./index.yml#/components/schemas/campus"
+
+      bio:
+        $ref: "./index.yml#/components/schemas/building"
+        properties:
+          code:
+            $ref: "#/components/schemas/building"
+            name: 생물관
+            geoLocation:
+              latitude: 37.566295
+              longitude: 126.938047
+          description: 생물관 건물
+          createdAt: "2020-01-01T00:00:00Z"
+          updatedAt: "2020-01-01T00:00:00Z"
+          campus:
+            $ref: "./index.yml#/components/schemas/campus"
+
+      naturalSci:
+        $ref: "./index.yml#/components/schemas/building"
+        properties:
+          code:
+            $ref: "#/components/schemas/building"
+            name: 자연과학대학
+            geoLocation:
+              latitude: 37.566295
+              longitude: 126.938047
+          description: 자연과학대학 건물
+          createdAt: "2020-01-01T00:00:00Z"
+          updatedAt: "2020-01-01T00:00:00Z"
+          campus:
+            $ref: "./index.yml#/components/schemas/campus"
+
+        # bio-eng:
+        #   $ref: "./index.yml#/components/schemas/building"
+        #   properties:
+        #     code:
+        #       $ref: "#/components/schemas/building"
+        #       name: 생명공학관
+        #       geoLocation:
+        #         latitude: 37.566295
+        #         longitude: 126.938047
+        #     description: 생명공학관 건물
+        #     createdAt: "2020-01-01T00:00:00Z"
+        #     updatedAt: "2020-01-01T00:00:00Z"
+        #     campus:
+        #       $ref: "./index.yml#/components/schemas/campus"
+
+        commerceEconomics:
+          $ref: "./index.yml#/components/schemas/building"
+          properties:
+            code:
+              $ref: "#/components/schemas/building"
+              name: 경상대학
+              geoLocation:
+                latitude: 37.566295
+                longitude: 126.938047
+            description: 경상대학 건물
+            createdAt: "2020-01-01T00:00:00Z"
+            updatedAt: "2020-01-01T00:00:00Z"
+            campus:
+              $ref: "./index.yml#/components/schemas/campus"
+
+        # 제2합동강의동
+        jointLecture2:
+          $ref: "./index.yml#/components/schemas/building"
+          properties:
+            code:
+              $ref: "#/components/schemas/building"
+              name: 제2합동강의동
+              geoLocation:
+                latitude: 37.566295
+                longitude: 126.938047
+            description: 제2합동강의동 건물
+            createdAt: "2020-01-01T00:00:00Z"
+            updatedAt: "2020-01-01T00:00:00Z"
+            campus:
+              $ref: "./index.yml#/components/schemas/campus"
+
+        # 법과대학
+        law:
+          $ref: "./index.yml#/components/schemas/building"
+          properties:
+            code:
+              $ref: "#/components/schemas/building"
+              name: 법과대학
+              geoLocation:
+                latitude: 37.566295
+                longitude: 126.938047
+            description: 법과대학 건물
+            createdAt: "2020-01-01T00:00:00Z"
+            updatedAt: "2020-01-01T00:00:00Z"
+            campus:
+              $ref: "./index.yml#/components/schemas/campus"
+
+        # 조형관
+        art:
+          $ref: "./index.yml#/components/schemas/building"
+          properties:
+            code:
+              $ref: "#/components/schemas/building"
+              name: 조형관
+              geoLocation:
+                latitude: 37.566295
+                longitude: 126.938047
+            description: 조형관 건물
+            createdAt: "2020-01-01T00:00:00Z"
+            updatedAt: "2020-01-01T00:00:00Z"
+            campus:
+              $ref: "./index.yml#/components/schemas/campus"
+
+          # 공과대학1호관
+          engineering1:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 공과대학1호관
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 공과대학1호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 제4합동강의동
+          jointLecture4:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 제4합동강의동
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 제4합동강의동 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 공과대학2호관
+          engineering2:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 공과대학2호관
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 공과대학2호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 정보전산원
+          information:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 정보전산원
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 정보전산원 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 공과대학3호관
+          engineering3:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 공과대학3호관
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 공과대학3호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 의과대학신관
+          medicalNew:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 의신
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 의과대학신관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # IT대학2호관
+          it2:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: IT2
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: IT대학2호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 의과대학본관
+          medicalMain:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 의본
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 의과대학본관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 공과대학6호관
+          engineering6:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: E6
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 공과대학6호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 의과대학강의동
+          medicalLecture:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 의강
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 의강
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 공과대학7호관
+          engineering7:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: E7
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 공과대학7호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 제1체육관
+          gym1:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 체1
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 제1체육관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 공과대학8호관
+          engineering8:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: E8
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 공과대학8호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 제2체육관
+          gym2:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 체2
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 제2체육관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 공과대학9호관
+          engineering9:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: E9
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 공과대학9호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 여학생체육관
+          gymWomen:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 체3
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 여학생체육관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # IT대학1호관
+          it1:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: IT1
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: IT대학1호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 수영장
+          swimmingPool:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 수영
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 수영장 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 동물병원
+          animalHospital:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 수동
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 동물병원 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # 국제경상관
+          internationalCommerce:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: 국제경상관
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: 국제경상관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+          # IT대학 3호관
+          it3:
+            $ref: "./index.yml#/components/schemas/building"
+            properties:
+              code:
+                $ref: "#/components/schemas/building"
+                name: IT3
+                geoLocation:
+                  latitude: 37.566295
+                  longitude: 126.938047
+              description: IT대학 3호관 건물
+              createdAt: "2020-01-01T00:00:00Z"
+              updatedAt: "2020-01-01T00:00:00Z"
+              campus:
+                $ref: "./index.yml#/components/schemas/campus"
+
+            # 공과대학12호관
+            engineering12:
+              $ref: "./index.yml#/components/schemas/building"
+              properties:
+                code:
+                  $ref: "#/components/schemas/building"
+                  name: E12
+                  geoLocation:
+                    latitude: 37.566295
+                    longitude: 126.938047
+                description: 공과대학12호관 건물
+                createdAt: "2020-01-01T00:00:00Z"
+                updatedAt: "2020-01-01T00:00:00Z"
+                campus:
+                  $ref: "./index.yml#/components/schemas/campus"
+
+            # 캠핑장
+            camping:
+              $ref: "./index.yml#/components/schemas/building"
+              properties:
+                code:
+                  $ref: "#/components/schemas/building"
+                  name: 캠핑
+                  geoLocation:
+                    latitude: 37.566295
+                    longitude: 126.938047
+                description: 캠핑장 건물
+                createdAt: "2020-01-01T00:00:00Z"
+                updatedAt: "2020-01-01T00:00:00Z"
+                campus:
+                  $ref: "./index.yml#/components/schemas/campus"
+
+            # 농과대학1호관
+            agriculture1:
+              $ref: "./index.yml#/components/schemas/building"
+              properties:
+                code:
+                  $ref: "#/components/schemas/building"
+                  name: 농1
+                  geoLocation:
+                    latitude: 37.566295
+                    longitude: 126.938047
+                description: 농과대학1호관 건물
+                createdAt: "2020-01-01T00:00:00Z"
+                updatedAt: "2020-01-01T00:00:00Z"
+                campus:
+                  $ref: "./index.yml#/components/schemas/campus"
+
+            # 스키장
+            skiResort:
+              $ref: "./index.yml#/components/schemas/building"
+              properties:
+                code:
+                  $ref: "#/components/schemas/building"
+                  name: 스키
+                  geoLocation:
+                    latitude: 37.566295
+                    longitude: 126.938047
+                description: 스키장 건물
+                createdAt: "2020-01-01T00:00:00Z"
+                updatedAt: "2020-01-01T00:00:00Z"
+                campus:
+                  $ref: "./index.yml#/components/schemas/campus"
+
+            # 농과대학2호관
+            agriculture2:
+              $ref: "./index.yml#/components/schemas/building"
+              properties:
+                code:
+                  $ref: "#/components/schemas/building"
+                  name: 농2
+                  geoLocation:
+                    latitude: 37.566295
+                    longitude: 126.938047
+                description: 농과대학2호관 건물
+                createdAt: "2020-01-01T00:00:00Z"
+                updatedAt: "2020-01-01T00:00:00Z"
+                campus:
+                  $ref: "./index.yml#/components/schemas/campus"
+
+            # 대운동장
+            stadium:
+              $ref: "./index.yml#/components/schemas/building"
+              properties:
+                code:
+                  $ref: "#/components/schemas/building"
+                  name: 운1
+                  geoLocation:
+                    latitude: 37.566295
+                    longitude: 126.938047
+                description: 대운동장 건물
+                createdAt: "2020-01-01T00:00:00Z"
+                updatedAt: "2020-01-01T00:00:00Z"
+                campus:
+                  $ref: "./index.yml#/components/schemas/campus"
+
+              # 농과대학3호관
+              agriculture3:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 농3
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 농과대학3호관 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 소운동장(야구장)
+              baseballField:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 운2
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 소운동장(야구장) 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 예술대학
+              art:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 예
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 예술대학 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 골프장
+              golfCourse:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 골프
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 골프장 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 사범대학
+              education:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 사범대학
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 사범대학 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 종합정보센터
+              informationCenter:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 정보
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 종합정보센터 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 수의과대학
+              veterinary:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 수
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 수의과대학 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 학군단
+              military:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 학
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 학군단 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 생활과학대학
+              lifeScience:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 생
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 생활과학대학 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 복지관
+              welfare:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 복지
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 복지관 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 중앙도서관
+              library:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 도서관
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 중앙도서관 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 대학원동
+              graduateSchool:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 대원
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 대학원동 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 어학교육원
+              languageInstitute:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: LE
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 어학교육원 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 교육대학원
+              educationGraduateSchool:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: OE
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 교육대학원 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 교수연구동
+              professorResearch:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 교연
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 교수연구동 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 제1과학관
+              science1:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: NS1
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 제1과학관 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 농대사과센터
+              agricultureCenter:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 농사
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 농대사과센터 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 제2과학관
+              science2:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: NS2
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 제2과학관 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # IT대학4호관
+              it4:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: IT4
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: IT대학4호관 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"
+
+              # 수의대해부학실
+              veterinaryAnatomy:
+                $ref: "./index.yml#/components/schemas/building"
+                properties:
+                  code:
+                    $ref: "#/components/schemas/building"
+                    name: 수해
+                    geoLocation:
+                      latitude: 37.566295
+                      longitude: 126.938047
+                  description: 수의대해부학실 건물
+                  createdAt: "2020-01-01T00:00:00Z"
+                  updatedAt: "2020-01-01T00:00:00Z"
+                  campus:
+                    $ref: "./index.yml#/components/schemas/campus"

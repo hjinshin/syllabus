@@ -1,0 +1,66 @@
+openapi: "3.0.2"
+info:
+  title: "사용자 정보 정의"
+  version: "1"
+
+paths:
+  /user:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/user"
+    post:
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+  /user/{userId}:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+    put:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+    delete:
+      responses:
+        "204":
+          description: No Content
+
+components:
+  schemas:
+      user:
+        type: object
+        properties:
+          id:
+            type: string
+            description: UUID 형식의 사용자 ID
+          name:
+            type: string
+            description: 사용자 이름
+          createdAt:
+            type: string
+            format: date-time
+            description: 사용자 데이터 생성일
+          updatedAt:
+            type: string
+            format: date-time
+            description: 사용자 데이터 수정일

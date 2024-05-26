@@ -1,0 +1,300 @@
+openapi: "3.0.2"
+info:
+  title: timeCode 정의
+  version: "1"
+
+paths:
+  /timeCode:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/timeCode"
+
+components:
+  schemas:
+    timeCode:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 시간 코드
+          example: 1A
+        actualTime:
+          type: array
+          format: time-time
+
+    "0-75":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 0A
+          actualTime: [07:30, 08:45]
+
+    "0-50":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 0A
+          actualTime: [08:00, 09:00]
+
+    "1A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 1A
+          actualTime: [09:00, 09:30]
+
+    "1B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 1B
+          actualTime: [09:30, 10:00]
+
+    "2A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 2A
+          actualTime: [10:00, 10:30]
+
+    "2B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 2B
+          actualTime: [10:30, 11:00]
+
+    "3A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 3A
+          actualTime: [11:00, 11:30]
+
+    "3B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 3B
+          actualTime: [11:30, 12:00]
+
+    "4A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 4A
+          actualTime: [12:00, 12:30]
+
+    "4B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 4B
+          actualTime: [12:30, 13:00]
+
+    "5A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 5A
+          actualTime: [13:00, 13:30]
+
+    "5B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 5B
+          actualTime: [13:30, 14:00]
+
+    "6A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 6A
+          actualTime: [14:00, 14:30]
+
+    "6B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 6B
+          actualTime: [14:30, 15:00]
+
+    "7A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 7A
+          actualTime: [15:00, 15:30]
+
+    "7B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 7B
+          actualTime: [15:30, 16:00]
+
+    "8A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 8A
+          actualTime: [16:00, 16:30]
+
+    "8B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 8B
+          actualTime: [16:30, 17:00]
+
+    "9A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 9A
+          actualTime: [17:00, 17:30]
+
+    "9B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 9B
+          actualTime: [17:30, 18:00]
+
+    "10A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 10A
+          actualTime: [18:00, 18:30]
+
+    "10B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 10B
+          actualTime: [18:30, 19:00]
+
+    "11A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 11A
+          actualTime: [19:00, 19:30]
+
+    "11B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 11B
+          actualTime: [19:30, 20:00]
+
+    "12A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 12A
+          actualTime: [20:00, 20:30]
+
+    "12B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 12B
+          actualTime: [20:30, 21:00]
+
+    "13A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 13A
+          actualTime: [21:00, 21:30]
+
+    "13B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 13B
+          actualTime: [21:30, 22:00]
+
+    "14A":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 14A
+          actualTime: [22:00, 22:30]
+
+    "14B":
+      type: object
+      $ref: "./index.yml#/components/schemas/time"
+      properties:
+        code:
+          $ref: "#/components/schemas/timeCode"
+          name: 14B
+          actualTime: [22:30, 23:00]
