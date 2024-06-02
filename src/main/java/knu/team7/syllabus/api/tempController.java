@@ -22,8 +22,19 @@ public class tempController {
     private final ListUseCase listUseCase;
     private final ClassUseCase classUseCase;
     private final SyllabusUseCase syllabusUseCase;
-    @GetMapping("/ge")
+    @GetMapping("/ge/list")
     public ResponseEntity<String> tempGetGEList() {
+        try {
+            List<CodeCommand> geList = listUseCase.getGEList();
+            return ResponseEntity.ok(geList.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok("error");
+        }
+    }
+
+    @GetMapping("/ge")
+    public ResponseEntity<String> tempGetGEClassList() {
         try {
             String year = "2024";
             String season = Constants.SEASONCODES[0]; // 1학기
@@ -36,7 +47,7 @@ public class tempController {
         }
     }
     @GetMapping("/other")
-    public ResponseEntity<String> tempGetOtherList() {
+    public ResponseEntity<String> tempGetOtherCLassList() {
         try {
             String year = "2024";
             String season = Constants.SEASONCODES[0]; // 1학기
