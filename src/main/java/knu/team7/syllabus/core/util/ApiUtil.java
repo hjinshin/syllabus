@@ -1,4 +1,4 @@
-package knu.team7.core.util;
+package knu.team7.syllabus.core.util;
 
 import java.io.IOException;
 import java.net.URI;

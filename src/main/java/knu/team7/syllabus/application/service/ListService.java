@@ -3,10 +3,10 @@ package knu.team7.syllabus.application.service;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import knu.team7.core.Constants;
-import knu.team7.core.annotation.UseCase;
-import knu.team7.core.util.ApiUtil;
-import knu.team7.core.util.GsonUtil;
+import knu.team7.syllabus.core.Constants;
+import knu.team7.syllabus.core.annotation.UseCase;
+import knu.team7.syllabus.core.util.ApiUtil;
+import knu.team7.syllabus.core.util.GsonUtil;
 import knu.team7.syllabus.application.port.in.command.CodeCommand;
 import knu.team7.syllabus.application.usecase.ListUseCase;
 import knu.team7.syllabus.infrastructure.adapter.dto.out.Search;
@@ -90,7 +90,8 @@ public class ListService implements ListUseCase {
     }
 
     private boolean isGEcode(String upperCodeId) {
-        return Arrays.asList(Constants.GECODES).contains(upperCodeId);
+        return Arrays.stream(Constants.GECODES)
+                .anyMatch(element -> element[0].equals(upperCodeId));
     }
 
 }

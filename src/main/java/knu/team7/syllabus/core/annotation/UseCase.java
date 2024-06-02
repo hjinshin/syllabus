@@ -1,4 +1,4 @@
-package knu.team7.core.annotation;
+package knu.team7.syllabus.core.annotation;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface PersistenceAdapter {
+public @interface UseCase {
     @AliasFor(annotation = Component.class)
     String value() default "";
 }

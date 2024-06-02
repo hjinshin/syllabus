@@ -1,7 +1,8 @@
-package knu.team7.core.util;
+package knu.team7.syllabus.core.util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class GsonUtil {
@@ -20,5 +21,18 @@ public class GsonUtil {
 
     public static JsonArray getAsJsonArray(JsonObject jsonObject, String key) {
         return jsonObject.getAsJsonArray(key);
+    }
+
+    public static String getStringOrNull(JsonObject item, String key) {
+        if (item.has(key)) {
+            JsonElement element = item.get(key);
+            if (!element.isJsonNull()) {
+                String value = element.getAsString();
+                if (!value.isEmpty()) {
+                    return value;
+                }
+            }
+        }
+        return null;
     }
 }

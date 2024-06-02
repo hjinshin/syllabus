@@ -1,10 +1,11 @@
 package knu.team7.syllabus.application.usecase;
 
-import com.google.gson.JsonObject;
+import knu.team7.syllabus.domain.model.TempSchedule;
+import knu.team7.syllabus.domain.model.TempSyllabus;
 
 import java.util.List;
 
 public interface SyllabusUseCase {
-    String getSyllabus(String year, String season, String subjectCode) throws Exception;
-    List<JsonObject> getSchedule(String year, String season, String subjectCode) throws Exception;
+    TempSyllabus getSyllabus(String year, String season, String subjectCode) throws Exception;
+    List<TempSchedule> getSchedule(String year, String season, String subjectCode) throws Exception;
 }
