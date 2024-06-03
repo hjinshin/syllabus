@@ -1,6 +1,12 @@
 package knu.team7.syllabus.core;
 
 public class Constants {
+
+    public static final String LIST_URL = "https://knuin.knu.ac.kr/public/cmmnn/cmmbs/code/selectListCode";
+    public static final String CLASS_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInqr/selectListLectPlnInqr";
+    public static final String SYLLABUS_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInputDtl/selectListLectPlnInputDtl";
+    public static final String SCHEDULE_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInputDtl/selectListLectPlnInputDtlWekCntns";
+
     public static final String[][] SEASONCODES = {
             {"CMBS001400001", "1학기"}, // 1학기
             {"CMBS001400004", "여름학기"}, // 여름학기
@@ -33,10 +39,6 @@ public class Constants {
             {"STCU000800027", "전공기반"}   // 전공기반
     };
 
-    public static final String LIST_URL = "https://knuin.knu.ac.kr/public/cmmnn/cmmbs/code/selectListCode";
-    public static final String CLASS_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInqr/selectListLectPlnInqr";
-    public static final String SYLLABUS_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInputDtl/selectListLectPlnInputDtl";
-    public static final String SCHEDULE_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInputDtl/selectListLectPlnInputDtlWekCntns";
     public static final String[] GELIST_KEYS = {"STCU0011", "STCU0012"};
     public static final String SUBLIST_KEY = "STCU0008";
 }

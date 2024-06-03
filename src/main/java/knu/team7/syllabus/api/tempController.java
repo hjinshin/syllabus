@@ -1,13 +1,19 @@
 package knu.team7.syllabus.api;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import knu.team7.syllabus.application.port.in.command.CodeCommand;
 import knu.team7.syllabus.application.usecase.ClassUseCase;
 import knu.team7.syllabus.application.usecase.ListUseCase;
 import knu.team7.syllabus.application.usecase.SyllabusUseCase;
 import knu.team7.syllabus.core.Constants;
+import knu.team7.syllabus.core.util.ApiUtil;
+import knu.team7.syllabus.core.util.GsonUtil;
 import knu.team7.syllabus.domain.model.TempLecture;
 import knu.team7.syllabus.domain.model.TempSchedule;
 import knu.team7.syllabus.domain.model.TempSyllabus;
+import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchPayloadCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -91,6 +97,38 @@ public class tempController {
             return ResponseEntity.ok(schedule);
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.ok(new ArrayList<>());
+        }
+    }
+
+    @GetMapping("/building/list")
+    public ResponseEntity<List<String>> tempGetBuildingList() {
+        try {
+            String res = ApiUtil.post(
+                    "https://knuin.knu.ac.kr/public/web/stddm/common/bldngLctrm/selectBldngBldngLctrm",
+                    GsonUtil.toJson(SearchPayloadCommand.builder().build()),
+                    null
+            );
+            List<String> list = new ArrayList<>();
+
+            JsonObject jsonObject = GsonUtil.fromJson(res);
+            JsonArray codesArray = GsonUtil.getAsJsonArray(jsonObject, "data");
+            for (JsonElement jsonElement : codesArray) {
+                JsonObject item = jsonElement.getAsJsonObject();
+                String temp = GsonUtil.getStringOrNull(item, "bldngNm");
+                if (!temp.contains("철거")) {
+                    temp = temp.replaceAll("\\(.*?\\)", "");
+                    char x = temp.charAt(0);
+                    if (x== ' ') {
+                        temp = temp.substring((1));
+                    }
+                    //temp = "경북대학교" + temp;
+                    list.add(temp);
+                }
+            }
+
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
             return ResponseEntity.ok(new ArrayList<>());
         }
     }
