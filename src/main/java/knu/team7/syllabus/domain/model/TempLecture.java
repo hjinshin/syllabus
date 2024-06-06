@@ -14,7 +14,7 @@ public class TempLecture {
     private String estblGrade;      // 학년
     private String sbjetNm;         // 과목명
     private String sbjetCd;         // 과목코드
-    private String crseNo;          // 강좌코드
+    private String crseNo;          // 강좌번호
     private String lssnsTimeInfo;   // 강의시간
     private String lssnsRealTimeInfo;//실제강의시간
     private String crdit;           // 학점

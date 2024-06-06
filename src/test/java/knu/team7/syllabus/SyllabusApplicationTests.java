@@ -9,5 +9,4 @@ class SyllabusApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
