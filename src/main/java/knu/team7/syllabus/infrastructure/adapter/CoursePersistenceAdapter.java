@@ -5,6 +5,7 @@ import knu.team7.syllabus.application.port.out.CreateCoursePort;
 import knu.team7.syllabus.core.annotation.PersistenceAdapter;
 import knu.team7.syllabus.domain.model.Course;
 import knu.team7.syllabus.infrastructure.adapter.persistence.entity.CourseJpaEntity;
+import knu.team7.syllabus.infrastructure.adapter.persistence.entity.SubjectCodeJpaEntity;
 import knu.team7.syllabus.infrastructure.adapter.persistence.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -21,19 +22,32 @@ public class CoursePersistenceAdapter implements CreateCoursePort {
                         .crseNo(command.crseNo())
                         .year(Integer.parseInt(command.year()))
                         .season(command.season())
+                        .subjectCodeJpaEntity(SubjectCodeJpaEntity.builder()
+                                .sbjetCd(command.subjectCode().getSbjetCd())
+                                .sbjetNm(command.subjectCode().getSbjetNm())
+                                .build())
                         .build())
-            .filter(entity -> !courseRepository.existsByCrseNoAndYearAndSeason(entity.getCrseNo(), entity.getYear(), entity.getSeason()))
+            .filter(entity -> !courseRepository
+                    .existsByCrseNoAndYearAndSeasonAndSubjectCodeJpaEntity(
+                            entity.getCrseNo(), entity.getYear(), entity.getSeason(), entity.getSubjectCodeJpaEntity()))
             .toList();
 
         courseRepository.saveAll(courseJpaEntities);
 
         return list.stream().map(
                 item -> Course.builder()
-                        .id(courseRepository.findByCrseNoAndYearAndSeason(item.crseNo(), Integer.parseInt(item.year()), item.season())
+                        .id(courseRepository
+                                .findByCrseNoAndYearAndSeasonAndSubjectCodeJpaEntity(
+                                        item.crseNo(), Integer.parseInt(item.year()), item.season(),
+                                        SubjectCodeJpaEntity.builder()
+                                                .sbjetCd(item.subjectCode().getSbjetCd())
+                                                .sbjetNm(item.subjectCode().getSbjetNm())
+                                                .build())
                                 .getId())
                         .crseNo(item.crseNo())
                         .year(item.year())
                         .season(item.season())
+                        .subjectCode(item.subjectCode())
                         .build()
         ).toList();
 

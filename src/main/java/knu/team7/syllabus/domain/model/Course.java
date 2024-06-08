@@ -10,11 +10,15 @@ public class Course {
     private final String year;        // 개설연도
     private final String season;      // 개설학기
 
+    private final SubjectCode subjectCode;
+
+
     @Builder
-    public Course(Long id, String crseNo, String year, String season) {
+    public Course(Long id, String crseNo, String year, String season, SubjectCode subjectCode) {
         this.id = id;
         this.crseNo = crseNo;
         this.year = year;
         this.season = season;
+        this.subjectCode = subjectCode;
     }
 }

@@ -22,12 +22,11 @@ public class Lecture {
     private final Course course;
     private final Professor professor;
     private final Department department;
-    private final SubjectCode subjectCode;
     private final SubjectSection subjectSection;
     private final Evaluation evaluation;
 
     @Builder
-    public Lecture(Long id, int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, Course course, Professor professor, Department department, SubjectCode subjectCode, SubjectSection subjectSection, Evaluation evaluation) {
+    public Lecture(Long id, int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, Course course, Professor professor, Department department, SubjectSection subjectSection, Evaluation evaluation) {
         this.id = id;
         this.credit = credit;
         this.lecCr = lecCr;
@@ -45,7 +44,6 @@ public class Lecture {
         this.course = course;
         this.professor = professor;
         this.department = department;
-        this.subjectCode = subjectCode;
         this.subjectSection = subjectSection;
         this.evaluation = evaluation;
     }

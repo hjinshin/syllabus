@@ -1,9 +1,10 @@
 package knu.team7.syllabus.infrastructure.adapter.persistence.repository;
 
 import knu.team7.syllabus.infrastructure.adapter.persistence.entity.CourseJpaEntity;
+import knu.team7.syllabus.infrastructure.adapter.persistence.entity.SubjectCodeJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CourseRepository extends JpaRepository<CourseJpaEntity, Long> {
-    boolean existsByCrseNoAndYearAndSeason(String crseNo, int year, String season);
-    CourseJpaEntity findByCrseNoAndYearAndSeason(String crseNo, int year, String season);
+    boolean existsByCrseNoAndYearAndSeasonAndSubjectCodeJpaEntity(String crseNo, int year, String season, SubjectCodeJpaEntity subjectCodeJpaEntity);
+    CourseJpaEntity findByCrseNoAndYearAndSeasonAndSubjectCodeJpaEntity(String crseNo, int year, String season, SubjectCodeJpaEntity subjectCodeJpaEntity);
 }

@@ -75,8 +75,12 @@ public class DataFetchService implements DataFetchUseCase {
 
     private void create(List<ListCommand> list, List<OutLectureCommand> outLectureCommandList, String option) throws Exception {
 
+        // subjectcode 저장 및 가져오기
+        List<SubjectCode> sbjctCodeList = createAndGetSubjectCode(outLectureCommandList);
+        System.out.println(option + " sbjctCodeList");
+
         // course 저장 및 가져오기
-        List<Course> courseList = createAndGetCourse(outLectureCommandList);
+        List<Course> courseList = createAndGetCourse(outLectureCommandList, sbjctCodeList);
         System.out.println(option + " courseList");
 
         // 목록 저장
@@ -88,10 +92,6 @@ public class DataFetchService implements DataFetchUseCase {
         List<Department> departmentList = createAndGetDepartment(outLectureCommandList);
         System.out.println(option + " departmentList");
 
-
-        // subjectcode 저장 및 가져오기
-        List<SubjectCode> sbjctCodeList = createAndGetSubjectCode(outLectureCommandList);
-        System.out.println(option + " sbjctCodeList");
 
         // syllabus 저장 및 가져오기
         List<Syllabus> syllabusList = createAndGetSyllabus(outLectureCommandList, courseList);
@@ -106,7 +106,7 @@ public class DataFetchService implements DataFetchUseCase {
         System.out.println(option + " evaluationList");
 
         // lecture 저장 및 가져오기
-        List<Lecture> lectureList = createAndGetLecture(outLectureCommandList, syllabusList, courseList, professorList, departmentList, sbjctCodeList, subjectSectionList, evaluationList);
+        List<Lecture> lectureList = createAndGetLecture(outLectureCommandList, syllabusList, courseList, professorList, departmentList, subjectSectionList, evaluationList);
         System.out.println(option + " lectureList");
 
 
@@ -138,9 +138,9 @@ public class DataFetchService implements DataFetchUseCase {
         return createSubjectCodeUseCase.createSubjectCode(subjectCodeCommandList);
     }
 
-    private List<Course> createAndGetCourse(List<OutLectureCommand> outLectureCommandList) {
+    private List<Course> createAndGetCourse(List<OutLectureCommand> outLectureCommandList, List<SubjectCode> sbjctCodeList) {
         // course command
-        List<CourseCommand> courseCommandList = createCourseCommandList(outLectureCommandList);
+        List<CourseCommand> courseCommandList = createCourseCommandList(outLectureCommandList, sbjctCodeList);
         // course 목록 저장
         return createCourseUseCase.createCourse(courseCommandList);
     }
@@ -170,10 +170,9 @@ public class DataFetchService implements DataFetchUseCase {
     }
 
     private List<Lecture> createAndGetLecture(List<OutLectureCommand> outLectureCommandList, List<Syllabus> syllabusList,
-                                              List<Course> courseList, List<Professor> professorList,
-                                              List<Department> departmentList, List<SubjectCode> subjectCodeList,
+                                              List<Course> courseList, List<Professor> professorList, List<Department> departmentList,
                                               List<SubjectSection> subjectSectionList, List<Evaluation> evaluationList) {
-        List<LectureCommand> lectureCommandList = createLectureCommandList(outLectureCommandList, syllabusList, courseList, professorList, departmentList, subjectCodeList, subjectSectionList, evaluationList);
+        List<LectureCommand> lectureCommandList = createLectureCommandList(outLectureCommandList, syllabusList, courseList, professorList, departmentList, subjectSectionList, evaluationList);
         // lecture 목록 저장
         return createLectureUseCase.createLecture(lectureCommandList);
     }
@@ -191,14 +190,19 @@ public class DataFetchService implements DataFetchUseCase {
                         .build()
                 ).toList();
     }
-    private List<CourseCommand> createCourseCommandList(List<OutLectureCommand> outLectureCommandList) {
-        return outLectureCommandList.stream()
-                .map(outLectureCommand -> CourseCommand.builder()
-                        .crseNo(outLectureCommand.crseNo())
-                        .year(outLectureCommand.estblYear())
-                        .season(outLectureCommand.estblSmstrSctnm())
-                        .build()
-                ).toList();
+    private List<CourseCommand> createCourseCommandList(List<OutLectureCommand> outLectureCommandList, List<SubjectCode> sbjctCodeList) {
+        List<CourseCommand> list = new ArrayList<>();
+        for (int i = 0; i < outLectureCommandList.size(); i++) {
+            OutLectureCommand command = outLectureCommandList.get(i);
+            SubjectCode code = sbjctCodeList.get(i);
+            list.add(CourseCommand.builder()
+                    .crseNo(command.crseNo())
+                    .year(command.estblYear())
+                    .season(command.estblSmstrSctnm())
+                    .subjectCode(code)
+                    .build());
+        }
+        return list;
     }
     private List<DepartmentCommand> createDepartmentCommandList(List<OutLectureCommand> outLectureCommandList) {
         return outLectureCommandList.stream()
@@ -270,8 +274,7 @@ public class DataFetchService implements DataFetchUseCase {
     }
     private List<LectureCommand> createLectureCommandList(List<OutLectureCommand> outLectureCommandList, List<Syllabus> syllabusList,
                                                           List<Course> courseList, List<Professor> professorList,
-                                                          List<Department> departmentList, List<SubjectCode> subjectCodeList,
-                                                          List<SubjectSection> subjectSectionList, List<Evaluation> evaluationList) {
+                                                          List<Department> departmentList, List<SubjectSection> subjectSectionList, List<Evaluation> evaluationList) {
         List<LectureCommand> list = new ArrayList<>();
         for (int i = 0; i < outLectureCommandList.size(); i++) {
             OutLectureCommand outLectureCommand = outLectureCommandList.get(i);
@@ -279,7 +282,6 @@ public class DataFetchService implements DataFetchUseCase {
             Course course = courseList.get(i);
             Professor professor = professorList.get(i);
             Department department = departmentList.get(i);
-            SubjectCode subjectCode = subjectCodeList.get(i);
             SubjectSection subjectSection = subjectSectionList.stream()
                     .filter(item -> Objects.equals(item.getCodeId(), outLectureCommand.codeId()))
                     .findFirst()
@@ -303,7 +305,6 @@ public class DataFetchService implements DataFetchUseCase {
                     .course(course)
                     .professor(professor)
                     .department(department)
-                    .subjectCode(subjectCode)
                     .subjectSection(subjectSection)
                     .evaluation(evaluation)
                     .build());

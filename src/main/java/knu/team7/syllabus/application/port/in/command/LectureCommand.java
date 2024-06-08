@@ -7,6 +7,6 @@ import lombok.Builder;
 public record LectureCommand(int credit, int lecCr, int pracCr, String grade, String building, String room,
                              int capacity, String lang, boolean isRemote, String note, String preSbjet,
                              String postSbjet, String realLecTime, Course course, Professor professor,
-                             Department department, SubjectCode subjectCode, SubjectSection subjectSection,
+                             Department department, SubjectSection subjectSection,
                              Evaluation evaluation) {
 }

@@ -19,11 +19,16 @@ public class CourseJpaEntity {
     private int year;        // 개설연도
     private String season;      // 개설학기
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_code")
+    private SubjectCodeJpaEntity subjectCodeJpaEntity;  // 과목코드
+
     @Builder
-    public CourseJpaEntity(Long id, String crseNo, int year, String season) {
+    public CourseJpaEntity(Long id, String crseNo, int year, String season, SubjectCodeJpaEntity subjectCodeJpaEntity) {
         this.id = id;
         this.crseNo = crseNo;
         this.year = year;
         this.season = season;
+        this.subjectCodeJpaEntity = subjectCodeJpaEntity;
     }
 }

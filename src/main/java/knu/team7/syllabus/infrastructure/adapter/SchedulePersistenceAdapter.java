@@ -5,6 +5,7 @@ import knu.team7.syllabus.application.port.out.CreateSchedulePort;
 import knu.team7.syllabus.core.annotation.PersistenceAdapter;
 import knu.team7.syllabus.infrastructure.adapter.persistence.entity.CourseJpaEntity;
 import knu.team7.syllabus.infrastructure.adapter.persistence.entity.ScheduleJpaEntity;
+import knu.team7.syllabus.infrastructure.adapter.persistence.entity.SubjectCodeJpaEntity;
 import knu.team7.syllabus.infrastructure.adapter.persistence.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +29,10 @@ public class SchedulePersistenceAdapter implements CreateSchedulePort {
                                         .crseNo(command.course().getCrseNo())
                                         .year(Integer.parseInt(command.course().getYear()))
                                         .season(command.course().getSeason())
+                                        .subjectCodeJpaEntity(SubjectCodeJpaEntity.builder()
+                                                .sbjetCd(command.course().getSubjectCode().getSbjetCd())
+                                                .sbjetNm(command.course().getSubjectCode().getSbjetNm())
+                                                .build())
                                         .build())
                                 .build())
                 .filter(entity -> !scheduleRepository.existsByCourseJpaEntity(entity.getCourseJpaEntity()))

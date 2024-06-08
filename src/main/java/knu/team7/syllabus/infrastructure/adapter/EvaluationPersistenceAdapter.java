@@ -6,6 +6,7 @@ import knu.team7.syllabus.core.annotation.PersistenceAdapter;
 import knu.team7.syllabus.domain.model.Evaluation;
 import knu.team7.syllabus.infrastructure.adapter.persistence.entity.CourseJpaEntity;
 import knu.team7.syllabus.infrastructure.adapter.persistence.entity.EvaluationJpaEntity;
+import knu.team7.syllabus.infrastructure.adapter.persistence.entity.SubjectCodeJpaEntity;
 import knu.team7.syllabus.infrastructure.adapter.persistence.repository.EvaluationRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +33,10 @@ public class EvaluationPersistenceAdapter implements CreateEvaluationPort {
                                         .id(command.course().getId())
                                         .season(command.course().getSeason())
                                         .year(Integer.parseInt(command.course().getYear()))
+                                        .subjectCodeJpaEntity(SubjectCodeJpaEntity.builder()
+                                                .sbjetCd(command.course().getSubjectCode().getSbjetCd())
+                                                .sbjetNm(command.course().getSubjectCode().getSbjetNm())
+                                                .build())
                                         .build())
                                 .build()
                 ).filter(entity -> !evaluationRepository.existsByCourseJpaEntity(entity.getCourseJpaEntity()))

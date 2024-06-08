@@ -34,7 +34,6 @@ public class LecturePersistenceAdapter implements CreateLecturePort {
                                 .courseJpaEntity(courseJpaEntityBuilder(command.course()))
                                 .professorJpaEntity(professorJpaEntityBuilder(command.professor()))
                                 .departmentJpaEntity(departmentJpaEntityBuilder(command.department()))
-                                .subjectCodeJpaEntity(subjectCodeJpaEntityBuilder(command.subjectCode()))
                                 .subjectSectionJpaEntity(subjectSectionJpaEntityBuilder(command.subjectSection()))
                                 .evaluation(evaluationJpaEntityBuilder(command.evaluation()))
                                 .build())
@@ -61,7 +60,6 @@ public class LecturePersistenceAdapter implements CreateLecturePort {
                         .course(item.course())
                         .professor(item.professor())
                         .department(item.department())
-                        .subjectCode(item.subjectCode())
                         .subjectSection(item.subjectSection())
                         .evaluation(item.evaluation())
                         .build()
@@ -74,6 +72,10 @@ public class LecturePersistenceAdapter implements CreateLecturePort {
                 .crseNo(course.getCrseNo())
                 .year(Integer.parseInt(course.getYear()))
                 .season(course.getSeason())
+                .subjectCodeJpaEntity(SubjectCodeJpaEntity.builder()
+                        .sbjetCd(course.getSubjectCode().getSbjetCd())
+                        .sbjetNm(course.getSubjectCode().getSbjetNm())
+                        .build())
                 .build();
 
     }
@@ -92,12 +94,7 @@ public class LecturePersistenceAdapter implements CreateLecturePort {
                 .depart(department.getDepart())
                 .build();
     }
-    private SubjectCodeJpaEntity subjectCodeJpaEntityBuilder(SubjectCode subjectCode) {
-        return SubjectCodeJpaEntity.builder()
-                .sbjetCd(subjectCode.getSbjetCd())
-                .sbjetNm(subjectCode.getSbjetNm())
-                .build();
-    }
+
     private SubjectSectionJpaEntity subjectSectionJpaEntityBuilder(SubjectSection subjectSection) {
         return SubjectSectionJpaEntity.builder()
                 .codeId(subjectSection.getCodeId())

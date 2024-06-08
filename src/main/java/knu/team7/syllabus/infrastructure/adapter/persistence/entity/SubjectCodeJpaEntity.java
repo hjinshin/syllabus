@@ -16,6 +16,7 @@ public class SubjectCodeJpaEntity {
     private String sbjetNm; // 과목명
 
 
+
     @Builder
     public SubjectCodeJpaEntity(String sbjetCd, String sbjetNm) {
         this.sbjetCd = sbjetCd;

@@ -47,10 +47,6 @@ public class LectureJpaEntity {
     private DepartmentJpaEntity departmentJpaEntity;    // 개설학과
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_code")
-    private SubjectCodeJpaEntity subjectCodeJpaEntity;  // 과목코드
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_section")
     private SubjectSectionJpaEntity subjectSectionJpaEntity;  // 교과구분
 
@@ -62,7 +58,7 @@ public class LectureJpaEntity {
     private EvaluationJpaEntity evaluation;   // 평가방법
 
     @Builder
-    public LectureJpaEntity(int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, CourseJpaEntity courseJpaEntity, ProfessorJpaEntity professorJpaEntity, DepartmentJpaEntity departmentJpaEntity, SubjectCodeJpaEntity subjectCodeJpaEntity, SubjectSectionJpaEntity subjectSectionJpaEntity, List<LectureTimeJpaEntity> lectureTimes, EvaluationJpaEntity evaluation) {
+    public LectureJpaEntity(int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, CourseJpaEntity courseJpaEntity, ProfessorJpaEntity professorJpaEntity, DepartmentJpaEntity departmentJpaEntity, SubjectSectionJpaEntity subjectSectionJpaEntity, List<LectureTimeJpaEntity> lectureTimes, EvaluationJpaEntity evaluation) {
         this.credit = credit;
         this.lecCr = lecCr;
         this.pracCr = pracCr;
@@ -79,7 +75,6 @@ public class LectureJpaEntity {
         this.courseJpaEntity = courseJpaEntity;
         this.professorJpaEntity = professorJpaEntity;
         this.departmentJpaEntity = departmentJpaEntity;
-        this.subjectCodeJpaEntity = subjectCodeJpaEntity;
         this.subjectSectionJpaEntity = subjectSectionJpaEntity;
         this.lectureTimes = lectureTimes;
         this.evaluation = evaluation;
