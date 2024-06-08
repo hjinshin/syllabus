@@ -2,10 +2,9 @@ package knu.team7.syllabus.infrastructure.adapter.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Table(name = "syllabus")
@@ -16,62 +15,33 @@ public class SyllabusJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int credit;         // 학점
-    private int lecCr;          // 강의
-    private int pracCr;         // 실습
-    private int grade;          // 학년
-    private String building;    // 강의실
-    private String room;        // 호실
-    private int capacity;       // 수강정원
-    private String lang;        // 강의언어
-    private boolean isRemote;   // 원격여부
-    private String note;        // 비고
-    private String preSbjet;    // 권장선수과목
-    private String postSbjet;   // 권장선수과목
-    private String realLecTime; // 실제강의시간
+    @Column(columnDefinition = "TEXT")
+    private String crseGoal;       // 강의목표
+    @Column(columnDefinition = "TEXT")
+    private String eduGoal;        // 교육목표
+    @Column(columnDefinition = "TEXT")
+    private String summary;        // 강의개요
+    @Column(columnDefinition = "TEXT")
+    private String textbook;       // 교재 및 참고문헌 직접입력
+    @Column(columnDefinition = "TEXT")
+    private String evalMethd;      // 평가방법
+    private String intviTimeLoc;   // 상담장소/시간
+    @Column(columnDefinition = "TEXT")
+    private String refer;           // 수강 참고사항
 
     @OneToOne
     @JoinColumn(name = "course")
     private CourseJpaEntity courseJpaEntity;    // 강좌번호
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "professor")
-    private ProfessorJpaEntity professorJpaEntity;    // 교수
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department")
-    private DepartmentJpaEntity departmentJpaEntity;    // 개설학과
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_code")
-    private SubjectCodeJpaEntity subjectCodeJpaEntity;  // 과목코드
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_section")
-    private SubjectSectionJpaEntity subjectSectionJpaEntity;  // 교과구분
-
-    @OneToMany(mappedBy = "syllabus", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<LectureTimeJpaEntity> lectureTimes;        // 강의시간
-
-    public SyllabusJpaEntity(int credit, int lecCr, int pracCr, int grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, CourseJpaEntity courseJpaEntity, ProfessorJpaEntity professorJpaEntity, DepartmentJpaEntity departmentJpaEntity, SubjectCodeJpaEntity subjectCodeJpaEntity, SubjectSectionJpaEntity subjectSectionJpaEntity, List<LectureTimeJpaEntity> lectureTimes) {
-        this.credit = credit;
-        this.lecCr = lecCr;
-        this.pracCr = pracCr;
-        this.grade = grade;
-        this.building = building;
-        this.room = room;
-        this.capacity = capacity;
-        this.lang = lang;
-        this.isRemote = isRemote;
-        this.note = note;
-        this.preSbjet = preSbjet;
-        this.postSbjet = postSbjet;
-        this.realLecTime = realLecTime;
+    @Builder
+    public SyllabusJpaEntity(String crseGoal, String eduGoal, String summary, String textbook, String evalMethd, String intviTimeLoc, String refer, CourseJpaEntity courseJpaEntity) {
+        this.crseGoal = crseGoal;
+        this.eduGoal = eduGoal;
+        this.summary = summary;
+        this.textbook = textbook;
+        this.evalMethd = evalMethd;
+        this.intviTimeLoc = intviTimeLoc;
+        this.refer = refer;
         this.courseJpaEntity = courseJpaEntity;
-        this.professorJpaEntity = professorJpaEntity;
-        this.departmentJpaEntity = departmentJpaEntity;
-        this.subjectCodeJpaEntity = subjectCodeJpaEntity;
-        this.subjectSectionJpaEntity = subjectSectionJpaEntity;
-        this.lectureTimes = lectureTimes;
     }
 }

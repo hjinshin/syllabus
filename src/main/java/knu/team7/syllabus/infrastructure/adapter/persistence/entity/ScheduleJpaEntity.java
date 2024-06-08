@@ -15,10 +15,14 @@ public class ScheduleJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "TEXT")
     private String lssnsGoalCntns;           // 수업목표 및 학습내용
+    @Column(columnDefinition = "TEXT")
     private String lssnsMethd;               // 수업방법 및 매체
+    @Column(columnDefinition = "TEXT")
     private String rsrchCntns;               // 과제 및 연구문제
     private String weekSn;                   // 주차(1부터 있지는 않아서 신뢰도 낮음)
+    @Column(columnDefinition = "TEXT")
     private String weekNote;                 // 비고
 
     @ManyToOne(fetch = FetchType.LAZY)

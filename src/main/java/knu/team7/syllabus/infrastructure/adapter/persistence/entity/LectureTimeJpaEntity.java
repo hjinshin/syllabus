@@ -18,16 +18,13 @@ public class LectureTimeJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "course")
-    private CourseJpaEntity courseJpaEntity;    // 강좌번호
     private DayType day;    // 요일
     private LocalTime startTime;  // 시작 시간
     private LocalTime endTime;    // 종료 시간
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "syllabus_id")
-    private SyllabusJpaEntity syllabus;  // 강의 시간이 속한 교과목
+    @JoinColumn(name = "lecture_id")
+    private LectureJpaEntity lecture;  // 강의 시간이 속한 교과목
 
     @ElementCollection
     @CollectionTable(name = "time_code", joinColumns = @JoinColumn(name = "lecture_time_id"))
@@ -35,11 +32,11 @@ public class LectureTimeJpaEntity {
     private Set<String> timeCodes; // 시간 코드
 
     @Builder
-    public LectureTimeJpaEntity(CourseJpaEntity courseJpaEntity, DayType day, LocalTime startTime, LocalTime endTime, Set<String> timeCodes) {
-        this.courseJpaEntity = courseJpaEntity;
+    public LectureTimeJpaEntity(DayType day, LocalTime startTime, LocalTime endTime, LectureJpaEntity lecture, Set<String> timeCodes) {
         this.day = day;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.lecture = lecture;
         this.timeCodes = timeCodes;
     }
 }

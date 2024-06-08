@@ -1,13 +1,15 @@
 package knu.team7.syllabus.application.service;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import knu.team7.syllabus.application.port.in.command.ListCommand;
+import knu.team7.syllabus.application.port.out.command.OutLectureCommand;
+import knu.team7.syllabus.application.usecase.LectureUseCase;
 import knu.team7.syllabus.core.Constants;
 import knu.team7.syllabus.core.annotation.UseCase;
 import knu.team7.syllabus.core.util.ApiUtil;
 import knu.team7.syllabus.core.util.GsonUtil;
-import knu.team7.syllabus.application.port.in.command.CodeCommand;
-import knu.team7.syllabus.application.usecase.ClassUseCase;
-import knu.team7.syllabus.domain.model.TempLecture;
 import knu.team7.syllabus.infrastructure.adapter.dto.out.Search;
 import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchClassCommand;
 import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchPayloadCommand;
@@ -15,34 +17,37 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @UseCase
 @RequiredArgsConstructor
-public class ClassService implements ClassUseCase {
+public class LectureService implements LectureUseCase {
 
     @Override
-    public List<TempLecture> getClassList(List<CodeCommand> codeCommandList, String year, String season) throws Exception {
-        List<TempLecture> list = new ArrayList<>();
-        for (CodeCommand item : codeCommandList) {
-            Search search = getGEClass(item.codeId(), year, season);
-            String response = requestClass(search);
-            list.addAll(parsingData(response));
+    public List<OutLectureCommand> getGELectureList(List<ListCommand> idList, String year, String season) throws Exception {
+        List<OutLectureCommand> list = new ArrayList<>();
+        for (ListCommand command : idList) {
+            String code = command.sCodeId() == null ? command.mCodeId() : command.sCodeId();
+            Search search = getGELecture(code, year, season);
+            String response = requestLecture(search);
+            list.addAll(parsingData(response, code));
         }
         return list;
     }
 
     @Override
-    public List<TempLecture> getClassList(String[] codeList, String year, String season) throws Exception {
-        List<TempLecture> list = new ArrayList<>();
-        for (String code : codeList) {
-            Search search = getOtherClass(code, year, season);
-            String response = requestClass(search);
-            list.addAll(parsingData(response));
+    public List<OutLectureCommand> getOtherLectureList(List<ListCommand> idList, String year, String season) throws Exception {
+        List<OutLectureCommand> list = new ArrayList<>();
+        for (ListCommand command : idList) {
+            String code = getCode(command);
+            Search search = getOtherLecture(code, year, season);
+            String response = requestLecture(search);
+            list.addAll(parsingData(response, code));
         }
         return list;
     }
-    @Override
-    public Search getGEClass(String code, String year, String season) {
+
+    public Search getGELecture(String code, String year, String season) {
         return SearchClassCommand.builder()
                 .estblYear(year)
                 .estblSmstrSctcd(season)
@@ -52,8 +57,7 @@ public class ClassService implements ClassUseCase {
                 .build();
     }
 
-    @Override
-    public Search getOtherClass(String code, String year, String season) {
+    public Search getOtherLecture(String code, String year, String season) {
         return SearchClassCommand.builder()
                 .estblYear(year)
                 .estblSmstrSctcd(season)
@@ -64,7 +68,7 @@ public class ClassService implements ClassUseCase {
     }
 
 
-    private String requestClass(Search search) throws Exception {
+    private String requestLecture(Search search) throws Exception {
             return ApiUtil.post(
                     Constants.CLASS_URL,
                 GsonUtil.toJson(SearchPayloadCommand.builder()
@@ -73,21 +77,22 @@ public class ClassService implements ClassUseCase {
                 null);
     }
 
-    private List<TempLecture> parsingData(String jsonData) {
-        List<TempLecture> codes = new ArrayList<>();
+    private List<OutLectureCommand> parsingData(String jsonData, String codeId) {
+        List<OutLectureCommand> codes = new ArrayList<>();
         JsonObject jsonObject = GsonUtil.fromJson(jsonData);
         JsonArray codesArray = GsonUtil.getAsJsonArray(jsonObject, "data");
         for (JsonElement jsonElement : codesArray) {
             JsonObject item = jsonElement.getAsJsonObject();
-            TempLecture tempLecture = classDataExtraction(item);
-            codes.add(tempLecture);
+            OutLectureCommand outLectureCommand = classDataExtraction(item, codeId);
+            codes.add(outLectureCommand);
         }
 
         return codes;
     }
 
-    private TempLecture classDataExtraction(JsonObject item) {
-        return TempLecture.builder()
+    private OutLectureCommand classDataExtraction(JsonObject item, String codeId) {
+        return OutLectureCommand.builder()
+                .codeId(codeId)
                 .estblYear(GsonUtil.getStringOrNull(item, "estblYear"))
                 .estblSmstrSctnm(GsonUtil.getStringOrNull(item, "estblSmstrSctnm"))
                 .estblSmstrSctcd(GsonUtil.getStringOrNull(item, "estblSmstrSctcd"))
@@ -103,7 +108,9 @@ public class ClassService implements ClassUseCase {
                 .crdit(GsonUtil.getStringOrNull(item, "crdit"))
                 .thryTime(GsonUtil.getStringOrNull(item, "thryTime"))
                 .prctsTime(GsonUtil.getStringOrNull(item, "prctsTime"))
-                .totalPrfssNm(GsonUtil.getStringOrNull(item, "totalPrfssNm"))
+                .totalPrfssNm(Optional.ofNullable(GsonUtil.getStringOrNull(item, "totalPrfssNm"))
+                        .map(name -> name.replaceAll("<br/>", ", "))
+                        .orElse(null))
                 .lctrmInfo(GsonUtil.getStringOrNull(item, "lctrmInfo"))
                 .rmnmCd(GsonUtil.getStringOrNull(item, "rmnmCd"))
                 .attlcPrscpCnt(GsonUtil.getStringOrNull(item, "attlcPrscpCnt"))
@@ -111,5 +118,15 @@ public class ClassService implements ClassUseCase {
                 .expniSllbsYn(GsonUtil.getStringOrNull(item, "expniSllbsYn"))
                 .rmrk(GsonUtil.getStringOrNull(item, "rmrk"))
                 .build();
+    }
+
+    private String getCode(ListCommand item) {
+        if (item.sCodeId() != null) {
+            return item.sCodeId();
+        }
+        if (item.mCodeId() != null) {
+            return item.mCodeId();
+        }
+        return item.lCodeId();
     }
 }

@@ -1,5 +1,8 @@
 package knu.team7.syllabus.core;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Constants {
 
     public static final String LIST_URL = "https://knuin.knu.ac.kr/public/cmmnn/cmmbs/code/selectListCode";
@@ -7,22 +10,23 @@ public class Constants {
     public static final String SYLLABUS_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInputDtl/selectListLectPlnInputDtl";
     public static final String SCHEDULE_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInputDtl/selectListLectPlnInputDtlWekCntns";
 
-    public static final String[][] SEASONCODES = {
-            {"CMBS001400001", "1학기"}, // 1학기
-            {"CMBS001400004", "여름학기"}, // 여름학기
-            {"CMBS001400002", "2학기"}, // 2학기
-            {"CMBS001400003", "겨울학기"}  // 겨울학기
-    };
+    public static final Map<String, String> SEASONCODES = new HashMap<>(){{
+        put("1학기", "CMBS001400001"); // 1학기
+        put("여름학기", "CMBS001400004"); // 여름학기
+        put("2학기", "CMBS001400002"); // 2학기
+        put("겨울학기", "CMBS001400003");  // 겨울학기
+    }};
 
     public static final String[][] GECODES = {
             {"STCU001000005", "첨성인기초", ""}, // 첨성인기초
-//            {"STCU001000006", "첨성인핵심", ""}, // 첨성인핵심     첨성인핵심의 경우 깊이가 1개 더 있어서 문제 발생
             {"STCU001000007", "첨성인일반", ""}, // 첨성인일반
-            {"STCU001000028", "첨성인소양", ""}, // 첨성인소양
+            {"STCU001000028", "첨성인소양", ""} // 첨성인소양
+    };
+    public static final String[][] GECORECODES = {
             {"STCU001100027", "첨성인핵심", "인문/사회"}, // 첨성인핵심(인문/사회)
             {"STCU001100028", "첨성인핵심", "자연과학"}  // 첨성인핵심(자연과학)
     };
-
+    public static final String[] CHUMSUNGINCORE = {"STCU001000006", "첨성인핵심"};
     public static final String[][] SUBCODES = {
 //            {"STCU000800001", "교양"},  // 교양
             {"STCU000800002", "전공기초"},  // 전공기초

@@ -30,7 +30,8 @@ public class EvaluationJpaEntity {
     private CourseJpaEntity courseJpaEntity;    // 강좌번호
 
     @Builder
-    public EvaluationJpaEntity(String attendance, String midExam, String finalExam, String assignment, String presentation, String debate, String safetyEdu, String etc, String total, CourseJpaEntity courseJpaEntity) {
+    public EvaluationJpaEntity(Long id, String attendance, String midExam, String finalExam, String assignment, String presentation, String debate, String safetyEdu, String etc, String total, CourseJpaEntity courseJpaEntity) {
+        this.id = id;
         this.attendance = attendance;
         this.midExam = midExam;
         this.finalExam = finalExam;
