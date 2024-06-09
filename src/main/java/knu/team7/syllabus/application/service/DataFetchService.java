@@ -39,10 +39,6 @@ public class DataFetchService implements DataFetchUseCase {
         List<ListCommand> list = listUseCase.getGEList();
         System.out.println(option + " GEList");
 
-        // ge 목록 저장
-        List<SubjectSection> subjectSectionList = createListUseCase.createSubjectSection(list);
-        System.out.println(option + " subjectSectionList");
-
         // ge lecture 불러오기
         List<OutLectureCommand> outLectureCommandList = lectureUseCase.getGELectureList(list, String.valueOf(year), season);
         System.out.println(option + " outLectureCommandList");
@@ -61,9 +57,6 @@ public class DataFetchService implements DataFetchUseCase {
         List<ListCommand> list = listUseCase.getOtherList();
         System.out.println(option + " otherList");
 
-        // 목록 저장
-        List<SubjectSection> subjectSectionList = createListUseCase.createSubjectSection(list);
-        System.out.println(option + " subjectSectionList");
 
         // Other lecture 불러오기
         List<OutLectureCommand> outLectureCommandList = lectureUseCase.getOtherLectureList(list, String.valueOf(year), season);
@@ -108,16 +101,10 @@ public class DataFetchService implements DataFetchUseCase {
         // lecture 저장 및 가져오기
         List<Lecture> lectureList = createAndGetLecture(outLectureCommandList, syllabusList, courseList, professorList, departmentList, subjectSectionList, evaluationList);
         System.out.println(option + " lectureList");
-
-
+        
         // schedule command
         createSchedule(courseList);
         System.out.println(option + " Schedule");
-
-
-
-        // lectureTime command
-        // lectureTime 저장
 
     }
 
@@ -302,6 +289,7 @@ public class DataFetchService implements DataFetchUseCase {
                     .preSbjet(syllabus.getPreSbjet())
                     .postSbjet(syllabus.getPostSbjet())
                     .realLecTime(outLectureCommand.lssnsRealTimeInfo())
+                    .lecTime(outLectureCommand.lssnsTimeInfo())
                     .course(course)
                     .professor(professor)
                     .department(department)

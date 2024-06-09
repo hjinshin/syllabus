@@ -6,6 +6,7 @@ import knu.team7.syllabus.core.annotation.PersistenceAdapter;
 import knu.team7.syllabus.domain.model.*;
 import knu.team7.syllabus.infrastructure.adapter.persistence.entity.*;
 import knu.team7.syllabus.infrastructure.adapter.persistence.repository.LectureRepository;
+import knu.team7.syllabus.infrastructure.adapter.persistence.repository.LectureTimeRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -36,9 +37,14 @@ public class LecturePersistenceAdapter implements CreateLecturePort {
                                 .departmentJpaEntity(departmentJpaEntityBuilder(command.department()))
                                 .subjectSectionJpaEntity(subjectSectionJpaEntityBuilder(command.subjectSection()))
                                 .evaluation(evaluationJpaEntityBuilder(command.evaluation()))
+                                .lectureTimeList(lectureTimeJpaEntitieBuilder(command.lecTime()))
                                 .build())
                 .filter(entity -> !lectureRepository.existsByCourseJpaEntity(entity.getCourseJpaEntity()))
                 .toList();
+//        saveJpaEntities.stream().map(
+//                entity -> entity.addLectureTimeEntity(lectureTimeJpaEntitieBuilder())
+//        )
+
         lectureRepository.saveAll(saveJpaEntities);
         return list.stream().map(
                 item -> Lecture.builder()
@@ -118,5 +124,14 @@ public class LecturePersistenceAdapter implements CreateLecturePort {
                 .total(evaluation.getTotal())
                 .courseJpaEntity(courseJpaEntityBuilder(evaluation.getCourse()))
                 .build();
+    }
+
+    private List<LectureTimeJpaEntity> lectureTimeJpaEntitieBuilder(List<LectureTime> list) {
+        return list.stream().map(
+                lectureTime -> LectureTimeJpaEntity.builder()
+                        .day(lectureTime.getDay())
+                        .timeCode(lectureTime.getTimeCode())
+                        .build())
+                .toList();
     }
 }

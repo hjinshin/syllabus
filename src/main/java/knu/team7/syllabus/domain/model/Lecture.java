@@ -3,6 +3,8 @@ package knu.team7.syllabus.domain.model;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class Lecture {
     private final Long id;
@@ -19,14 +21,17 @@ public class Lecture {
     private final String preSbjet;    // 권장선수과목
     private final String postSbjet;   // 권장선수과목
     private final String realLecTime; // 실제강의시간
+
+    private final List<LectureTime> lectimes;   // 강의시간 과목코드
     private final Course course;
     private final Professor professor;
     private final Department department;
     private final SubjectSection subjectSection;
     private final Evaluation evaluation;
 
+
     @Builder
-    public Lecture(Long id, int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, Course course, Professor professor, Department department, SubjectSection subjectSection, Evaluation evaluation) {
+    public Lecture(Long id, int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, List<LectureTime> lectimes, Course course, Professor professor, Department department, SubjectSection subjectSection, Evaluation evaluation) {
         this.id = id;
         this.credit = credit;
         this.lecCr = lecCr;
@@ -41,6 +46,7 @@ public class Lecture {
         this.preSbjet = preSbjet;
         this.postSbjet = postSbjet;
         this.realLecTime = realLecTime;
+        this.lectimes = lectimes;
         this.course = course;
         this.professor = professor;
         this.department = department;

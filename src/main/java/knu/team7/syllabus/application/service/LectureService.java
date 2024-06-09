@@ -8,20 +8,25 @@ import knu.team7.syllabus.application.port.out.command.OutLectureCommand;
 import knu.team7.syllabus.application.usecase.LectureUseCase;
 import knu.team7.syllabus.core.Constants;
 import knu.team7.syllabus.core.annotation.UseCase;
+import knu.team7.syllabus.core.type.DayType;
 import knu.team7.syllabus.core.util.ApiUtil;
 import knu.team7.syllabus.core.util.GsonUtil;
+import knu.team7.syllabus.domain.model.LectureTime;
 import knu.team7.syllabus.infrastructure.adapter.dto.out.Search;
 import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchClassCommand;
 import knu.team7.syllabus.infrastructure.adapter.dto.out.SearchPayloadCommand;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
+import static knu.team7.syllabus.core.type.DayType.*;
 
 @UseCase
 @RequiredArgsConstructor
 public class LectureService implements LectureUseCase {
+    private final Map<Character, DayType> dayTypeMap = new HashMap<>() {{
+            put('월', Mon); put('화', Mon); put('수', Mon); put('목', Mon); put('금', Mon); put('토', Mon); put('일', Mon);
+        }};
 
     @Override
     public List<OutLectureCommand> getGELectureList(List<ListCommand> idList, String year, String season) throws Exception {
@@ -103,7 +108,8 @@ public class LectureService implements LectureUseCase {
                 .sbjetNm(GsonUtil.getStringOrNull(item, "sbjetNm"))
                 .sbjetCd(GsonUtil.getStringOrNull(item, "sbjetCd"))
                 .crseNo(GsonUtil.getStringOrNull(item, "crseNo"))
-                .lssnsTimeInfo(GsonUtil.getStringOrNull(item, "lssnsTimeInfo"))
+                .lssnsTimeInfo(
+                        parseLssnsTimeInfoToList(GsonUtil.getStringOrNull(item, "lssnsTimeInfo")))
                 .lssnsRealTimeInfo(GsonUtil.getStringOrNull(item, "lssnsRealTimeInfo"))
                 .crdit(GsonUtil.getStringOrNull(item, "crdit"))
                 .thryTime(GsonUtil.getStringOrNull(item, "thryTime"))
@@ -128,5 +134,31 @@ public class LectureService implements LectureUseCase {
             return item.mCodeId();
         }
         return item.lCodeId();
+    }
+
+    private List<LectureTime> parseLssnsTimeInfoToList(String lssnsTimeInfo) {
+        List<LectureTime> lectureTimeList = new ArrayList<>();
+        if (lssnsTimeInfo == null) {
+            return lectureTimeList;
+        }
+        lssnsTimeInfo = lssnsTimeInfo.replaceAll("\\s", "");
+        String[] result = lssnsTimeInfo.split("(?=월|화|수|목|금)");
+
+        for (String s : result) {
+            char day = s.charAt(0);
+            String codeStr = s.substring(1);
+            String[] codes = codeStr.split(",");
+            for (String code : codes) {
+                lectureTimeList.add(createLectureTime(dayTypeMap.get(day), code));
+            }
+        }
+        return lectureTimeList;
+    }
+
+    LectureTime createLectureTime(DayType day, String code) {
+        return LectureTime.builder()
+                .day(day)
+                .timeCode(code)
+                .build();
     }
 }

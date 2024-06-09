@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -51,14 +52,22 @@ public class LectureJpaEntity {
     private SubjectSectionJpaEntity subjectSectionJpaEntity;  // 교과구분
 
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<LectureTimeJpaEntity> lectureTimes;        // 강의시간
+    private List<LectureTimeJpaEntity> lectureTimes = new ArrayList<>();    // 강의시간
 
     @OneToOne
     @JoinColumn(name = "evaluation")
     private EvaluationJpaEntity evaluation;   // 평가방법
 
+    public void addLectureTimeEntity(LectureTimeJpaEntity entity) {
+        if (entity == null) {
+            return;
+        }
+        lectureTimes.add(entity);
+        entity.seLectureJpaEntity(this);
+    }
+
     @Builder
-    public LectureJpaEntity(int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, CourseJpaEntity courseJpaEntity, ProfessorJpaEntity professorJpaEntity, DepartmentJpaEntity departmentJpaEntity, SubjectSectionJpaEntity subjectSectionJpaEntity, List<LectureTimeJpaEntity> lectureTimes, EvaluationJpaEntity evaluation) {
+    public LectureJpaEntity(int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, CourseJpaEntity courseJpaEntity, ProfessorJpaEntity professorJpaEntity, DepartmentJpaEntity departmentJpaEntity, SubjectSectionJpaEntity subjectSectionJpaEntity, List<LectureTimeJpaEntity> lectureTimeList, EvaluationJpaEntity evaluation) {
         this.credit = credit;
         this.lecCr = lecCr;
         this.pracCr = pracCr;
@@ -76,7 +85,9 @@ public class LectureJpaEntity {
         this.professorJpaEntity = professorJpaEntity;
         this.departmentJpaEntity = departmentJpaEntity;
         this.subjectSectionJpaEntity = subjectSectionJpaEntity;
-        this.lectureTimes = lectureTimes;
+        for (LectureTimeJpaEntity lectureTime : lectureTimeList) {
+            addLectureTimeEntity(lectureTime);
+        }
         this.evaluation = evaluation;
     }
 }

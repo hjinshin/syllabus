@@ -1,6 +1,9 @@
 package knu.team7.syllabus.application.port.out.command;
 
+import knu.team7.syllabus.domain.model.LectureTime;
 import lombok.Builder;
+
+import java.util.List;
 
 /**
  * @param codeId            교과코드
@@ -30,7 +33,7 @@ import lombok.Builder;
 @Builder
 public record OutLectureCommand(String codeId, String estblYear, String estblSmstrSctnm, String estblSmstrSctcd, String sbjetSctnm,
                                 String estblUnivNm, String estblDprtnNm, String estblGrade, String sbjetNm,
-                                String sbjetCd, String crseNo, String lssnsTimeInfo, String lssnsRealTimeInfo,
+                                String sbjetCd, String crseNo, List<LectureTime> lssnsTimeInfo, String lssnsRealTimeInfo,
                                 String crdit, String thryTime, String prctsTime, String totalPrfssNm,
                                 String lctrmInfo, String rmnmCd, String attlcPrscpCnt, String doPlan,
                                 String expniSllbsYn, String rmrk) {

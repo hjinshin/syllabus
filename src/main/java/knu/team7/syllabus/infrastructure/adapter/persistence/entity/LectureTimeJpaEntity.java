@@ -7,9 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
-import java.util.Set;
-
 @Entity
 @Table(name = "lecture_time")
 @Getter
@@ -19,24 +16,21 @@ public class LectureTimeJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private DayType day;    // 요일
-    private LocalTime startTime;  // 시작 시간
-    private LocalTime endTime;    // 종료 시간
+    private String timeCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
     private LectureJpaEntity lecture;  // 강의 시간이 속한 교과목
 
-    @ElementCollection
-    @CollectionTable(name = "time_code", joinColumns = @JoinColumn(name = "lecture_time_id"))
-    @Column(name = "code")
-    private Set<String> timeCodes; // 시간 코드
+    public void seLectureJpaEntity(LectureJpaEntity entity) {
+        this.lecture = entity;
+    }
 
     @Builder
-    public LectureTimeJpaEntity(DayType day, LocalTime startTime, LocalTime endTime, LectureJpaEntity lecture, Set<String> timeCodes) {
+    public LectureTimeJpaEntity(Long id, DayType day, String timeCode, LectureJpaEntity lecture) {
+        this.id = id;
         this.day = day;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.timeCode = timeCode;
         this.lecture = lecture;
-        this.timeCodes = timeCodes;
     }
 }
