@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity(name = "FetchSyllabusJpaEntity")
-@Table(name = "syllabus")
+@Table(name = "syllabus", uniqueConstraints = {@UniqueConstraint(columnNames = {"doPlan", "course"})})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SyllabusJpaEntity {
@@ -33,6 +35,22 @@ public class SyllabusJpaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course")
     private CourseJpaEntity courseJpaEntity;    // 강좌번호
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SyllabusJpaEntity that = (SyllabusJpaEntity) o;
+        return Objects.equals(doPlan, that.doPlan) &&
+                courseJpaEntity.getYear() == that.courseJpaEntity.getYear() &&
+                Objects.equals(courseJpaEntity.getCrseNo(), that.courseJpaEntity.getCrseNo()) &&
+                Objects.equals(courseJpaEntity.getSeason(), that.courseJpaEntity.getSeason());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseJpaEntity);
+    }
 
     @Builder
     public SyllabusJpaEntity(String crseGoal, String eduGoal, String summary, String textbook, String evalMethd, String intviTimeLoc, String refer, String doPlan, CourseJpaEntity courseJpaEntity) {

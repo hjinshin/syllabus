@@ -14,6 +14,8 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -27,7 +29,7 @@ public class SchedulePersistenceAdapter implements CreateSchedulePort {
     )
     @Transactional
     public void createSchedule(List<ScheduleCommand> list) {
-        List<ScheduleJpaEntity> saveJpaEntities = list.stream().map(
+        Set<ScheduleJpaEntity> saveJpaEntities = list.stream().map(
                         command -> ScheduleJpaEntity.builder()
                                 .lssnsGoalCntns(command.lssnsGoalCntns())
                                 .lssnsMethd(command.lssnsMethd())
@@ -47,7 +49,7 @@ public class SchedulePersistenceAdapter implements CreateSchedulePort {
                                         .build())
                                 .build())
                 .filter(entity -> !scheduleRepository.existsByCourseJpaEntityAndDoPlan(entity.getCourseJpaEntity(), entity.getDoPlan()))
-                .toList();
+                .collect(Collectors.toSet());
         scheduleRepository.saveAll(saveJpaEntities);
     }
 }

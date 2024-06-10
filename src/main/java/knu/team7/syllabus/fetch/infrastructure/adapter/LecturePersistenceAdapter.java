@@ -1,8 +1,8 @@
 package knu.team7.syllabus.fetch.infrastructure.adapter;
 
+import knu.team7.syllabus.core.annotation.PersistenceAdapter;
 import knu.team7.syllabus.fetch.application.port.in.command.LectureCommand;
 import knu.team7.syllabus.fetch.application.port.out.CreateLecturePort;
-import knu.team7.syllabus.core.annotation.PersistenceAdapter;
 import knu.team7.syllabus.fetch.domain.model.*;
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.*;
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.repository.LectureRepository;
@@ -13,52 +13,17 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class LecturePersistenceAdapter implements CreateLecturePort {
     private final LectureRepository lectureRepository;
-    @Override
-    @Retryable(
-            maxAttempts = 3,
-            backoff = @Backoff(delay = 1000),
-            retryFor = DataIntegrityViolationException.class
-    )
-    @Transactional
+
     public List<Lecture> createLecture(List<LectureCommand> list) {
-        List<LectureJpaEntity> saveJpaEntities = list.stream().map(
-                        command -> LectureJpaEntity.builder()
-                                .credit(command.credit())
-                                .lecCr(command.lecCr())
-                                .pracCr(command.pracCr())
-                                .grade(command.grade())
-                                .building(command.building())
-                                .room(command.room())
-                                .capacity(command.capacity())
-                                .lang(command.lang())
-                                .isRemote(command.isRemote())
-                                .note(command.note())
-                                .preSbjet(command.preSbjet())
-                                .postSbjet(command.postSbjet())
-                                .realLecTime(command.realLecTime())
-                                .isHumanities(command.humanities())
-                                .isSdg(command.sdg())
-                                .isFlipped(command.flipped())
-                                .isNU(command.nU())
-                                .isDgKp(command.dgKp())
-                                .isSu(command.su())
-                                .courseJpaEntity(courseJpaEntityBuilder(command.course()))
-                                .professorJpaEntity(professorJpaEntityBuilder(command.professor()))
-                                .departmentJpaEntity(departmentJpaEntityBuilder(command.department()))
-                                .subjectSectionJpaEntity(subjectSectionJpaEntityBuilder(command.subjectSection()))
-                                .evaluation(evaluationJpaEntityBuilder(command.evaluation()))
-                                .lectureTimes(lectureTimeJpaEntitieBuilder(command.lecTime()))
 
-                                .build())
-                .filter(entity -> !lectureRepository.existsByCourseJpaEntity(entity.getCourseJpaEntity()))
-                .toList();
-
-        lectureRepository.saveAll(saveJpaEntities);
+        createSchedule(list);
         return list.stream().map(
                 item -> Lecture.builder()
                         .id(lectureRepository.findByCourseJpaEntity(courseJpaEntityBuilder(item.course()))
@@ -89,6 +54,47 @@ public class LecturePersistenceAdapter implements CreateLecturePort {
                         .isSu(item.su())
                         .build()
         ).toList();
+    }
+
+    @Retryable(
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 1000),
+            retryFor = DataIntegrityViolationException.class
+    )
+    @Transactional
+    public void createSchedule(List<LectureCommand> list) {
+        Set<LectureJpaEntity> saveJpaEntities = list.stream().map(
+                        command -> LectureJpaEntity.builder()
+                                .credit(command.credit())
+                                .lecCr(command.lecCr())
+                                .pracCr(command.pracCr())
+                                .grade(command.grade())
+                                .building(command.building())
+                                .room(command.room())
+                                .capacity(command.capacity())
+                                .lang(command.lang())
+                                .isRemote(command.isRemote())
+                                .note(command.note())
+                                .preSbjet(command.preSbjet())
+                                .postSbjet(command.postSbjet())
+                                .realLecTime(command.realLecTime())
+                                .isHumanities(command.humanities())
+                                .isSdg(command.sdg())
+                                .isFlipped(command.flipped())
+                                .isNU(command.nU())
+                                .isDgKp(command.dgKp())
+                                .isSu(command.su())
+                                .courseJpaEntity(courseJpaEntityBuilder(command.course()))
+                                .professorJpaEntity(professorJpaEntityBuilder(command.professor()))
+                                .departmentJpaEntity(departmentJpaEntityBuilder(command.department()))
+                                .subjectSectionJpaEntity(subjectSectionJpaEntityBuilder(command.subjectSection()))
+                                .evaluation(evaluationJpaEntityBuilder(command.evaluation()))
+                                .lectureTimes(lectureTimeJpaEntitieBuilder(command.lecTime()))
+                                .build())
+                .filter(entity -> !lectureRepository.existsByCourseJpaEntity(entity.getCourseJpaEntity()))
+                .collect(Collectors.toSet());
+
+        lectureRepository.saveAll(saveJpaEntities);
     }
 
     private CourseJpaEntity courseJpaEntityBuilder(Course course) {

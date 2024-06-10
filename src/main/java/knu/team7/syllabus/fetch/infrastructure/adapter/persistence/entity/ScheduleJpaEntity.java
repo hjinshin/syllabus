@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity(name = "FetchScheduleJpaEntity")
-@Table(name = "schedule")
+@Table(name = "schedule", uniqueConstraints = {@UniqueConstraint(columnNames = {"doPlan", "course"})})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ScheduleJpaEntity {
@@ -28,6 +30,22 @@ public class ScheduleJpaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course")
     private CourseJpaEntity courseJpaEntity;    // 강좌번호
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScheduleJpaEntity that = (ScheduleJpaEntity) o;
+        return Objects.equals(doPlan, that.doPlan) &&
+                courseJpaEntity.getYear() == that.courseJpaEntity.getYear() &&
+                Objects.equals(courseJpaEntity.getCrseNo(), that.courseJpaEntity.getCrseNo()) &&
+                Objects.equals(courseJpaEntity.getSeason(), that.courseJpaEntity.getSeason());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(doPlan, courseJpaEntity);
+    }
 
     @Builder
     public ScheduleJpaEntity(Long id, String doPlan, String lssnsGoalCntns, String lssnsMethd, String rsrchCntns, String weekSn, String weekNote, CourseJpaEntity courseJpaEntity) {

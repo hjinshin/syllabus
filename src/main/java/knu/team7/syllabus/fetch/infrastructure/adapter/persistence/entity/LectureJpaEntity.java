@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "FetchLectureJpaEntity")
-@Table(name = "lecture")
+@Table(name = "lecture", uniqueConstraints = {@UniqueConstraint(columnNames = "course")})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LectureJpaEntity {
@@ -70,6 +71,21 @@ public class LectureJpaEntity {
         }
         lectureTimes.add(entity);
         entity.seLectureJpaEntity(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LectureJpaEntity that = (LectureJpaEntity) o;
+        return  courseJpaEntity.getYear() == that.courseJpaEntity.getYear() &&
+                Objects.equals(courseJpaEntity.getCrseNo(), that.courseJpaEntity.getCrseNo()) &&
+                Objects.equals(courseJpaEntity.getSeason(), that.courseJpaEntity.getSeason());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseJpaEntity);
     }
 
     @Builder

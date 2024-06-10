@@ -21,12 +21,6 @@ import java.util.stream.Collectors;
 public class DepartmentPersistenceAdapter implements CreateDepartmentPort {
     private final DepartmentRepository departmentRepository;
     @Override
-    @Retryable(
-            maxAttempts = 3,
-            backoff = @Backoff(delay = 1000),
-            retryFor = DataIntegrityViolationException.class
-    )
-    @Transactional
     public List<Department> createDepartment(List<DepartmentCommand> list) {
 
         saveEntityWithRetry(list);
@@ -40,6 +34,12 @@ public class DepartmentPersistenceAdapter implements CreateDepartmentPort {
         ).toList();
     }
 
+    @Retryable(
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 1000),
+            retryFor = DataIntegrityViolationException.class
+    )
+    @Transactional
     public void saveEntityWithRetry(List<DepartmentCommand> list) {
         Set<DepartmentJpaEntity> saveJpaEntities = list.stream().map(
                         command -> DepartmentJpaEntity.builder()

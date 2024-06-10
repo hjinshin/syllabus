@@ -14,6 +14,8 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -27,7 +29,7 @@ public class SyllabusPersistenceAdapter implements CreateSyllabusPort {
     )
     @Transactional
     public void createSyllabus(List<SyllabusCommand> list) {
-        List<SyllabusJpaEntity> saveJpaEntities = list.stream().map(
+        Set<SyllabusJpaEntity> saveJpaEntities = list.stream().map(
                         command -> SyllabusJpaEntity.builder()
                                 .crseGoal(command.crseGoal())
                                 .eduGoal(command.eduGoal())
@@ -50,7 +52,8 @@ public class SyllabusPersistenceAdapter implements CreateSyllabusPort {
                                 .build()
                 ).filter(entity -> !syllabusRepository.existsByCourseJpaEntityAndDoPlan(
                         entity.getCourseJpaEntity(), entity.getDoPlan()))
-                .toList();
+                .collect(Collectors.toSet());
+
         syllabusRepository.saveAll(saveJpaEntities);
     }
 }

@@ -32,13 +32,6 @@ public class DataFetchService implements DataFetchUseCase {
     private final CreateLectureUseCase createLectureUseCase;
     private final CreateScheduleUseCase createScheduleUseCase;
 
-//    @Override
-//    @Async
-//    public void fetchData(int year, String season) throws Exception {
-//        fetchGEData(year, season);
-//        fetchOtherData(year, season);
-//    }
-
     @Override
     @Async
     public void fetchGEData(int year, String season) throws Exception {

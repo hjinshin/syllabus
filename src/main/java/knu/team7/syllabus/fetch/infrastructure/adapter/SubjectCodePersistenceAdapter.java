@@ -12,6 +12,8 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -25,17 +27,13 @@ public class SubjectCodePersistenceAdapter implements CreateSubjectCodePort {
     )
     @Transactional
     public void createSubjectCode(List<SubjectCodeCommand> list) {
-        List<SubjectCodeJpaEntity> saveJpaEntities = list.stream().map(
+        Set<SubjectCodeJpaEntity> saveJpaEntities = list.stream().map(
                         command -> SubjectCodeJpaEntity.builder()
                                 .sbjetCd(command.sbjetCd())
                                 .sbjetNm(command.sbjetNm())
                                 .build())
                 .filter(entity -> !subjectCodeRepository.existsById(entity.getSbjetCd()))
-                .toList();
-        for (SubjectCodeJpaEntity entity : saveJpaEntities) {
-            if (!subjectCodeRepository.existsById(entity.getSbjetCd())) {
-                subjectCodeRepository.save(entity);
-            }
+                .collect(Collectors.toSet());
+        subjectCodeRepository.saveAll(saveJpaEntities);
         }
-    }
 }

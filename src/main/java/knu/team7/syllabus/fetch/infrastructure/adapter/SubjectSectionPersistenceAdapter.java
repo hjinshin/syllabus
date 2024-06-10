@@ -7,9 +7,14 @@ import knu.team7.syllabus.fetch.domain.model.SubjectSection;
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.SubjectSectionJpaEntity;
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.repository.SubjectSectionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Retryable
 @PersistenceAdapter
@@ -41,8 +46,14 @@ public class SubjectSectionPersistenceAdapter implements CreateSubjectSectionPor
         return item.lCodeId();
     }
 
+    @Retryable(
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 1000),
+            retryFor = DataIntegrityViolationException.class
+    )
+    @Transactional
     public void saveEntityWithRetry(List<ListCommand> list) {
-        List<SubjectSectionJpaEntity> saveJpaEntities = list.stream().map(
+        Set<SubjectSectionJpaEntity> saveJpaEntities = list.stream().map(
                         command -> SubjectSectionJpaEntity.builder()
                                 .codeId(getCode(command))
                                 .sbjetSctnm(command.section())
@@ -52,7 +63,7 @@ public class SubjectSectionPersistenceAdapter implements CreateSubjectSectionPor
                                 .build()
                 )
                 .filter(entity -> !subjectSectionRepository.existsById(entity.getCodeId()))
-                .toList();
+                .collect(Collectors.toSet());
 
         subjectSectionRepository.saveAll(saveJpaEntities);
     }

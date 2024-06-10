@@ -22,13 +22,7 @@ import java.util.stream.Collectors;
 public class CoursePersistenceAdapter implements CreateCoursePort {
     private final CourseRepository courseRepository;
 
-    @Override
-    @Retryable(
-            maxAttempts = 3,
-            backoff = @Backoff(delay = 1000),
-            retryFor = DataIntegrityViolationException.class
-    )
-    @Transactional
+
     public List<Course> createCourse(List<CourseCommand> list) {
         saveEntityWithRetry(list);
 
@@ -46,6 +40,12 @@ public class CoursePersistenceAdapter implements CreateCoursePort {
         ).toList();
     }
 
+    @Retryable(
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 1000),
+            retryFor = DataIntegrityViolationException.class
+    )
+    @Transactional
     public void saveEntityWithRetry(List<CourseCommand> list) {
         Set<CourseJpaEntity> courseJpaEntities = list.stream().map(
                         command -> CourseJpaEntity.builder()
