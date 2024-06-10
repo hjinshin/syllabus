@@ -35,4 +35,11 @@ public class GsonUtil {
         }
         return null;
     }
+
+    public static String nullTo0(String item) {
+        if (item == null) {
+            return "0";
+        }
+        return item;
+    }
 }

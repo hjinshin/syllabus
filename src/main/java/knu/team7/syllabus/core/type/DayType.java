@@ -1,7 +1,7 @@
 package knu.team7.syllabus.core.type;
 
 public enum DayType {
-    Mon("월"),
+    MON("월"),
     TUE("화"),
     WED("수"),
     THU("목"),
