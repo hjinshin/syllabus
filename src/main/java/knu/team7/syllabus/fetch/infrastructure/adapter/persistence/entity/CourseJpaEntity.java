@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity(name = "FetchCourseJpaEntity")
 @Table(name = "course", uniqueConstraints = {@UniqueConstraint(columnNames = {"crseNo", "year", "season"})})
 @Getter
@@ -22,6 +24,19 @@ public class CourseJpaEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_code")
     private SubjectCodeJpaEntity subjectCodeJpaEntity;  // 강좌번호
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CourseJpaEntity that = (CourseJpaEntity) o;
+        return year == that.year && Objects.equals(crseNo, that.crseNo) && Objects.equals(season, that.season);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(crseNo, year, season);
+    }
 
     @Builder
     public CourseJpaEntity(Long id, String crseNo, int year, String season, SubjectCodeJpaEntity subjectCodeJpaEntity) {

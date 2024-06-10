@@ -8,6 +8,10 @@ import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.Schedu
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.SubjectCodeJpaEntity;
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +20,12 @@ import java.util.List;
 public class SchedulePersistenceAdapter implements CreateSchedulePort {
     private final ScheduleRepository scheduleRepository;
     @Override
+    @Retryable(
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 1000),
+            retryFor = DataIntegrityViolationException.class
+    )
+    @Transactional
     public void createSchedule(List<ScheduleCommand> list) {
         List<ScheduleJpaEntity> saveJpaEntities = list.stream().map(
                         command -> ScheduleJpaEntity.builder()

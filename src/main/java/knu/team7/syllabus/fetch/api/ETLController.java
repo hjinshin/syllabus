@@ -30,9 +30,9 @@ public class ETLController {
                         .build());
             }
 
-            dataFetchUseCase.fetchData(year, seasonCode.get());
-//            dataFetchUseCase.fetchGEData(year, seasonCode.get());
-//            dataFetchUseCase.fetchOtherData(year, seasonCode.get());
+//            dataFetchUseCase.fetchData(year, seasonCode.get());
+            dataFetchUseCase.fetchGEData(year, seasonCode.get());
+            dataFetchUseCase.fetchOtherData(year, seasonCode.get());
 
 
             return ResponseEntity.ok(FetchResponse.builder()

@@ -7,6 +7,10 @@ import knu.team7.syllabus.fetch.domain.model.*;
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.*;
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.repository.LectureRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +19,12 @@ import java.util.List;
 public class LecturePersistenceAdapter implements CreateLecturePort {
     private final LectureRepository lectureRepository;
     @Override
+    @Retryable(
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 1000),
+            retryFor = DataIntegrityViolationException.class
+    )
+    @Transactional
     public List<Lecture> createLecture(List<LectureCommand> list) {
         List<LectureJpaEntity> saveJpaEntities = list.stream().map(
                         command -> LectureJpaEntity.builder()

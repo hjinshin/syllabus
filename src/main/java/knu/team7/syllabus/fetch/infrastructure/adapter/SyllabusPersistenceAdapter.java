@@ -8,6 +8,10 @@ import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.Subjec
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.SyllabusJpaEntity;
 import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.repository.SyllabusRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +20,12 @@ import java.util.List;
 public class SyllabusPersistenceAdapter implements CreateSyllabusPort {
     private final SyllabusRepository syllabusRepository;
     @Override
+    @Retryable(
+            maxAttempts = 3,
+            backoff = @Backoff(delay = 1000),
+            retryFor = DataIntegrityViolationException.class
+    )
+    @Transactional
     public void createSyllabus(List<SyllabusCommand> list) {
         List<SyllabusJpaEntity> saveJpaEntities = list.stream().map(
                         command -> SyllabusJpaEntity.builder()

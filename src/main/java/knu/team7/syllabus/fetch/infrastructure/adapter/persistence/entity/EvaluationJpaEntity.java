@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Entity(name = "FetchEvaluationJpaEntity")
-@Table(name = "evaluation")
+@Table(name = "evaluation", uniqueConstraints = {@UniqueConstraint(columnNames = "course")})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EvaluationJpaEntity {
@@ -29,8 +31,20 @@ public class EvaluationJpaEntity {
     @JoinColumn(name = "course")
     private CourseJpaEntity courseJpaEntity;    // 강좌번호
 
-    @Builder
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EvaluationJpaEntity that = (EvaluationJpaEntity) o;
+        return Objects.equals(courseJpaEntity.getId(), that.courseJpaEntity.getId());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseJpaEntity);
+    }
+
+    @Builder
     public EvaluationJpaEntity(Long id, float attendance, float midExam, float finalExam, float assignment, float presentation, float debate, float safetyEdu, float etc, float total, CourseJpaEntity courseJpaEntity) {
         this.id = id;
         this.attendance = attendance;

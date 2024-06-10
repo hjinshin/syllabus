@@ -8,10 +8,12 @@ import knu.team7.syllabus.fetch.application.usecase.*;
 import knu.team7.syllabus.fetch.domain.model.*;
 import knu.team7.syllabus.fetch.application.service.dto.in.SyllabusParamsCommand;
 import lombok.RequiredArgsConstructor;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.Async;
 
 import java.util.*;
 
+@EnableRetry
 @UseCase
 @RequiredArgsConstructor
 public class DataFetchService implements DataFetchUseCase {
@@ -30,15 +32,15 @@ public class DataFetchService implements DataFetchUseCase {
     private final CreateLectureUseCase createLectureUseCase;
     private final CreateScheduleUseCase createScheduleUseCase;
 
-    @Override
-    @Async
-    public void fetchData(int year, String season) throws Exception {
-        fetchGEData(year, season);
-        fetchOtherData(year, season);
-    }
+//    @Override
+//    @Async
+//    public void fetchData(int year, String season) throws Exception {
+//        fetchGEData(year, season);
+//        fetchOtherData(year, season);
+//    }
 
     @Override
-//    @Async
+    @Async
     public void fetchGEData(int year, String season) throws Exception {
         String option = "[GE]";
 
@@ -56,7 +58,7 @@ public class DataFetchService implements DataFetchUseCase {
     }
 
     @Override
-//    @Async
+    @Async
     public void fetchOtherData(int year, String season) throws Exception {
         String option = "[Other]";
 
