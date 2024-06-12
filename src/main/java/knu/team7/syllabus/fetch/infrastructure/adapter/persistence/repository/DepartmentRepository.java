@@ -4,8 +4,9 @@ import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.Depart
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository("FetchDepartmentRepository")
 public interface DepartmentRepository extends JpaRepository<DepartmentJpaEntity, Long> {
-    boolean existsByCollegeAndDepart(String college, String depart);
-    DepartmentJpaEntity findByCollegeAndDepart(String college, String depart);
+    Optional<DepartmentJpaEntity> findByCollegeAndDepart(String college, String depart);
 }

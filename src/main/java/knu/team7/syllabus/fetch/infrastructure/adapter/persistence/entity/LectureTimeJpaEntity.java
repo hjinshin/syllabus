@@ -23,7 +23,7 @@ public class LectureTimeJpaEntity {
     @JoinColumn(name = "lecture_id")
     private LectureJpaEntity lecture;  // 강의 시간이 속한 교과목
 
-    public void seLectureJpaEntity(LectureJpaEntity entity) {
+    public void setLectureJpaEntity(LectureJpaEntity entity) {
         this.lecture = entity;
     }
 

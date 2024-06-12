@@ -22,8 +22,8 @@ public class CourseJpaEntity {
     private String season;      // 개설학기
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_code")
-    private SubjectCodeJpaEntity subjectCodeJpaEntity;  // 강좌번호
+    @JoinColumn(name = "subject_id")
+    private SubjectJpaEntity subjectJpaEntity;  // 강좌번호
 
     @Override
     public boolean equals(Object o) {
@@ -39,11 +39,22 @@ public class CourseJpaEntity {
     }
 
     @Builder
-    public CourseJpaEntity(Long id, String crseNo, int year, String season, SubjectCodeJpaEntity subjectCodeJpaEntity) {
+    public CourseJpaEntity(Long id, String crseNo, int year, String season, SubjectJpaEntity subjectJpaEntity) {
         this.id = id;
         this.crseNo = crseNo;
         this.year = year;
         this.season = season;
-        this.subjectCodeJpaEntity = subjectCodeJpaEntity;
+        this.subjectJpaEntity = subjectJpaEntity;
+    }
+
+    @Override
+    public String toString() {
+        return "CourseJpaEntity{" +
+                "id=" + id +
+                ", crseNo='" + crseNo + '\'' +
+                ", year=" + year +
+                ", season='" + season + '\'' +
+                ", subjectJpaEntity=" + subjectJpaEntity +
+                '}';
     }
 }

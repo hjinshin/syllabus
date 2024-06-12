@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.Objects;
 
 @Entity(name = "FetchEvaluationJpaEntity")
-@Table(name = "evaluation", uniqueConstraints = {@UniqueConstraint(columnNames = "course")})
+@Table(name = "evaluation", uniqueConstraints = {@UniqueConstraint(columnNames = "course_id")})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EvaluationJpaEntity {
@@ -28,23 +28,23 @@ public class EvaluationJpaEntity {
     private float total;         // 평가요소(총합)
 
     @OneToOne
-    @JoinColumn(name = "course")
-    private CourseJpaEntity courseJpaEntity;    // 강좌번호
+    @JoinColumn(name = "course_id")
+    private CourseJpaEntity courseJpaEntity;    // 과목코드
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EvaluationJpaEntity that = (EvaluationJpaEntity) o;
-        return Objects.equals(courseJpaEntity.getId(), that.courseJpaEntity.getId());
+        return Float.compare(that.attendance, attendance) == 0 && Float.compare(that.midExam, midExam) == 0 && Float.compare(that.finalExam, finalExam) == 0 && Float.compare(that.assignment, assignment) == 0 && Float.compare(that.presentation, presentation) == 0 && Float.compare(that.debate, debate) == 0 && Float.compare(that.safetyEdu, safetyEdu) == 0 && Float.compare(that.etc, etc) == 0 && Float.compare(that.total, total) == 0 && Objects.equals(id, that.id) && Objects.equals(courseJpaEntity, that.courseJpaEntity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(courseJpaEntity);
+        return Objects.hash(id, attendance, midExam, finalExam, assignment, presentation, debate, safetyEdu, etc, total, courseJpaEntity);
     }
 
-    @Builder
+    @Builder(toBuilder = true)
     public EvaluationJpaEntity(Long id, float attendance, float midExam, float finalExam, float assignment, float presentation, float debate, float safetyEdu, float etc, float total, CourseJpaEntity courseJpaEntity) {
         this.id = id;
         this.attendance = attendance;

@@ -21,12 +21,12 @@ public class Lecture {
     private final String preSbjet;    // 권장선수과목
     private final String postSbjet;   // 권장선수과목
     private final String realLecTime; // 실제강의시간
+    private final String profNm;    // 교수명
 
     private final List<LectureTime> lectimes;   // 강의시간 과목코드
     private final Course course;
-    private final Professor professor;
     private final Department department;
-    private final SubjectSection subjectSection;
+    private final Section section;
     private final Evaluation evaluation;
     private final boolean isHumanities;
     private final boolean isSdg;
@@ -37,7 +37,7 @@ public class Lecture {
 
 
     @Builder
-    public Lecture(Long id, int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, List<LectureTime> lectimes, Course course, Professor professor, Department department, SubjectSection subjectSection, Evaluation evaluation, boolean isHumanities, boolean isSdg, boolean isFlipped, boolean isNU, boolean isDgKp, boolean isSu) {
+    public Lecture(Long id, int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, String profNm, List<LectureTime> lectimes, Course course, Department department, Section section, Evaluation evaluation, boolean isHumanities, boolean isSdg, boolean isFlipped, boolean isNU, boolean isDgKp, boolean isSu) {
         this.id = id;
         this.credit = credit;
         this.lecCr = lecCr;
@@ -52,11 +52,11 @@ public class Lecture {
         this.preSbjet = preSbjet;
         this.postSbjet = postSbjet;
         this.realLecTime = realLecTime;
+        this.profNm = profNm;
         this.lectimes = lectimes;
         this.course = course;
-        this.professor = professor;
         this.department = department;
-        this.subjectSection = subjectSection;
+        this.section = section;
         this.evaluation = evaluation;
         this.isHumanities = isHumanities;
         this.isSdg = isSdg;

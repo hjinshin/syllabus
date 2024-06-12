@@ -4,8 +4,13 @@ import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.Course
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("FetchCourseRepository")
+import java.util.List;
+import java.util.Optional;
+
+@Repository("CourseRepository")
 public interface CourseRepository extends JpaRepository<CourseJpaEntity, Long> {
+    Optional<CourseJpaEntity> findByCrseNoAndYearAndSeason(String crseNo, int year, String season);
     boolean existsByCrseNoAndYearAndSeason(String crseNo, int year, String season);
-    CourseJpaEntity findByCrseNoAndYearAndSeason(String crseNo, int year, String season);
+
+    List<CourseJpaEntity> findAllByYearAndSeason(int year, String season);
 }

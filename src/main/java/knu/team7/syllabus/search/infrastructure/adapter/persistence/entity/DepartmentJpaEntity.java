@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "department")
+import java.util.Objects;
+
+@Entity(name = "SearchDepartmentJpaEntity")
+@Table(name = "department", uniqueConstraints = {@UniqueConstraint(columnNames = {"college", "depart"})})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DepartmentJpaEntity {
@@ -22,5 +24,19 @@ public class DepartmentJpaEntity {
         this.id = id;
         this.college = college;
         this.depart = depart;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DepartmentJpaEntity that = (DepartmentJpaEntity) o;
+        return Objects.equals(college, that.college) &&
+                Objects.equals(depart, that.depart);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(college, depart);
     }
 }

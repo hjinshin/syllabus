@@ -11,14 +11,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "FetchLectureJpaEntity")
-@Table(name = "lecture", uniqueConstraints = {@UniqueConstraint(columnNames = "course")})
+@Table(name = "lecture", uniqueConstraints = {@UniqueConstraint(columnNames = "course_id")})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LectureJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private int credit;         // 학점
     private int lecCr;          // 강의
     private int pracCr;         // 실습
@@ -33,8 +32,9 @@ public class LectureJpaEntity {
     @Column(columnDefinition = "TEXT")
     private String preSbjet;    // 권장선수과목
     @Column(columnDefinition = "TEXT")
-    private String postSbjet;   // 권장선수과목
+    private String postSbjet;   // 권장후수과목
     private String realLecTime; // 실제강의시간
+    private String profNm;      // 교수이름
     private boolean isHumanities; //인문교양
     private boolean isSdg;        //SDG(지속가능발전목표)
     private boolean isFlipped;  //플립드러닝
@@ -43,34 +43,26 @@ public class LectureJpaEntity {
     private boolean isSu;       // SU평가강좌
 
     @OneToOne
-    @JoinColumn(name = "course")
-    private CourseJpaEntity courseJpaEntity;    // 강좌번호
+    @JoinColumn(name = "course_id")
+    private CourseJpaEntity courseJpaEntity;    // 과목코드
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "professor")
-    private ProfessorJpaEntity professorJpaEntity;    // 교수
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department")
+    @JoinColumn(name = "department_id")
     private DepartmentJpaEntity departmentJpaEntity;    // 개설학과
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_section")
-    private SubjectSectionJpaEntity subjectSectionJpaEntity;  // 교과구분
+    @JoinColumn(name = "section_id")
+    private SectionJpaEntity sectionJpaEntity;  // 교과구분
 
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<LectureTimeJpaEntity> lectureTimes = new ArrayList<>();    // 강의시간
-
-    @OneToOne
-    @JoinColumn(name = "evaluation")
-    private EvaluationJpaEntity evaluation;   // 평가방법
 
     public void addLectureTimeEntity(LectureTimeJpaEntity entity) {
         if (entity == null) {
             return;
         }
         lectureTimes.add(entity);
-        entity.seLectureJpaEntity(this);
+        entity.setLectureJpaEntity(this);
     }
 
     @Override
@@ -78,9 +70,7 @@ public class LectureJpaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LectureJpaEntity that = (LectureJpaEntity) o;
-        return  courseJpaEntity.getYear() == that.courseJpaEntity.getYear() &&
-                Objects.equals(courseJpaEntity.getCrseNo(), that.courseJpaEntity.getCrseNo()) &&
-                Objects.equals(courseJpaEntity.getSeason(), that.courseJpaEntity.getSeason());
+        return Objects.equals(courseJpaEntity.getId(), that.courseJpaEntity.getId());
     }
 
     @Override
@@ -88,8 +78,9 @@ public class LectureJpaEntity {
         return Objects.hash(courseJpaEntity);
     }
 
-    @Builder
-    public LectureJpaEntity(int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, boolean isHumanities, boolean isSdg, boolean isFlipped, boolean isNU, boolean isDgKp, boolean isSu, CourseJpaEntity courseJpaEntity, ProfessorJpaEntity professorJpaEntity, DepartmentJpaEntity departmentJpaEntity, SubjectSectionJpaEntity subjectSectionJpaEntity, List<LectureTimeJpaEntity> lectureTimes, EvaluationJpaEntity evaluation) {
+    @Builder(toBuilder = true)
+    public LectureJpaEntity(Long id, int credit, int lecCr, int pracCr, String grade, String building, String room, int capacity, String lang, boolean isRemote, String note, String preSbjet, String postSbjet, String realLecTime, String profNm, boolean isHumanities, boolean isSdg, boolean isFlipped, boolean isNU, boolean isDgKp, boolean isSu, CourseJpaEntity courseJpaEntity, DepartmentJpaEntity departmentJpaEntity, SectionJpaEntity sectionJpaEntity, List<LectureTimeJpaEntity> lectureTimes) {
+        this.id = id;
         this.credit = credit;
         this.lecCr = lecCr;
         this.pracCr = pracCr;
@@ -103,6 +94,7 @@ public class LectureJpaEntity {
         this.preSbjet = preSbjet;
         this.postSbjet = postSbjet;
         this.realLecTime = realLecTime;
+        this.profNm = profNm;
         this.isHumanities = isHumanities;
         this.isSdg = isSdg;
         this.isFlipped = isFlipped;
@@ -110,10 +102,10 @@ public class LectureJpaEntity {
         this.isDgKp = isDgKp;
         this.isSu = isSu;
         this.courseJpaEntity = courseJpaEntity;
-        this.professorJpaEntity = professorJpaEntity;
         this.departmentJpaEntity = departmentJpaEntity;
-        this.subjectSectionJpaEntity = subjectSectionJpaEntity;
-        this.lectureTimes = lectureTimes;
-        this.evaluation = evaluation;
+        this.sectionJpaEntity = sectionJpaEntity;
+        for (LectureTimeJpaEntity lectureTime : lectureTimes) {
+            addLectureTimeEntity(lectureTime);
+        }
     }
 }

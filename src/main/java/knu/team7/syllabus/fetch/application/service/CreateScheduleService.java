@@ -1,9 +1,9 @@
 package knu.team7.syllabus.fetch.application.service;
 
+import knu.team7.syllabus.core.annotation.UseCase;
 import knu.team7.syllabus.fetch.application.port.in.command.ScheduleCommand;
 import knu.team7.syllabus.fetch.application.port.out.CreateSchedulePort;
 import knu.team7.syllabus.fetch.application.usecase.CreateScheduleUseCase;
-import knu.team7.syllabus.core.annotation.UseCase;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

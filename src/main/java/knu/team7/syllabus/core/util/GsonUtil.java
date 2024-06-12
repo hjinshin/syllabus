@@ -36,10 +36,11 @@ public class GsonUtil {
         return null;
     }
 
-    public static String nullTo0(String item) {
-        if (item == null) {
-            return "0";
+    public static String getAsString(JsonObject jsonObject, String key) {
+        JsonElement jsonElement = jsonObject.get(key);
+        if (jsonElement != null && !jsonElement.isJsonNull()) {
+            return jsonElement.getAsString();
         }
-        return item;
+        return null;
     }
 }

@@ -19,7 +19,6 @@ public class Evaluation {
 
 
     @Builder
-
     public Evaluation(Long id, float attendance, float midExam, float finalExam, float assignment, float presentation, float debate, float safetyEdu, float etc, float total, Course course) {
         this.id = id;
         this.attendance = attendance;

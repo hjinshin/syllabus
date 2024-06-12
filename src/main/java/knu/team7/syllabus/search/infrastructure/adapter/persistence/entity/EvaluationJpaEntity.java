@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "evaluation")
+import java.util.Objects;
+
+@Entity(name = "SearchEvaluationJpaEntity")
+@Table(name = "evaluation", uniqueConstraints = {@UniqueConstraint(columnNames = "course_id")})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EvaluationJpaEntity {
@@ -15,22 +17,35 @@ public class EvaluationJpaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String attendance;    // 평가요소(출석)
-    private String midExam;       // 평가요소(중간시험)
-    private String finalExam;     // 평가요소(기말시험)
-    private String assignment;    // 평가요소(과제)
-    private String presentation;  // 평가요소(발표)
-    private String debate;        // 평가요소(토론)
-    private String safetyEdu;     // 평가요소(안전교육)
-    private String etc;           // 평가요소(기타)
-    private String total;         // 평가요소(총합)
+    private float attendance;    // 평가요소(출석)
+    private float midExam;       // 평가요소(중간시험)
+    private float finalExam;     // 평가요소(기말시험)
+    private float assignment;    // 평가요소(과제)
+    private float presentation;  // 평가요소(발표)
+    private float debate;        // 평가요소(토론)
+    private float safetyEdu;     // 평가요소(안전교육)
+    private float etc;           // 평가요소(기타)
+    private float total;         // 평가요소(총합)
 
     @OneToOne
-    @JoinColumn(name = "course")
-    private CourseJpaEntity courseJpaEntity;    // 강좌번호
+    @JoinColumn(name = "course_id")
+    private CourseJpaEntity courseJpaEntity;    // 과목코드
 
-    @Builder
-    public EvaluationJpaEntity(Long id, String attendance, String midExam, String finalExam, String assignment, String presentation, String debate, String safetyEdu, String etc, String total, CourseJpaEntity courseJpaEntity) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EvaluationJpaEntity that = (EvaluationJpaEntity) o;
+        return Float.compare(that.attendance, attendance) == 0 && Float.compare(that.midExam, midExam) == 0 && Float.compare(that.finalExam, finalExam) == 0 && Float.compare(that.assignment, assignment) == 0 && Float.compare(that.presentation, presentation) == 0 && Float.compare(that.debate, debate) == 0 && Float.compare(that.safetyEdu, safetyEdu) == 0 && Float.compare(that.etc, etc) == 0 && Float.compare(that.total, total) == 0 && Objects.equals(id, that.id) && Objects.equals(courseJpaEntity, that.courseJpaEntity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, attendance, midExam, finalExam, assignment, presentation, debate, safetyEdu, etc, total, courseJpaEntity);
+    }
+
+    @Builder(toBuilder = true)
+    public EvaluationJpaEntity(Long id, float attendance, float midExam, float finalExam, float assignment, float presentation, float debate, float safetyEdu, float etc, float total, CourseJpaEntity courseJpaEntity) {
         this.id = id;
         this.attendance = attendance;
         this.midExam = midExam;

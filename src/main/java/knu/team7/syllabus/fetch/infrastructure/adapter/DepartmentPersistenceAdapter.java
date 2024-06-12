@@ -13,41 +13,45 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
 public class DepartmentPersistenceAdapter implements CreateDepartmentPort {
     private final DepartmentRepository departmentRepository;
+
     @Override
-    public List<Department> createDepartment(List<DepartmentCommand> list) {
-
-        saveEntityWithRetry(list);
-        return list.stream().map(
-                item -> Department.builder()
-                        .id(departmentRepository.findByCollegeAndDepart(item.college(), item.depart())
-                                .getId())
-                        .college(item.college())
-                        .depart(item.depart())
-                        .build()
-        ).toList();
-    }
-
     @Retryable(
             maxAttempts = 3,
             backoff = @Backoff(delay = 1000),
             retryFor = DataIntegrityViolationException.class
     )
     @Transactional
-    public void saveEntityWithRetry(List<DepartmentCommand> list) {
-        Set<DepartmentJpaEntity> saveJpaEntities = list.stream().map(
+    public List<Department> createDepartment(Set<DepartmentCommand> list) {
+        List<DepartmentJpaEntity> saveJpaEntities = list.stream().map(
                         command -> DepartmentJpaEntity.builder()
                                 .college(command.college())
                                 .depart(command.depart())
                                 .build())
-                .filter(entity -> !departmentRepository.existsByCollegeAndDepart(entity.getCollege(), entity.getDepart()))
-                .collect(Collectors.toSet());
+                .map(this::getExistingOrNew)
+                .toList();
+
         departmentRepository.saveAll(saveJpaEntities);
+        List<DepartmentJpaEntity> entities = departmentRepository.findAll();
+        return entities.stream().map(
+                entity -> Department.builder()
+                        .id(entity.getId())
+                        .college(entity.getCollege())
+                        .depart(entity.getDepart())
+                        .build()).toList();
+    }
+
+    private DepartmentJpaEntity getExistingOrNew(DepartmentJpaEntity entity) {
+        Optional<DepartmentJpaEntity> existingEntityOptional = departmentRepository.findByCollegeAndDepart(entity.getCollege(), entity.getDepart());
+        if (existingEntityOptional.isEmpty()) {
+            return entity;
+        }
+        return existingEntityOptional.get();
     }
 }

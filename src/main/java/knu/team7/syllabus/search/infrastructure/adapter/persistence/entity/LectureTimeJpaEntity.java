@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "SearchLectureTimeJpaEntity")
 @Table(name = "lecture_time")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,7 +23,7 @@ public class LectureTimeJpaEntity {
     @JoinColumn(name = "lecture_id")
     private LectureJpaEntity lecture;  // 강의 시간이 속한 교과목
 
-    public void seLectureJpaEntity(LectureJpaEntity entity) {
+    public void setLectureJpaEntity(LectureJpaEntity entity) {
         this.lecture = entity;
     }
 

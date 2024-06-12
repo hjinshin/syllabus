@@ -21,11 +21,17 @@ public class LectureController {
     @PostMapping("/lecture")
     public ResponseEntity<ApiResponse<?>> getLectures(@ModelAttribute LectureRequest lectureRequest) {
         try {
+
+
+
+
+
+
             List<LectureResponse> response = new ArrayList<>();
             return new ResponseEntity<>(ApiResponse.builder()
                     .success(true)
                     .data(response)
-                    .build(), HttpStatus.BAD_REQUEST);
+                    .build(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(ApiResponse.builder()
                     .success(false)

@@ -5,7 +5,10 @@ import knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity.Schedu
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("FetchScheduleRepository")
 public interface ScheduleRepository extends JpaRepository<ScheduleJpaEntity, Long>{
-    boolean existsByCourseJpaEntityAndDoPlan(CourseJpaEntity courseJpaEntity, String doPlan);
+
+    List<ScheduleJpaEntity> findByCourseJpaEntityIn(List<CourseJpaEntity> courseJpaEntity);
 }
