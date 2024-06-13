@@ -55,7 +55,7 @@ public class LectureJpaEntity {
     private SectionJpaEntity sectionJpaEntity;  // 교과구분
 
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<LectureTimeJpaEntity> lectureTimes = new ArrayList<>();    // 강의시간
+    private final List<LectureTimeJpaEntity> lectureTimes = new ArrayList<>();    // 강의시간
 
     public void addLectureTimeEntity(LectureTimeJpaEntity entity) {
         if (entity == null) {
@@ -107,5 +107,36 @@ public class LectureJpaEntity {
         for (LectureTimeJpaEntity lectureTime : lectureTimes) {
             addLectureTimeEntity(lectureTime);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "LectureJpaEntity{" +
+                "id=" + id +
+                ", credit=" + credit +
+                ", lecCr=" + lecCr +
+                ", pracCr=" + pracCr +
+                ", grade='" + grade + '\'' +
+                ", building='" + building + '\'' +
+                ", room='" + room + '\'' +
+                ", capacity=" + capacity +
+                ", lang='" + lang + '\'' +
+                ", isRemote=" + isRemote +
+                ", note='" + note + '\'' +
+                ", preSbjet='" + preSbjet + '\'' +
+                ", postSbjet='" + postSbjet + '\'' +
+                ", realLecTime='" + realLecTime + '\'' +
+                ", profNm='" + profNm + '\'' +
+                ", isHumanities=" + isHumanities +
+                ", isSdg=" + isSdg +
+                ", isFlipped=" + isFlipped +
+                ", isNU=" + isNU +
+                ", isDgKp=" + isDgKp +
+                ", isSu=" + isSu +
+                ", courseJpaEntity=" + courseJpaEntity +
+                ", departmentJpaEntity=" + departmentJpaEntity +
+                ", sectionJpaEntity=" + sectionJpaEntity +
+                ", lectureTimes=" + lectureTimes +
+                '}';
     }
 }

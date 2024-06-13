@@ -1,6 +1,7 @@
 package knu.team7.syllabus.search.api.dto.response;
 
-import knu.team7.syllabus.core.type.DayType;
+import knu.team7.syllabus.search.domain.model.Evaluation;
+import knu.team7.syllabus.search.domain.model.LectureTime;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,8 +22,8 @@ public class LectureResponse {
     private final String sbjctNm;         // 과목명
     private final String subjctCd;        // 강좌번호
     private final String realLecTime;     // 실제강의사간
-    private final List<LectureTimeDTO> lecTimes;  // 강의시간코드
-    private final String credit;      // 학점
+    private final List<LectureTime> lecTimes;  // 강의시간코드
+    private final int credit;      // 학점
     private final int lecCr;          // 강의
     private final int pracCr;         // 실습
     private final String professor;      // 교수명
@@ -33,7 +34,7 @@ public class LectureResponse {
     private final boolean isRemote;   // 원격여부
     private final String preSbjet;    // 권장선수과목
     private final String postSbjet;   // 권장선수과목
-    private final EvaluationDTO evaluation; // 평가방법
+    private final Evaluation evaluation; // 평가방법
     private final boolean isHumanities; //인문교양
     private final boolean isSdg;        //SDG(지속가능발전목표)
     private final boolean isFlipped;  //플립드러닝
@@ -43,7 +44,7 @@ public class LectureResponse {
     private final String note;        // 비고
 
     @Builder
-    public LectureResponse(int year, String season, String sbjSection, String lSct, String mSct, String sSct, String college, String depart, String grade, String crseNo, String sbjctNm, String subjctCd, String realLecTime, List<LectureTimeDTO> lecTimes, String credit, int lecCr, int pracCr, String professor, String building, String room, int capacity, String lang, boolean isRemote, String preSbjet, String postSbjet, EvaluationDTO evaluation, boolean isHumanities, boolean isSdg, boolean isFlipped, boolean isNU, boolean isDgKp, boolean isSu, String note) {
+    public LectureResponse(int year, String season, String sbjSection, String lSct, String mSct, String sSct, String college, String depart, String grade, String crseNo, String sbjctNm, String subjctCd, String realLecTime, List<LectureTime> lecTimes, int credit, int lecCr, int pracCr, String professor, String building, String room, int capacity, String lang, boolean isRemote, String preSbjet, String postSbjet, Evaluation evaluation, boolean isHumanities, boolean isSdg, boolean isFlipped, boolean isNU, boolean isDgKp, boolean isSu, String note) {
         this.year = year;
         this.season = season;
         this.sbjSection = sbjSection;
@@ -80,40 +81,3 @@ public class LectureResponse {
     }
 }
 
-@Getter
-class LectureTimeDTO {
-    private final DayType day;        // 요일 ex) MON("월"),TUE("화"),WED("수"),THU("목"),FRI("금"), SAT("토"),SUN("일");
-    private final String timeCode;
-
-    @Builder
-    public LectureTimeDTO(DayType day, String timeCode) {
-        this.day = day;
-        this.timeCode = timeCode;
-    }
-}
-
-@Getter
-class EvaluationDTO {
-    private final float attendance;    // 평가요소(출석)
-    private final float midExam;       // 평가요소(중간시험)
-    private final float finalExam;     // 평가요소(기말시험)
-    private final float assignment;    // 평가요소(과제)
-    private final float presentation;  // 평가요소(발표)
-    private final float debate;        // 평가요소(토론)
-    private final float safetyEdu;     // 평가요소(안전교육)
-    private final float etc;           // 평가요소(기타)
-    private final float total;         // 평가요소(총합)
-
-    @Builder
-    public EvaluationDTO(float attendance, float midExam, float finalExam, float assignment, float presentation, float debate, float safetyEdu, float etc, float total) {
-        this.attendance = attendance;
-        this.midExam = midExam;
-        this.finalExam = finalExam;
-        this.assignment = assignment;
-        this.presentation = presentation;
-        this.debate = debate;
-        this.safetyEdu = safetyEdu;
-        this.etc = etc;
-        this.total = total;
-    }
-}

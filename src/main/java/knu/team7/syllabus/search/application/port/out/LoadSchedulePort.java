@@ -6,5 +6,5 @@ import knu.team7.syllabus.search.domain.model.Schedule;
 import java.util.List;
 
 public interface LoadSchedulePort {
-    List<Schedule> loadSchedule(ScheduleCommand command);
+    List<Schedule> loadSchedules(ScheduleCommand command);
 }

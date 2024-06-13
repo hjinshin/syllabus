@@ -43,4 +43,15 @@ public class SectionJpaEntity {
         this.mSct = mSct;
         this.sSct = sSct;
     }
+
+    @Override
+    public String toString() {
+        return "SectionJpaEntity{" +
+                "codeId='" + codeId + '\'' +
+                ", sctNm='" + sctNm + '\'' +
+                ", lSct='" + lSct + '\'' +
+                ", mSct='" + mSct + '\'' +
+                ", sSct='" + sSct + '\'' +
+                '}';
+    }
 }

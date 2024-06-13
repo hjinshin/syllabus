@@ -25,6 +25,9 @@ public class CourseJpaEntity {
     @JoinColumn(name = "subject_id")
     private SubjectJpaEntity subjectJpaEntity;  // 강좌번호
 
+    @OneToOne(mappedBy = "courseJpaEntity", cascade = CascadeType.ALL)
+    private EvaluationJpaEntity evaluationJpaEntity;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

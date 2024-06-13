@@ -55,7 +55,7 @@ public class LectureJpaEntity {
     private SectionJpaEntity sectionJpaEntity;  // 교과구분
 
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<LectureTimeJpaEntity> lectureTimes = new ArrayList<>();    // 강의시간
+    private final List<LectureTimeJpaEntity> lectureTimes = new ArrayList<>();    // 강의시간
 
     public void addLectureTimeEntity(LectureTimeJpaEntity entity) {
         if (entity == null) {

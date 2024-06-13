@@ -20,29 +20,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SyllabusController {
     private final LoadSyllabusUseCase loadSyllabusUseCase;
     @GetMapping("/syllabus")
-    public ResponseEntity<ApiResponse<?>> getSyllabus(@ModelAttribute SyllabusRequest syllabusRequest) {
+    public ResponseEntity<ApiResponse<?>> getSyllabus(@ModelAttribute SyllabusRequest request) {
         try {
-            SyllabusCommand command = SyllabusCommand.builder()
-                    .doPlan(syllabusRequest.getDoPlan())
-                    .year(syllabusRequest.getYear())
-                    .season(syllabusRequest.getSeason())
-                    .crseNo(syllabusRequest.getCrseNo())
-                    .build();
+            SyllabusCommand command = syllabusCommandMapper(request);
 
             Syllabus syllabus = loadSyllabusUseCase.loadSyllabus(command);
+
+            SyllabusResponse response = syllabusResponseMapper(syllabus);
             return new ResponseEntity<>(ApiResponse.builder()
                     .success(true)
-                    .data(SyllabusResponse.builder()
-                            .crseNo(syllabus.getCrseNo())
-                            .crseGoal(syllabus.getCrseGoal())
-                            .eduGoal(syllabus.getEduGoal())
-                            .summary(syllabus.getSummary())
-                            .textbook(syllabus.getTextbook())
-                            .evalMethd(syllabus.getEvalMethd())
-                            .intviTimeLoc(syllabus.getIntviTimeLoc())
-                            .refer(syllabus.getRefer())
-                            .build())
-                    .build(), HttpStatus.BAD_REQUEST);
+                    .data(response)
+                    .build(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(ApiResponse.builder()
                     .success(false)
@@ -51,4 +39,30 @@ public class SyllabusController {
                     .build(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    private SyllabusCommand syllabusCommandMapper(SyllabusRequest request) {
+        return SyllabusCommand.builder()
+                .doPlan(request.getDoPlan())
+                .year(request.getYear())
+                .season(request.getSeason())
+                .crseNo(request.getCrseNo())
+                .build();
+    }
+
+    private SyllabusResponse syllabusResponseMapper(Syllabus syllabus) {
+        return SyllabusResponse.builder()
+                .crseNo(syllabus.getCrseNo())
+                .crseGoal(syllabus.getCrseGoal())
+                .eduGoal(syllabus.getEduGoal())
+                .summary(syllabus.getSummary())
+                .textbook(syllabus.getTextbook())
+                .evalMethd(syllabus.getEvalMethd())
+                .intviTimeLoc(syllabus.getIntviTimeLoc())
+                .refer(syllabus.getRefer())
+                .profNm(syllabus.getProfNm())
+                .profTel(syllabus.getProfTel())
+                .profEmail(syllabus.getProfEmail())
+                .build();
+    }
+
 }

@@ -14,7 +14,7 @@ import java.util.List;
 public class LoadScheduleService implements LoadScheduleUseCase {
     private final LoadSchedulePort loadSchedulePort;
     @Override
-    public List<Schedule> loadSchedule(ScheduleCommand command) {
-        return loadSchedulePort.loadSchedule(command);
+    public List<Schedule> loadSchedules(ScheduleCommand command) {
+        return loadSchedulePort.loadSchedules(command);
     }
 }

@@ -27,7 +27,7 @@ public class EvaluationJpaEntity {
     private float etc;           // 평가요소(기타)
     private float total;         // 평가요소(총합)
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id")
     private CourseJpaEntity courseJpaEntity;    // 과목코드
 

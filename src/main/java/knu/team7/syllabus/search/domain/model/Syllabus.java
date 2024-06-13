@@ -14,9 +14,12 @@ public class Syllabus {
     private final String intviTimeLoc;   // 상담장소/시간
     private final String refer;           // 수강 참고사항
     private final String doPlan;      // 작성언어
+    private final String profNm;          // 담당교수
+    private final String profTel;         // 교수 연락처
+    private final String profEmail;       // 교수 이메일
 
     @Builder
-    public Syllabus(String crseNo, String crseGoal, String eduGoal, String summary, String textbook, String evalMethd, String intviTimeLoc, String refer, String doPlan) {
+    public Syllabus(String crseNo, String crseGoal, String eduGoal, String summary, String textbook, String evalMethd, String intviTimeLoc, String refer, String doPlan, String profNm, String profTel, String profEmail) {
         this.crseNo = crseNo;
         this.crseGoal = crseGoal;
         this.eduGoal = eduGoal;
@@ -26,5 +29,9 @@ public class Syllabus {
         this.intviTimeLoc = intviTimeLoc;
         this.refer = refer;
         this.doPlan = doPlan;
+
+        this.profNm = profNm;
+        this.profTel = profTel;
+        this.profEmail = profEmail;
     }
 }

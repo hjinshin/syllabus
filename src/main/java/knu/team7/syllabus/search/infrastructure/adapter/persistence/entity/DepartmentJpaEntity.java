@@ -39,4 +39,13 @@ public class DepartmentJpaEntity {
     public int hashCode() {
         return Objects.hash(college, depart);
     }
+
+    @Override
+    public String toString() {
+        return "DepartmentJpaEntity{" +
+                "id=" + id +
+                ", college='" + college + '\'' +
+                ", depart='" + depart + '\'' +
+                '}';
+    }
 }

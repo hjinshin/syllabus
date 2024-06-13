@@ -70,4 +70,23 @@ public class SyllabusJpaEntity {
         this.profEmail = profEmail;
         this.courseJpaEntity = courseJpaEntity;
     }
+
+    @Override
+    public String toString() {
+        return "SyllabusJpaEntity{" +
+                "id=" + id +
+                ", crseGoal='" + crseGoal + '\'' +
+                ", eduGoal='" + eduGoal + '\'' +
+                ", summary='" + summary + '\'' +
+                ", textbook='" + textbook + '\'' +
+                ", evalMethd='" + evalMethd + '\'' +
+                ", intviTimeLoc='" + intviTimeLoc + '\'' +
+                ", refer='" + refer + '\'' +
+                ", doPlan='" + doPlan + '\'' +
+                ", profNm='" + profNm + '\'' +
+                ", profTel='" + profTel + '\'' +
+                ", profEmail='" + profEmail + '\'' +
+                ", courseJpaEntity=" + courseJpaEntity +
+                '}';
+    }
 }

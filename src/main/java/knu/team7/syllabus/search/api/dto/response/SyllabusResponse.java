@@ -13,10 +13,13 @@ public class SyllabusResponse{
     private final String evalMethd;      // 평가방법
     private final String intviTimeLoc;   // 상담장소/시간
     private final String refer;           // 수강 참고사항
+    private final String profNm;          // 담당교수
+    private final String profTel;         // 교수 연락처
+    private final String profEmail;       // 교수 이메일
 
 
     @Builder
-    public SyllabusResponse(String crseNo, String crseGoal, String eduGoal, String summary, String textbook, String evalMethd, String intviTimeLoc, String refer) {
+    public SyllabusResponse(String crseNo, String crseGoal, String eduGoal, String summary, String textbook, String evalMethd, String intviTimeLoc, String refer, String profNm, String profTel, String profEmail) {
         this.crseNo = crseNo;
         this.crseGoal = crseGoal;
         this.eduGoal = eduGoal;
@@ -25,5 +28,8 @@ public class SyllabusResponse{
         this.evalMethd = evalMethd;
         this.intviTimeLoc = intviTimeLoc;
         this.refer = refer;
+        this.profNm = profNm;
+        this.profTel = profTel;
+        this.profEmail = profEmail;
     }
 }

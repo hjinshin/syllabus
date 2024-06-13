@@ -23,30 +23,18 @@ public class ScheduleController {
     private final LoadScheduleUseCase loadScheduleUseCase;
 
     @GetMapping("/schedule")
-    public ResponseEntity<ApiResponse<?>> getSchedule(@ModelAttribute ScheduleRequest scheduleRequest) {
+    public ResponseEntity<ApiResponse<?>> getSchedule(@ModelAttribute ScheduleRequest request) {
         try {
-            ScheduleCommand command = ScheduleCommand.builder()
-                    .crseNo(scheduleRequest.getCrseNo())
-                    .year(scheduleRequest.getYear())
-                    .season(scheduleRequest.getSeason())
-                    .doPlan(scheduleRequest.getDoPlan())
-                    .build();
+            ScheduleCommand command = scehduleCommandMapper(request);
 
-            List<Schedule> scheduleList = loadScheduleUseCase.loadSchedule(command);
-            List<ScheduleResponse> scheduleResponses = scheduleList.stream().map(
-                    item -> ScheduleResponse.builder()
-                            .lssnsGoalCntns(item.getLssnsGoalCntns())
-                            .lssnsMethd(item.getLssnsMethd())
-                            .rsrchCntns(item.getRsrchCntns())
-                            .weekSn(item.getWeekSn())
-                            .weekNote(item.getWeekNote())
-                            .build()
-            ).toList();
+            List<Schedule> scheduleList = loadScheduleUseCase.loadSchedules(command);
+            List<ScheduleResponse> scheduleResponses = scheduleList.stream()
+                    .map(this::scheduleResponseMapper).toList();
 
             return new ResponseEntity<>(ApiResponse.builder()
                     .success(true)
                     .data(scheduleResponses)
-                    .build(), HttpStatus.BAD_REQUEST);
+                    .build(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(ApiResponse.builder()
                     .success(false)
@@ -55,4 +43,24 @@ public class ScheduleController {
                     .build(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    private ScheduleCommand scehduleCommandMapper(ScheduleRequest request) {
+        return ScheduleCommand.builder()
+                .crseNo(request.getCrseNo())
+                .year(request.getYear())
+                .season(request.getSeason())
+                .doPlan(request.getDoPlan())
+                .build();
+    }
+
+    private ScheduleResponse scheduleResponseMapper(Schedule schedule) {
+        return ScheduleResponse.builder()
+                .lssnsGoalCntns(schedule.getLssnsGoalCntns())
+                .lssnsMethd(schedule.getLssnsMethd())
+                .rsrchCntns(schedule.getRsrchCntns())
+                .weekSn(schedule.getWeekSn())
+                .weekNote(schedule.getWeekNote())
+                .build();
+    }
+
 }

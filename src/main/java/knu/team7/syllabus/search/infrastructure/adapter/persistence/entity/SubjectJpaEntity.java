@@ -41,4 +41,12 @@ public class SubjectJpaEntity {
         this.sbjetCd = sbjetCd;
         this.sbjetNm = sbjetNm;
     }
+
+    @Override
+    public String toString() {
+        return "SubjectJpaEntity{" +
+                "sbjetCd='" + sbjetCd + '\'' +
+                ", sbjetNm='" + sbjetNm + '\'' +
+                '}';
+    }
 }

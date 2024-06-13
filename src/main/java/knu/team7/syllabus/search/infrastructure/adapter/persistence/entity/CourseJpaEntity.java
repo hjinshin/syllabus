@@ -25,6 +25,9 @@ public class CourseJpaEntity {
     @JoinColumn(name = "subject_id")
     private SubjectJpaEntity subjectJpaEntity;  // 강좌번호
 
+    @OneToOne(mappedBy = "courseJpaEntity", cascade = CascadeType.ALL)
+    private EvaluationJpaEntity evaluationJpaEntity;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,12 +42,13 @@ public class CourseJpaEntity {
     }
 
     @Builder
-    public CourseJpaEntity(Long id, String crseNo, int year, String season, SubjectJpaEntity subjectJpaEntity) {
+    public CourseJpaEntity(Long id, String crseNo, int year, String season, SubjectJpaEntity subjectJpaEntity, EvaluationJpaEntity evaluationJpaEntity) {
         this.id = id;
         this.crseNo = crseNo;
         this.year = year;
         this.season = season;
         this.subjectJpaEntity = subjectJpaEntity;
+        this.evaluationJpaEntity = evaluationJpaEntity;
     }
 
     @Override
@@ -55,6 +59,7 @@ public class CourseJpaEntity {
                 ", year=" + year +
                 ", season='" + season + '\'' +
                 ", subjectJpaEntity=" + subjectJpaEntity +
+                ", evaluationJpaEntity=" + evaluationJpaEntity +
                 '}';
     }
 }

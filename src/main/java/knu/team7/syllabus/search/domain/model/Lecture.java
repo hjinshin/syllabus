@@ -1,6 +1,5 @@
 package knu.team7.syllabus.search.domain.model;
 
-import knu.team7.syllabus.fetch.domain.model.Evaluation;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -22,7 +21,7 @@ public class Lecture {
     private final String subjctCd;        // 강좌번호
     private final String realLecTime;     // 실제강의사간
     private final List<LectureTime> lecTimes;  // 강의시간코드
-    private final String credit;      // 학점
+    private final int credit;      // 학점
     private final int lecCr;          // 강의
     private final int pracCr;         // 실습
     private final String professor;      // 교수명
@@ -43,7 +42,7 @@ public class Lecture {
     private final String note;        // 비고
 
     @Builder
-    public Lecture(int year, String season, String sbjSection, String lSct, String mSct, String sSct, String college, String depart, String grade, String crseNo, String sbjctNm, String subjctCd, String realLecTime, List<LectureTime> lecTimes, String credit, int lecCr, int pracCr, String professor, String building, String room, int capacity, String lang, boolean isRemote, String preSbjet, String postSbjet, Evaluation evaluation, boolean isHumanities, boolean isSdg, boolean isFlipped, boolean isNU, boolean isDgKp, boolean isSu, String note) {
+    public Lecture(int year, String season, String sbjSection, String lSct, String mSct, String sSct, String college, String depart, String grade, String crseNo, String sbjctNm, String subjctCd, String realLecTime, List<LectureTime> lecTimes, int credit, int lecCr, int pracCr, String professor, String building, String room, int capacity, String lang, boolean isRemote, String preSbjet, String postSbjet, Evaluation evaluation, boolean isHumanities, boolean isSdg, boolean isFlipped, boolean isNU, boolean isDgKp, boolean isSu, String note) {
         this.year = year;
         this.season = season;
         this.sbjSection = sbjSection;
