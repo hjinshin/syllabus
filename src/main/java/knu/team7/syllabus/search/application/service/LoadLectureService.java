@@ -17,4 +17,9 @@ public class LoadLectureService implements LoadLectureUseCase {
     public List<Lecture> loadLectures(LectureCommand command) {
         return loadLecturePort.loadLectures(command);
     }
+
+    @Override
+    public List<Lecture> loadLecturesByCrseNos(int year, String season, List<String> crseNoList) {
+        return loadLecturePort.loadLecturesByCrseNos(year, season, crseNoList);
+    }
 }

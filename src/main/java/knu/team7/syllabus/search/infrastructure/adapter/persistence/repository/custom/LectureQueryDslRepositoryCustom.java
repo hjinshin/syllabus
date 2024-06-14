@@ -8,4 +8,5 @@ import java.util.List;
 public interface LectureQueryDslRepositoryCustom {
     List<LectureJpaEntity> findAllLectures(LectureCommand command);
 
+    List<LectureJpaEntity> findAllLecturesByYearAndSeasonAndCrseNo(int year, String season, List<String> crseNos);
 }

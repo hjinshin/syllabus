@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LoadLectureUseCase {
     List<Lecture> loadLectures(LectureCommand command);
+
+    List<Lecture> loadLecturesByCrseNos(int year, String season, List<String> crseNoList);
 }

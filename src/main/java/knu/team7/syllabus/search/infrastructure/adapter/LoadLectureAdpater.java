@@ -25,6 +25,14 @@ public class LoadLectureAdpater implements LoadLecturePort {
         return lectureListMapper(entities);
     }
 
+    @Override
+    public List<Lecture> loadLecturesByCrseNos(int year, String season, List<String> crseNoList) {
+        List<LectureJpaEntity> entities = lectureRepository
+                .findAllLecturesByYearAndSeasonAndCrseNo(year, season, crseNoList);
+
+        return lectureListMapper(entities);
+    }
+
     private List<Lecture> lectureListMapper(List<LectureJpaEntity> entities) {
         return entities.stream().map(
                 entity -> Lecture.builder()

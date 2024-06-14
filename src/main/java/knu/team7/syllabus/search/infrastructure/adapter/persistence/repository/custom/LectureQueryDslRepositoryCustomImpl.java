@@ -117,4 +117,25 @@ public class LectureQueryDslRepositoryCustomImpl implements LectureQueryDslRepos
                 .where(builder)
                 .fetch();
     }
+
+    @Override
+    public List<LectureJpaEntity> findAllLecturesByYearAndSeasonAndCrseNo(int year, String season, List<String> crseNos) {
+        QLectureJpaEntity lectureJpaEntity = QLectureJpaEntity.lectureJpaEntity;
+        QCourseJpaEntity courseJpaEntity = QCourseJpaEntity.courseJpaEntity;
+        QLectureTimeJpaEntity lectureTimeJpaEntity = QLectureTimeJpaEntity.lectureTimeJpaEntity;
+
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(courseJpaEntity.year.eq(year));
+        builder.and(courseJpaEntity.season.eq(season));
+        builder.and(courseJpaEntity.crseNo.in(crseNos));
+
+        return queryFactory
+                .selectFrom(lectureJpaEntity)
+                .leftJoin(lectureJpaEntity.courseJpaEntity, courseJpaEntity).fetchJoin()
+                .leftJoin(lectureJpaEntity.lectureTimes, lectureTimeJpaEntity).fetchJoin()
+                .where(builder)
+                .fetch();
+    }
+
+
 }

@@ -40,7 +40,7 @@ public class ScheduleController {
                     .success(false)
                     .error(e.getMessage())
                     .data(null)
-                    .build(), HttpStatus.BAD_REQUEST);
+                    .build(), HttpStatus.OK);
         }
     }
 

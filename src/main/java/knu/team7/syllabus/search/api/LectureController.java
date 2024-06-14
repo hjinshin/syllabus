@@ -10,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,7 +38,28 @@ public class LectureController {
                     .success(false)
                     .error(e.getMessage())
                     .data(null)
-                    .build(), HttpStatus.BAD_REQUEST);
+                    .build(), HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/lecture/select")
+    public ResponseEntity<ApiResponse<?>> getLectureByCrseNos(@RequestParam("year") int year,
+                                                         @RequestParam("season") String season,
+                                                         @RequestParam("crseno") List<String> crseNoList) {
+        try {
+            List<Lecture> lectureList = lectureUseCase.loadLecturesByCrseNos(year, season, crseNoList);
+            List<LectureResponse> response = lectureList.stream()
+                    .map(this::lectureResponseMapper).toList();
+            return new ResponseEntity<>(ApiResponse.builder()
+                    .success(true)
+                    .data(response)
+                    .build(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(ApiResponse.builder()
+                    .success(false)
+                    .error(e.getMessage())
+                    .data(null)
+                    .build(), HttpStatus.OK);
         }
     }
 
