@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/public/api/v1")
 public class FetchController {
     private final FetchUseCase fetchUseCase;
     @GetMapping("/fetch")

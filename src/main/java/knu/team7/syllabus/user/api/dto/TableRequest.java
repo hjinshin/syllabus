@@ -6,7 +6,7 @@ import java.util.List;
 
 @Getter
 public class TableRequest {
-    int year;
-    String season;
-    List<String> crseNos;
+    private int year;
+    private String season;
+    private List<String> crseNos;
 }
