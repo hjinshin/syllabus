@@ -13,10 +13,7 @@ import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @PersistenceAdapter
 @RequiredArgsConstructor
@@ -31,7 +28,7 @@ public class EvaluationPersistenceAdapter implements CreateEvaluationPort {
             retryFor = DataIntegrityViolationException.class
     )
     @Transactional
-    public void createEvaluation(List<EvaluationCommand> list) {
+    public void createEvaluation(Set<EvaluationCommand> list) {
         List<EvaluationJpaEntity> saveJpaEntities = new ArrayList<>();
         for (EvaluationCommand command : list) {
             Optional<CourseJpaEntity> courseOpt = courseRepository.findByCrseNoAndYearAndSeason(
@@ -54,10 +51,11 @@ public class EvaluationPersistenceAdapter implements CreateEvaluationPort {
                             .total(command.total())
                             .courseJpaEntity(course)
                             .build());
-            saveJpaEntities.add(entity);
+            if(entity != null)
+                saveJpaEntities.add(entity);
         }
-
-        evaluationRepository.saveAll(saveJpaEntities);
+        if(!saveJpaEntities.isEmpty())
+            evaluationRepository.saveAll(saveJpaEntities);
     }
 
     private EvaluationJpaEntity getExistORNew(EvaluationJpaEntity entity) {
@@ -69,17 +67,17 @@ public class EvaluationPersistenceAdapter implements CreateEvaluationPort {
         if (Objects.equals(entity, existingEntity)) {
             return null;
         }
-        return existingEntity.toBuilder()
-                .attendance(entity.getAttendance())
-                .midExam(entity.getMidExam())
-                .finalExam(entity.getFinalExam())
-                .assignment(entity.getAssignment())
-                .presentation(entity.getPresentation())
-                .debate(entity.getDebate())
-                .safetyEdu(entity.getSafetyEdu())
-                .etc(entity.getEtc())
-                .total(entity.getTotal())
-                .build();
+        existingEntity.setAttendance(entity.getAttendance());
+        existingEntity.setMidExam(entity.getMidExam());
+        existingEntity.setFinalExam(entity.getFinalExam());
+        existingEntity.setAssignment(entity.getAssignment());
+        existingEntity.setPresentation(entity.getPresentation());
+        existingEntity.setDebate(entity.getDebate());
+        existingEntity.setSafetyEdu(entity.getSafetyEdu());
+        existingEntity.setEtc(entity.getEtc());
+        existingEntity.setTotal(entity.getTotal());
+
+        return existingEntity;
     }
 
 }

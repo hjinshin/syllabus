@@ -2,8 +2,8 @@ package knu.team7.syllabus.fetch.application.port.out;
 
 import knu.team7.syllabus.fetch.application.port.in.command.EvaluationCommand;
 
-import java.util.List;
+import java.util.Set;
 
 public interface CreateEvaluationPort {
-    void createEvaluation(List<EvaluationCommand> list);
+    void createEvaluation(Set<EvaluationCommand> list);
 }

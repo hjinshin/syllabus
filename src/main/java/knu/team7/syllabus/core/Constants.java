@@ -9,6 +9,7 @@ public class Constants {
     public static final Map<Character, DayType> DAY_TYPE = new HashMap<>() {{
         put('월', DayType.MON); put('화', DayType.TUE); put('수', DayType.WED); put('목', DayType.THU); put('금', DayType.FRI); put('토', DayType.SAT); put('일', DayType.SUN);
     }};
+    public static final String YEAR_SEASON_URL = "https://knuin.knu.ac.kr/public/web/stddm/common/stddmCommonInfo/selectListYrsmtInfo";
     public static final String LIST_URL = "https://knuin.knu.ac.kr/public/cmmnn/cmmbs/code/selectListCode";
     public static final String CLASS_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInqr/selectListLectPlnInqr";
     public static final String SYLLABUS_URL = "https://knuin.knu.ac.kr/public/web/stddm/lsspr/syllabus/lectPlnInputDtl/selectListLectPlnInputDtl";
@@ -16,9 +17,16 @@ public class Constants {
 
     public static final Map<String, String> SEASONCODES = new HashMap<>(){{
         put("1학기", "CMBS001400001"); // 1학기
-        put("여름학기", "CMBS001400004"); // 여름학기
+        put("계절학기(하계)", "CMBS001400004"); // 여름학기
         put("2학기", "CMBS001400002"); // 2학기
-        put("겨울학기", "CMBS001400003");  // 겨울학기
+        put("계절학기(동계)", "CMBS001400003");  // 겨울학기
+    }};
+
+    public static final Map<String, String> SEASONNAMES = new HashMap<>(){{
+        put("CMBS001400001", "1학기"); // 1학기
+        put("CMBS001400004", "계절학기(하계)"); // 여름학기
+        put("CMBS001400002", "2학기"); // 2학기
+        put("CMBS001400003", "계절학기(동계)");  // 겨울학기
     }};
 
     public static final String[][] GECATEGORYCODES = {
@@ -53,4 +61,6 @@ public class Constants {
 
     public static final String[] GECATEGORY_KEYS = {"STCU0011", "STCU0012"};
     public static final String SUBLIST_KEY = "STCU0008";
+    public static final String YEARANDSEASON_KEY = "EVE00111";
+    public static final String LCTRELNGGESCTCD_KEY = "STCU001400001";
 }

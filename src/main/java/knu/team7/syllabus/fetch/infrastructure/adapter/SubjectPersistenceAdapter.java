@@ -59,7 +59,7 @@ public class SubjectPersistenceAdapter implements CreateSubjectPort {
             return null;
         }
         return existingEntity.toBuilder()
-                .sbjetNm(existingEntity.getSbjetNm())
+                .sbjetNm(entity.getSbjetNm())
                 .build();
     }
 }

@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import knu.team7.syllabus.core.Constants;
 import knu.team7.syllabus.core.type.DayType;
 import knu.team7.syllabus.fetch.application.port.in.command.LectureCommand;
+import knu.team7.syllabus.fetch.application.port.in.command.YearAndSeasonCommand;
 import knu.team7.syllabus.fetch.domain.model.LectureTime;
 import knu.team7.syllabus.fetch.domain.model.Category;
 import knu.team7.syllabus.fetch.application.port.in.command.SyllabusCommand;
@@ -15,6 +16,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class ParseUtil {
+
+    public static YearAndSeasonCommand parsingYearSeasonData(String jsonData) {
+        JsonObject jsonObject = GsonUtil.fromJson(jsonData);
+        JsonObject dataObject = GsonUtil.getAsJsonObject(jsonObject, "data");
+        String year = GsonUtil.getStringOrNull(dataObject, "year");
+        String seasonCode = GsonUtil.getStringOrNull(dataObject, "smstrSctcd");
+        return YearAndSeasonCommand.builder()
+                .year(Integer.parseInt(nullTo0(year)))
+                .season(Constants.SEASONNAMES.get(seasonCode))
+                .build();
+    }
     public static List<LectureCommand> parsingLectureData(String jsonData, String sectCd) {
         List<LectureCommand> codes = new ArrayList<>();
         JsonObject jsonObject = GsonUtil.fromJson(jsonData);

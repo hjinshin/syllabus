@@ -75,9 +75,11 @@ public class LecturePersistenceAdapter implements CreateLecturePort {
                                     .build()).toList())
                     .build();
             entity = getExistingOrNew(entity);
-            saveEntities.add(entity);
+            if(entity != null)
+                saveEntities.add(entity);
         }
-        lectureRepository.saveAll(saveEntities);
+        if(!saveEntities.isEmpty())
+            lectureRepository.saveAll(saveEntities);
     }
 
     private CourseJpaEntity findCourseEntity(LectureCommand command) {

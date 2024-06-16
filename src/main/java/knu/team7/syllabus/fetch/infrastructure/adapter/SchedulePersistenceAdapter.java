@@ -72,17 +72,12 @@ public class SchedulePersistenceAdapter implements CreateSchedulePort {
                 .doPlan(entity.getDoPlan())
                 .no(entity.getNo())
                 .build());
-
-
         if (existingEntity == null) {
             return entity;
         }
-
         if (Objects.equals(entity, existingEntity)) {
             return null;
         }
-        System.out.println(entity);
-        System.out.println(existingEntity);
 
         return existingEntity.toBuilder()
                 .lssnsGoalCntns(entity.getLssnsGoalCntns())

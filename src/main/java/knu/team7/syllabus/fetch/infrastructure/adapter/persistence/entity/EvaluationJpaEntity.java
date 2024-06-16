@@ -1,16 +1,14 @@
 package knu.team7.syllabus.fetch.infrastructure.adapter.persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Objects;
 
 @Entity(name = "FetchEvaluationJpaEntity")
 @Table(name = "evaluation", uniqueConstraints = {@UniqueConstraint(columnNames = "course_id")})
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EvaluationJpaEntity {
     @Id
@@ -36,12 +34,12 @@ public class EvaluationJpaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EvaluationJpaEntity that = (EvaluationJpaEntity) o;
-        return Float.compare(that.attendance, attendance) == 0 && Float.compare(that.midExam, midExam) == 0 && Float.compare(that.finalExam, finalExam) == 0 && Float.compare(that.assignment, assignment) == 0 && Float.compare(that.presentation, presentation) == 0 && Float.compare(that.debate, debate) == 0 && Float.compare(that.safetyEdu, safetyEdu) == 0 && Float.compare(that.etc, etc) == 0 && Float.compare(that.total, total) == 0 && Objects.equals(id, that.id) && Objects.equals(courseJpaEntity, that.courseJpaEntity);
+        return Float.compare(that.attendance, attendance) == 0 && Float.compare(that.midExam, midExam) == 0 && Float.compare(that.finalExam, finalExam) == 0 && Float.compare(that.assignment, assignment) == 0 && Float.compare(that.presentation, presentation) == 0 && Float.compare(that.debate, debate) == 0 && Float.compare(that.safetyEdu, safetyEdu) == 0 && Float.compare(that.etc, etc) == 0 && Float.compare(that.total, total) == 0 && Objects.equals(courseJpaEntity, that.courseJpaEntity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, attendance, midExam, finalExam, assignment, presentation, debate, safetyEdu, etc, total, courseJpaEntity);
+        return Objects.hash(attendance, midExam, finalExam, assignment, presentation, debate, safetyEdu, etc, total, courseJpaEntity);
     }
 
     @Builder(toBuilder = true)

@@ -33,6 +33,7 @@ public class LectureJpaEntity {
     private String preSbjet;    // 권장선수과목
     @Column(columnDefinition = "TEXT")
     private String postSbjet;   // 권장후수과목
+    @Column(columnDefinition = "TEXT")
     private String realLecTime; // 실제강의시간
     private String profNm;      // 교수이름
     private boolean isHumanities; //인문교양

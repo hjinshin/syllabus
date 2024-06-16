@@ -28,7 +28,7 @@ public class ExternalScheduleAdapter implements FetchSchedulePort {
                 .estblSmstrSctcd(Constants.SEASONCODES.get(course.getSeason()))
                 .sbjetCd(codes[0])
                 .sbjetDvnno(codes[1])
-                .lctreLnggeSctcd(Constants.SEASONCODES.get(course.getSeason()).replace("CMBS", "STCU"))
+                .lctreLnggeSctcd(Constants.LCTRELNGGESCTCD_KEY)
                 .isApi("Y")
                 .doPlan(doPlan)
                 .build();
