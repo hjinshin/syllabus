@@ -31,16 +31,16 @@ public class LectureQueryDslRepositoryCustomImpl implements LectureQueryDslRepos
             builder.and(courseJpaEntity.year.eq(command.year()));
 
         if(StringUtils.hasText(command.crseNo()))
-           builder.and(courseJpaEntity.crseNo.eq(command.crseNo()));
+           builder.and(courseJpaEntity.crseNo.contains(command.crseNo()));
 
         if(StringUtils.hasText(command.sbjctNm()))
-            builder.and(courseJpaEntity.subjectJpaEntity.sbjetNm.eq(command.sbjctNm()));
+            builder.and(courseJpaEntity.subjectJpaEntity.sbjetNm.contains(command.sbjctNm()));
 
         if(StringUtils.hasText(command.subjctCd()))
-            builder.and(courseJpaEntity.subjectJpaEntity.sbjetCd.eq(command.subjctCd()));
+            builder.and(courseJpaEntity.subjectJpaEntity.sbjetCd.contains(command.subjctCd()));
 
         if(StringUtils.hasText(command.professor()))
-         builder.and(lectureJpaEntity.profNm.eq(command.professor()));
+         builder.and(lectureJpaEntity.profNm.contains(command.professor()));
 
         if(StringUtils.hasText(command.college()))
           builder.and(departmentJpaEntity.college.eq(command.college()));
@@ -49,7 +49,7 @@ public class LectureQueryDslRepositoryCustomImpl implements LectureQueryDslRepos
            builder.and(departmentJpaEntity.depart.eq(command.depart()));
 
         if(StringUtils.hasText(command.lang()))
-           builder.and(lectureJpaEntity.lang.eq(command.lang()));
+           builder.and(lectureJpaEntity.lang.contains(command.lang()));
 
         if(StringUtils.hasText(command.sbjctSection()))
             builder.and(sectionJpaEntity.sctNm.eq(command.sbjctSection()));
