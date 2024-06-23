@@ -2,13 +2,11 @@
 
 import DataTable from "./data-table";
 import { columns } from "./columns";
-import MapWrapper from "./map-wrapper";
 import { showMapPopupAtom } from "@/atoms/map-popup-atoms";
 import { useAtom } from "jotai";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { ICardData } from "@/types/ICardData";
-import OccupiedTime from "./occupiedTime";
 import { Suspense, useEffect } from "react";
 import {
   lectureListAtom,
@@ -53,7 +51,9 @@ const ViewAllFiltersToggle = () => {
       <ChevronDown
         className={`-ml-1 h-4 w-4 stroke-neutral-400  ${viewAllFilters === true ? `rotate-180` : ``}`}
       />
-      <p className="text-nowrap">{viewAllFilters ? `간단히 보기` : `모든 필터 보기`}</p>
+      <p className="text-nowrap">
+        {viewAllFilters ? `간단히 보기` : `모든 필터 보기`}
+      </p>
     </Badge>
   );
 };
@@ -89,12 +89,12 @@ const FiltersContainer = () => {
   return (
     <div className="flex flex-col items-start rounded-md bg-neutral-50 p-4">
       <p className="px-2 py-1 text-base font-semibold text-neutral-600">필터</p>
-      <p className="px-2 py-0.5 text-xs font-medium text-neutral-500">
+      {/* <p className="px-2 py-0.5 text-xs font-medium text-neutral-500">
         <span className="cursor-pointer rounded-md bg-neutral-200 px-[3px] py-0.5 font-semibold hover:bg-neutral-300">
           개인 설정
         </span>
         에서 학과를 선택하면 필터가 맞춤설정됩니다.
-      </p>
+      </p> */}
       <div className="flex w-full  gap-2 p-2">
         <Filters />
         <ViewAllFiltersToggle />
@@ -111,9 +111,19 @@ const SearchBar = () => {
   const [searchQueryInput, setSearchQueryInput] = useAtom(searchQueryInputAtom);
   const [searchQuery, setSearchQuery] = useAtom(searchQueryAtom);
   const [lectureList, setLectureList] = useAtom(lectureListAtom);
+  const [selectedFilters, setSelectedFilters] = useAtom(selectedFiltersAtom);
+
+  useEffect(() => {
+    setSearchQuery("courseName");
+  }, []);
 
   const search = async (input: string) => {
+    
     let injectedValue;
+    let filter = selectedFilters.find((filter) => filter.enabled === true);
+
+    console.log(filter);
+    console.log(selectedFilters)
     switch (searchQuery) {
       case "courseName":
         injectedValue = { sbjctNm: input };
@@ -128,6 +138,7 @@ const SearchBar = () => {
         injectedValue = { sbjctNm: input };
         break;
     }
+
 
     console.log(`injectedValue: ${injectedValue}`);
     console.log(injectedValue);
@@ -155,6 +166,10 @@ const SearchBar = () => {
       });
       console.log(response.data);
       const lectureResponse = response.data as ILectureResponse;
+      if (lectureResponse.data.length === 0) {
+        console.log("no data");
+        return;
+      }
       setLectureList(lectureResponse.data);
     } catch (e) {
       console.error(e);
@@ -229,8 +244,7 @@ const SearchBar = () => {
           onInput={(e) => {
             const input = e.currentTarget.value;
             setSearchQueryInput(input);
-
-            search(input);
+            if (input.length > 1) search(input);
           }}
         />
       </div>
@@ -252,12 +266,12 @@ const SearchBar = () => {
 const Indexer = () => {
   return (
     <TooltipProvider>
-      <div className="flex cursor-pointer select-none flex-col items-start space-y-4 rounded-lg bg-neutral-100 px-3 py-2 hover:bg-neutral-200">
-        <div className="flex flex-row items-baseline space-x-2">
-          <p className="text-lg font-semibold text-neutral-700">2024년</p>
-          <p className="text-base font-semibold text-neutral-500">1학기</p>
-        </div>
+      {/* <div className="flex cursor-pointer select-none flex-col items-start space-y-4 rounded-lg bg-neutral-100 px-3 py-2"> */}
+      <div className="flex flex-row items-baseline space-x-1">
+        <p className="text-lg font-semibold text-neutral-700">2024</p>
+        <p className="text-sm font-semibold text-neutral-500">1학기</p>
       </div>
+      {/* </div> */}
     </TooltipProvider>
   );
 };
@@ -266,7 +280,7 @@ const DataTableContainer = () => {
   const [lectureList, setLectureList] = useAtom(lectureListAtom);
 
   return (
-    <div className="flex h-full w-1/2 rounded-lg bg-neutral-50">
+    <div className="flex h-full w-1/2 rounded-lg">
       {lectureList ? (
         <DataTable columns={columns} data={lectureList} />
       ) : (
@@ -319,7 +333,7 @@ const IndexerContainer = () => {
     <div
       className={`relative flex h-full w-1/2 flex-row items-start space-x-12`}
     >
-      <div className="flex flex-col items-start space-y-3.5">
+      <div className="flex flex-col items-start space-y-2">
         <Indexer />
         <FiltersContainer />
         <SearchBar />
@@ -332,7 +346,7 @@ const Finder = () => {
   const [showMapPopup, setShowMapPopup] = useAtom(showMapPopupAtom);
 
   return (
-    <main className="container h-full w-full max-w-5xl flex-col space-y-4 px-8 py-5">
+    <main className="container h-full w-full max-w-5xl flex-col space-y-2 px-8 py-5">
       <Title />
       <div className="flex h-full w-full flex-row items-start space-x-12">
         <IndexerContainer />

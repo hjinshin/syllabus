@@ -30,7 +30,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useAtom } from "jotai";
 import { showMapPopupAtom } from "@/atoms/map-popup-atoms";
-import { selectedCourseAtom } from "@/atoms/finder";
+import { selectedCourseAtom } from "@/atoms";
 import {
   Dialog,
   DialogContent,
@@ -42,6 +42,20 @@ import { ILecture } from "@/types/api/ILectureResponse";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import { AlarmClockPlus, SquareMousePointer } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { toast } from "sonner";
+import { timeTableAtom } from "@/atoms";
+import {
+  ITimeTableUnit,
+  hasDuplicatedSchedule,
+  timeStringToTimeUnit,
+} from "@/types/ITime";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -57,6 +71,7 @@ export default function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [selectedCourse, setSelectedCourse] = useAtom(selectedCourseAtom);
+  const [timeTable, setTimeTable] = useAtom(timeTableAtom);
   const table = useReactTable({
     data,
     columns,
@@ -75,7 +90,7 @@ export default function DataTable<TData, TValue>({
   });
 
   return (
-    <motion.div className="flex w-full flex-col space-y-4">
+    <div className="flex w-full flex-col space-y-4">
       <div className="flex items-center py-0.5">
         <Input
           placeholder="검색..."
@@ -110,6 +125,7 @@ export default function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                  data-testid="search-result-row"
                   className="cursor-pointer transition-colors duration-200 ease-in-out hover:bg-neutral-100"
                   onClick={async () => {
                     // const response =  await axios.get(`/api/v1/lecture/select?year=2024&season=1학기&crseNo=${(row.original as ILecture).crseNo}`);
@@ -136,7 +152,7 @@ export default function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  결과가 없어요! 😢
+                  결과가 없습니다
                 </TableCell>
               </TableRow>
             )}
@@ -154,7 +170,31 @@ export default function DataTable<TData, TValue>({
       >
         <DialogContent className="flex w-full flex-col space-y-4">
           <DialogHeader>
-            <DialogTitle>{selectedCourse?.sbjctNm}</DialogTitle>
+            <DialogTitle className="space-x-1.5">
+              <p className="inline">{selectedCourse?.sbjctNm}</p>
+              <TooltipProvider delayDuration={0}>
+                <Tooltip>
+                  <TooltipTrigger
+                    onClick={() => {
+                      if (selectedCourse?.crseNo) {
+                        navigator.clipboard.writeText(selectedCourse?.crseNo);
+                        toast.info("복사되었습니다.", {
+                          position: "top-center",
+                          duration: 700,
+                        });
+                      }
+                    }}
+                  >
+                    <span className="text-sm text-neutral-500">
+                      {selectedCourse?.crseNo}
+                    </span>
+                  </TooltipTrigger>
+                  {/* <TooltipContent className="text-xs text-neutral-500">
+                    클릭해서 복사
+                  </TooltipContent> */}
+                </Tooltip>
+              </TooltipProvider>
+            </DialogTitle>
             <DialogDescription>{selectedCourse?.professor}</DialogDescription>
           </DialogHeader>
           <div className="grid grid-cols-2 gap-4">
@@ -191,14 +231,70 @@ export default function DataTable<TData, TValue>({
           </div>
           <div className="flex w-full flex-row justify-end space-x-2 py-2">
             <Link
-              href={`https://sy.knu.ac.kr/sugang?sbjtCd=${selectedCourse?.sbjtCd}`}
+              href={`https://sy.knu.ac.kr/sugang?sbjtCd=${selectedCourse?.crseNo}`}
             >
-              <Button variant="link">원본 강의 계획서 보기</Button>
+              <Button
+                variant="secondary"
+                className="flex flex-row items-center space-x-1.5"
+              >
+                <SquareMousePointer className="h-4 w-4" />
+                <p>자세히 보기</p>
+              </Button>
             </Link>
-            <Button>시간표에 추가</Button>
+            <Button
+              disabled={
+                !!timeTable.find(
+                  (course) => course.lecture.crseNo === selectedCourse?.crseNo,
+                )
+              }
+              className="flex flex-row items-center space-x-1.5"
+              onClick={() => {
+                if (selectedCourse) {
+                  const calculatedTimeUnit = timeStringToTimeUnit(
+                    selectedCourse.realLecTime,
+                  );
+
+                  const isConflict = hasDuplicatedSchedule(
+                    timeTable,
+                    calculatedTimeUnit,
+                  );
+
+                  if (isConflict) {
+                    toast.error("시간표가 겹칩니다.", {
+                      position: "top-center",
+                      duration: 700,
+                    });
+                    return;
+                  }
+
+                  const timeTableUnit: ITimeTableUnit = {
+                    lecture: selectedCourse,
+                    timeUnits: calculatedTimeUnit,
+                  };
+
+                  setTimeTable((draft) => {
+                    draft.push(timeTableUnit);
+                  });
+                  toast.success("시간표에 추가되었습니다.", {
+                    position: "top-center",
+                    duration: 700,
+                  });
+                  console.log(timeTable.concat(timeTableUnit));
+                }
+              }}
+            >
+              <AlarmClockPlus className="h-4 w-4" />
+              <p>
+                {!!timeTable.find(
+                  (course) => course.lecture.crseNo === selectedCourse?.crseNo,
+                )
+                  ? `시간표에 추가됨`
+                  : `시간표에 추가`}
+              </p>
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
-    </motion.div>
+    </div>
   );
 }

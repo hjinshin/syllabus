@@ -11,9 +11,13 @@ import Credentials from "./credentials";
 
 const Title = () => {
   return (
-    <div className="flex flex-row space-x-2.5 italic">
-      <Squirrel className="h-5 w-5 cursor-pointer stroke-neutral-700 hover:stroke-neutral-500" />
-    </div>
+    <Link
+      className="flex select-none flex-row space-x-2.5 font-medium"
+      href="/"
+    >
+      {/* <Squirrel className="h-5 w-5 cursor-pointer stroke-neutral-700 hover:stroke-neutral-500" /> */}
+      Time Table
+    </Link>
   );
 };
 
@@ -29,7 +33,7 @@ const menuItems: IMenuItem[] = [
   {
     title: "로그아웃",
     href: "/api/auth/signout",
-  }
+  },
 ];
 
 const MenuItem = ({ item }: { item: IMenuItem }) => {
@@ -67,7 +71,7 @@ const InvokeCommand = () => {
 const MenuItems = () => {
   return (
     <div className="flex flex-row items-center space-x-4">
-      <InvokeCommand />
+      {/* <InvokeCommand /> */}
       {menuItems.map((item, key) => (
         <MenuItem item={item} key={key} />
       ))}
@@ -92,10 +96,10 @@ const SearchBar = () => {
 
 const Header = () => {
   return (
-    <nav className="sticky top-0 flex h-12 w-full flex-row items-center justify-between bg-white/70 px-4 backdrop-blur-xl">
+    <nav className="sticky top-0 z-50 flex h-12 w-full flex-row items-center justify-between bg-white/70 px-4 backdrop-blur-xl">
       <div className="flex flex-row items-center space-x-4">
         <Title />
-        <SearchBar />
+        {/* <SearchBar /> */}
       </div>
       <MenuItems />
       {/* <Credentials /> */}
