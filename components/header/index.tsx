@@ -26,6 +26,10 @@ const menuItems: IMenuItem[] = [
     title: "강의 찾기",
     href: "/finder",
   },
+  {
+    title: "로그아웃",
+    href: "/api/auth/signout",
+  }
 ];
 
 const MenuItem = ({ item }: { item: IMenuItem }) => {

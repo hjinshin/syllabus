@@ -10,3 +10,4 @@ export const selectedFiltersAtom = atomWithImmer<IFilter[]>(filters);
 export const lectureListAtom = atom<ILecture[] | null>(null);
 export const searchQueryInputAtom = atom<string>("");
 export const searchQueryAtom = atom<SearchQuery | null>(null);
+export const selectedCourseAtom = atom<ILecture | null>(null);

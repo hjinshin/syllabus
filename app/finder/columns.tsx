@@ -60,7 +60,7 @@ export const columns: ColumnDef<ILecture>[] = [
       <DataTableColumnHeader column={column} title="과목 코드" />
     ),
     cell: ({ row }) => {
-      return <span>{row.original.cresNo}</span>;
+      return <span>{row.original.crseNo}</span>;
     }
   },
   {
@@ -124,7 +124,7 @@ export const columns: ColumnDef<ILecture>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() =>
-                navigator.clipboard.writeText(original.cresNo)
+                navigator.clipboard.writeText(original.crseNo)
               }
             >
               과목코드 복사

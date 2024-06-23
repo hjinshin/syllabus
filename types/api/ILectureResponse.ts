@@ -39,7 +39,7 @@ export interface ILecture {
   college: string; // 개설대학
   depart: string; // 개설학과
   grade: string; // 학년
-  cresNo: string; // 과목코드
+  crseNo: string; // 과목코드
   sbjctNm: string; // 과목명
   sbjctCd: string; // 강좌번호
   realLecTime: string; // 강의시간
@@ -47,7 +47,7 @@ export interface ILecture {
   credit: number; // 학점
   lecCr: number; // 강의실
   pracCr: number; // 실습
-  profNm: string; // 교수명
+  professor: string; // 교수명
   building: string; //강의실
   room: string; // 호실
   capacity: number; // 수강정원
