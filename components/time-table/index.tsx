@@ -25,6 +25,8 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { SquareMousePointer } from "lucide-react";
+import { useEffect } from "react";
+import axios from "axios";
 const Dummy = () => <div className="h-8 w-12"></div>;
 
 const colorsForCourse = ["#fee2e2", "#d1fae5", "#ecfccb", "#f1f5f9"];
@@ -192,32 +194,32 @@ const Cell = ({ hour, day }: { hour: Time; day: DoW }) => {
   return (
     // <Dialog>
     //   <DialogTrigger>
+    <div
+      className={`mx-1 h-full w-full text-center transition duration-300 ease-out ${thisCellShouldBeFilled ? `cursor-pointer bg-red-200 px-1 hover:shadow-sm` : ``}`}
+    >
+      {thisCellShouldBeFilled ? (
         <div
-          className={`mx-1 h-full w-full text-center transition duration-300 ease-out ${thisCellShouldBeFilled ? `cursor-pointer bg-red-200 hover:shadow-sm px-1` : ``}`}
+          className="flex h-full w-full flex-col items-center justify-center"
+          // style={{
+          //   background:
+          //     colorsForCourse[
+          //       thisCellShouldBeFilled.findIndex((course) => course === thisCourse) % 3
+          //     ],
+          // }}
         >
-          {thisCellShouldBeFilled ? (
-            <div
-              className="flex h-full w-full flex-col items-center justify-center"
-              // style={{
-              //   background:
-              //     colorsForCourse[
-              //       thisCellShouldBeFilled.findIndex((course) => course === thisCourse) % 3
-              //     ],
-              // }}
-            >
-              <p className="text-sm font-medium text-neutral-700">
-                {thisCellIsCenter && thisCellShouldBeFilled
-                  ? thisCellShouldBeFilled.lecture.sbjctNm
-                  : ""}
-              </p>
-              <p className="text-xs text-neutral-500">
-                {thisCellIsCenter && thisCellShouldBeFilled
-                  ? thisCellShouldBeFilled.lecture.building
-                  : ""}
-              </p>
-            </div>
-          ) : null}
+          <p className="text-sm font-medium text-neutral-700">
+            {thisCellIsCenter && thisCellShouldBeFilled
+              ? thisCellShouldBeFilled.lecture.sbjctNm
+              : ""}
+          </p>
+          <p className="text-xs text-neutral-500">
+            {thisCellIsCenter && thisCellShouldBeFilled
+              ? thisCellShouldBeFilled.lecture.building
+              : ""}
+          </p>
         </div>
+      ) : null}
+    </div>
     //   </DialogTrigger>
     //   <DialogContent>
     //     <DialogHeader>
@@ -268,6 +270,26 @@ const TimeTable = () => {
   //     Math.max(...lecture.timeUnits.map((timeUnit) => timeUnit.time)),
   //   ),
   // );
+  useEffect(() => {
+    (async () => {
+      const tableData = localStorage.getItem("timeTable");
+
+      if (tableData) {
+        setTimeTable(JSON.parse(tableData));
+      }
+      // axios
+      //   .get("/api/v1/user/table", {
+      //     withCredentials: true,
+      //   })
+      //   .then((res) => {
+      //     const crseList = res.data.reseNos;
+      //     console.log(crseList);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+    })();
+  }, []);
   return (
     <Table className="h-full w-full max-w-xl table-auto select-none rounded-lg border-none bg-neutral-50/50">
       <thead>

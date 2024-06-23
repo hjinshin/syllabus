@@ -275,6 +275,22 @@ export default function DataTable<TData, TValue>({
                   setTimeTable((draft) => {
                     draft.push(timeTableUnit);
                   });
+                  localStorage.setItem(
+                    "timeTable",
+                    JSON.stringify(timeTable.concat(timeTableUnit)),
+                  );
+                  // axios.put(
+                  //   "/api/v1/user/table",
+                  //   {
+                  //     crseNo: [
+                  //       ...timeTable.map((course) => course.lecture.crseNo),
+                  //       selectedCourse.crseNo,
+                  //     ],
+                  //     year: 2024,
+                  //     season: "1학기",
+                  //   },
+                  //   { withCredentials: true },
+                  // );
                   toast.success("시간표에 추가되었습니다.", {
                     position: "top-center",
                     duration: 700,
