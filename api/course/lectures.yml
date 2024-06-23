@@ -1,0 +1,84 @@
+openapi: "3.0.2"
+info:
+  title: "강의 내용 및 일정 정의"
+  version: "1"
+
+paths:
+  /lectures:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/lecture"
+    post:
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/lecture"
+  /lectures/{lectureId}:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/lecture"
+    put:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/lecture"
+    delete:
+      responses:
+        "204":
+          description: No Content
+
+
+components:
+  schemas:
+    # 수업목표 및 학습내용
+    lecture:
+      type: object
+      description: 1주차 강의 내용 및 일정
+      required:
+        - langMode
+        - nos # 강의 주차
+        - goalAndContent # 수업목표 및 학습내용
+        - methodAndMaterial # 수업방법 및 매체
+        - assignment # 과제 및 연구문제
+        - etc # 비고
+      properties:
+        langMode:
+          $ref: "../types.yml#/components/schemas/langMode"
+        nos:
+          type: integer
+          description: 강의 주차
+        goalAndContent:
+          type: string
+          description: 수업목표 및 학습내용
+        methodAndMaterial:
+          type: string
+          description: 수업방법 및 매체
+        assignment:
+          type: string
+          description: 과제 및 연구문제
+        etc:
+          type: string
+          description: 비고
+
+    lectures:
+      type: array
+      items:
+        $ref: "#/components/schemas/lecture"

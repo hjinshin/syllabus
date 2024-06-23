@@ -8,13 +8,13 @@ import { motion, useAnimate } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { Map as MapType } from "mapbox-gl";
 import { showMapPopupAtom } from "@/atoms/map-popup-atoms";
-import { selectedCourseAtom } from "@/atoms";
+import { selectedLectureAtom } from "@/atoms";
 
 // TODO use memoization
 const MapWrapper = () => {
   const [mapWidth, setMapWidth] = useAtom(mapWidthAtom);
   const [mapHeight, setMapHeight] = useAtom(mapHeightAtom);
-  const [selectedCourse, setSelectedCourse] = useAtom(selectedCourseAtom);
+  const [selectedCourse, setSelectedCourse] = useAtom(selectedLectureAtom);
   const [showMapPopup, setShowMapPopup] = useAtom(showMapPopupAtom);
   const [mapWrapperScope, mapWrapperAnimate] = useAnimate<HTMLDivElement>();
   const [mapScope, mapAnimate] = useAnimate<HTMLDivElement>();

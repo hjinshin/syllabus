@@ -21,6 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import { DataTableViewOptions } from "@/components/ui/column-toggle";
 import { DataTablePagination } from "@/components/ui/data-table-pagination";
 import { motion } from "framer-motion";
@@ -29,18 +30,20 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useAtom } from "jotai";
 import { showMapPopupAtom } from "@/atoms/map-popup-atoms";
-import { selectedCourseAtom } from "@/atoms";
+import { selectedLectureAtom } from "@/atoms";
+
+
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
-export function DataTable<TData, TValue>({
+export default function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
   const [showMapPopup, setShowMapPopup] = useAtom(showMapPopupAtom);
-  const [, setSelectedCourse] = useAtom(selectedCourseAtom);
+  const [, setSelectedCourse] = useAtom(selectedLectureAtom);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -63,7 +66,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <motion.div className="flex flex-col space-y-4">
+    <motion.div className="flex w-full flex-col space-y-4">
       <div className="flex items-center py-0.5">
         <Input
           placeholder="검색..."
@@ -74,6 +77,7 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
       </div>
+    
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -122,7 +126,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  결과가 없어요! 😢
                 </TableCell>
               </TableRow>
             )}

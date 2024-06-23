@@ -1,0 +1,348 @@
+openapi: "3.0.2"
+info:
+  title: 과목 정의
+  version: "1"
+
+paths:
+  /findOne:
+    get:
+      summary: 특정 과목을 조회합니다.
+      parameters:
+        - in: query
+          name: code
+          schema:
+            $ref: "#/components/schemas/code"
+        - in: query
+          name: langMode
+          schema:
+            $ref: "../types.yml#/components/schemas/langMode"
+          allowEmptyValue: true
+          description: 과목 정보를 영어로 조회할지를 선택합니다. 값이 지정되지 않으면 `ko`(한국어)로 지정됩니다.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/course"
+
+  /search:
+    post:
+      summary: 조건에 맞는 과목을 검색합니다.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                langMode:
+                  $ref: "../types.yml#/components/schemas/langMode"
+                name:
+                  type: string
+                  description: 과목 이름
+                code:
+                  $ref: "#/components/schemas/code"
+                개설학과:
+                  $ref: "../department.yml#/components/schemas/department"
+                building:
+                  $ref: "../building/index.yml#/components/schemas/building"
+                schedule:
+                  $ref: "../time/index.yml#/components/schemas/schedule"
+                courseLanguage:
+                  $ref: "#/components/schemas/courseLanguage"
+                evaluationMethod:
+                  $ref: "./evaluation.yml#/components/schemas/evaluationMethod"
+                lectureMaterials:
+                  $ref: "#/components/schemas/lectureMaterials"
+                lectures:
+                  $ref: "./lectures.yml#/components/schemas/lectures"
+                notes:
+                  type: string
+                  description: 참고사항
+                createdAt:
+                  type: string
+                  format: date-time
+                  description: 데이터 생성일
+                updatedAt:
+                  type: string
+                  format: date-time
+                  description: 데이터 최종 수정일
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/course"
+
+components:
+  schemas:
+    code:
+      type: string
+      description: 과목코드를 나타내는 7자리 문자열
+      example: "ELEC0224"
+
+    courseType:
+      type: object
+      properties:
+        langMode:
+          $ref: "../types.yml#/components/schemas/langMode"
+        type:
+          type: string
+          description: 과목 타입
+
+    courseLanguage:
+      type: string
+      description: 강의 언어
+      enum:
+        - ko
+        - en
+
+    mainPaper:
+      type: object
+      properties:
+        langMode:
+          $ref: "../types.yml#/components/schemas/langMode"
+        name:
+          type: string
+          description: 주교재
+
+    subPaper:
+      type: object
+      properties:
+        langMode:
+          $ref: "../types.yml#/components/schemas/langMode"
+        name:
+          type: string
+          description: 부교재
+
+    references:
+      type: object
+      properties:
+        langMode:
+          $ref: "../types.yml#/components/schemas/langMode"
+        name:
+          type: string
+          description: 참고문헌
+
+
+
+
+
+    # 첨성인기초, 첨성인핵심, 첨성인일반, 첨성인소양
+    cheomseongBasic:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 첨성인기초
+
+    cheomsongCore:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 첨성인핵심
+
+    cheomsongGeneral:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 첨성인일반
+
+    cheomsongElective:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 첨성인소양
+
+    # 첨성인기초, 첨성인핵심, 첨성인일반, 첨성인소양
+    generalCourseType:
+      type: object
+      properties:
+        type:
+          type: object
+          enum:
+            - "#/components/schemas/cheomseongBasic"
+            - "#/components/schemas/cheomsongCore"
+            - "#/components/schemas/cheomsongGeneral"
+            - "#/components/schemas/cheomsongElective"
+          description: 과목 타입
+
+    # 교양, 군사학, 교직, 연구산학처, 대학, 대학원, 전문대학원, 원격수업, 원격강의, 플립드러닝 강좌, 거점국립대 원격강좌, 대구경북권원격강좌, SU평가강좌, 실험실습실기강좌, KNU미래설계, 인문교양, SDG교양
+    general:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+        name:
+          type: string
+          description: 교양 과목 타입
+
+    military:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+      name:
+        type: string
+        description: 군사학
+
+    teaching:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+      name:
+        type: string
+        description: 교직
+
+    research:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+      name:
+        type: string
+        description: 연구산학처
+
+    university:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+      name:
+        type: string
+        description: 대학
+
+    graduateSchool:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+      name:
+        type: string
+        description: 대학원
+
+    professionalGraduateSchool:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+      name:
+        type: string
+        description: 전문대학원
+
+    remoteClass:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+      name:
+        type: string
+        description: 원격수업
+
+    remoteLecture:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+      name:
+        type: string
+        description: 원격강의
+
+    flippedLearning:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+        name:
+          type: string
+          description: 플립드러닝 강좌
+
+    nationalRemoteLecture:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+        name:
+          type: string
+          description: 거점국립대 원격강좌
+
+    daeguGyeongbukRemoteLecture:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+        name:
+          type: string
+          description: 대구경북권원격강좌
+
+    suEvaluationLecture:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+        name:
+          type: string
+          description: SU평가강좌
+
+    experimentPracticeLecture:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+        name:
+          type: string
+          description: 실험실습실기강좌
+
+    knuFutureDesign:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+        name:
+          type: string
+          description: KNU미래설계
+
+    humanitiesGeneral:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+        name:
+          type: string
+          description: 인문교양
+
+    sdgGeneral:
+      $ref: "../types.yml#/components/schemas/type"
+      properties:
+        name:
+          type: string
+          description: SDG교양
+
+    lectureMaterials:
+      type: object
+      properties:
+        langMode:
+          $ref: "../types.yml#/components/schemas/langMode"
+        name:
+          type: string
+          description: 강의 자료
+        mainPaper:
+          $ref: "#/components/schemas/mainPaper"
+        subPaper:
+          $ref: "#/components/schemas/subPaper"
+        references:
+          $ref: "#/components/schemas/references"
+
+    course:
+      type: object
+      properties:
+        langMode:
+          $ref: "../types.yml#/components/schemas/langMode"
+        name:
+          type: string
+          description: 과목 이름
+        code:
+          $ref: "#/components/schemas/code"
+        개설학과:
+          $ref: "../department.yml#/components/schemas/department"
+        building:
+          $ref: "../building/index.yml#/components/schemas/building"
+        schedule:
+          $ref: "../time/index.yml#/components/schemas/schedule"
+        courseLanguage:
+          $ref: "#/components/schemas/courseLanguage"
+        evaluationMethod:
+          $ref: "./evaluation.yml#/components/schemas/evaluationMethod"
+        lectureMaterials:
+          $ref: "#/components/schemas/lectureMaterials"
+        lectures:
+          $ref: "./lectures.yml#/components/schemas/lectures"
+        notes:
+          type: string
+          description: 참고사항
+        createdAt:
+          type: string
+          format: date-time
+          description: 데이터 생성일
+        updatedAt:
+          type: string
+          format: date-time
+          description: 데이터 최종 수정일

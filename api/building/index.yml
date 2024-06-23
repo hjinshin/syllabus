@@ -1,0 +1,62 @@
+openapi: "3.0.2"
+info:
+  title: "건물 정의"
+  version: "1"
+
+paths:
+  /building:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/building"
+
+components:
+  schemas:
+    building:
+      type: object
+      properties:
+        langMode:
+          $ref: "../types.yml#/components/schemas/langMode"
+        name:
+          type: string
+          description: 건물 이름
+        code:
+          type: string
+          description: 건물 코드
+        geoLocation:
+          $ref: "../types.yml#/components/schemas/geoLocation"
+        # phone:
+        #   type: string
+        #   description: 건물 전화번호
+        # fax:
+        #   type: string
+        #   description: 건물 팩스번호
+        # homepage:
+        #   type: string
+        #   description: 건물 홈페이지
+        # email:
+        #   type: string
+        #   description: 건물 이메일
+        description:
+          type: string
+          description: 건물 설명
+        createdAt:
+          type: string
+          format: date-time
+          description: 건물 데이터 생성일
+        updatedAt:
+          type: string
+          format: date-time
+          description: 건물 데이터 수정일
+        campus:
+          type: string
+          description: 건물 소속 캠퍼스
+          enum:
+            - 대구
+            - 상주

@@ -85,11 +85,11 @@ export interface ITime {
 export type ActualTime = [number, number]; // [epoch, epoch]
 
 export enum Day {
-  Monday = "Monday",
-  Tuesday = "Tuesday",
-  Wednesday = "Wednesday",
-  Thursday = "Thursday",
-  Friday = "Friday",
-  Saturday = "Saturday",
-  Sunday = "Sunday",
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday,
 }

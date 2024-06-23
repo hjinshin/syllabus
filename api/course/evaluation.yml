@@ -1,0 +1,144 @@
+openapi: "3.0.2"
+info:
+  title: "평가방법 정의"
+  version: "1"
+
+paths:
+  /evaluation:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/evaluationMethod"
+
+components:
+  schemas:
+      evaluationMethod:
+        type: object
+        description: 각각의 평가방법(출석, 중간고사, 기말고사, 과제, 퀴즈 등)을 나타내는 기본 데이터 구조. 이를 상속받아 각 평가방법에 대한 세부적인 정보를 나타냅니다.
+        required:
+          - langMode
+          - name
+        properties:
+          langMode:
+            $ref: "../types.yml#/components/schemas/langMode"
+          name:
+            type: string
+            description: 평가방법
+          proportion:
+            type: number
+            format: double
+            description: 평가방법의 비율. 전체 평가방법의 합은 100이 되어야 합니다.
+          description:
+            type: string
+            description: 평가방법에 대한 설명
+
+      attendance:
+        allOf:
+          - $ref: "#/components/schemas/evaluationMethod"
+          - type: object
+            properties:
+              langMode:
+                $ref: "../types.yml#/components/schemas/langMode"
+              name:
+                type: string
+                description: 출석 성적 반영 비율
+
+      midterm:
+        allOf:
+          - $ref: "#/components/schemas/evaluationMethod"
+          - type: object
+            properties:
+              langMode:
+                $ref: "../types.yml#/components/schemas/langMode"
+              name:
+                type: string
+                description: 중간고사 성적 반영 비율
+
+      final:
+        allOf:
+          - $ref: "#/components/schemas/evaluationMethod"
+          - type: object
+            properties:
+              langMode:
+                $ref: "../types.yml#/components/schemas/langMode"
+              name:
+                type: string
+                description: 기말고사 성적 반영 비율
+
+      assignment:
+        allOf:
+          - $ref: "#/components/schemas/evaluationMethod"
+          - type: object
+            properties:
+              langMode:
+                $ref: "../types.yml#/components/schemas/langMode"
+              name:
+                type: string
+                description: 과제 성적 반영 비율
+
+      quiz:
+        allOf:
+          - $ref: "#/components/schemas/evaluationMethod"
+          - type: object
+            properties:
+              langMode:
+                $ref: "../types.yml#/components/schemas/langMode"
+              name:
+                type: string
+                description: 퀴즈 성적 반영 비율
+
+      presentation:
+        allOf:
+          - $ref: "#/components/schemas/evaluationMethod"
+          - type: object
+            properties:
+              langMode:
+                $ref: "../types.yml#/components/schemas/langMode"
+              name:
+                type: string
+                description: 발표 성적 반영 비율
+
+
+      debate:
+        allOf:
+          - $ref: "#/components/schemas/evaluationMethod"
+          - type: object
+            properties:
+              langMode:
+                $ref: "../types.yml#/components/schemas/langMode"
+              name:
+                type: string
+                description: 토론 성적 반영 비율
+
+      safetyEducation:
+        allOf:
+          - $ref: "#/components/schemas/evaluationMethod"
+          - type: object
+            properties:
+              langMode:
+                $ref: "../types.yml#/components/schemas/langMode"
+              name:
+                type: string
+                description: 안전교육 성적 반영 비율
+
+      etc:
+        allOf:
+          - $ref: "#/components/schemas/evaluationMethod"
+          - type: object
+            properties:
+              langMode:
+                $ref: "../types.yml#/components/schemas/langMode"
+              name:
+                type: string
+                description: 기타 성적 반영 비율
+
+      totalScore:
+        type: number
+        format: double
+        description: 총점수

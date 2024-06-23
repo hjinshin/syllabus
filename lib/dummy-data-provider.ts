@@ -1,5 +1,5 @@
 import { IGeoData, IT1, IT5 } from "@/types/IGeoData";
-import { ICourse } from "@/types/ICourse";
+import { Day, ICourse } from "@/types/ICourse";
 
 export const getTimeTables: () => ICourse[] = () => [
   {
@@ -7,10 +7,10 @@ export const getTimeTables: () => ICourse[] = () => [
     courseNameEn: "Mathematics",
     subnjectCode: "MATH",
     time: {
-      day: ["Monday", "Wednesday", "Friday"],
+      day: [Day.Monday, Day.Wednesday],
       times: [
-        { name: "0A", actualTime: "8:00 - 9:00" },
-        { name: "0B", actualTime: "9:00 - 10:00" },
+        { name: "0A", actualTime: [8, 9] },
+        { name: "0B", actualTime: [9, 10] },
       ],
     },
     building: IT1,
@@ -20,10 +20,10 @@ export const getTimeTables: () => ICourse[] = () => [
     courseNameEn: "Science",
     subnjectCode: "SCI",
     time: {
-      day: ["Tuesday", "Thursday"],
+      day: [Day.Monday, Day.Wednesday],
       times: [
-        { name: "0A", actualTime: "8:00 - 9:00" },
-        { name: "0B", actualTime: "9:00 - 10:00" },
+        { name: "0A", actualTime: [8, 9] },
+        { name: "0B", actualTime: [9, 10] },
       ],
     },
     building: IT5,
@@ -33,11 +33,8 @@ export const getTimeTables: () => ICourse[] = () => [
     courseNameEn: "English",
     subnjectCode: "ENG",
     time: {
-      day: ["Monday", "Wednesday", "Friday"],
-      times: [
-        { name: "0A", actualTime: "8:00 - 9:00" },
-        { name: "0B", actualTime: "9:00 - 10:00" },
-      ],
+      day: [Day.Monday, Day.Tuesday],
+      times: [{ name: "0A", actualTime: [13, 14] }],
     },
     building: IT5,
   },

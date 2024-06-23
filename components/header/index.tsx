@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 import { IMenuItem } from "@/types/IMenuItem";
 import { CommandIcon, Plus, Squirrel } from "lucide-react";
 import { useAtom } from "jotai";
 import { showCommandAtom } from "@/atoms";
+import Credentials from "./credentials";
 
 const Title = () => {
   return (
@@ -24,7 +26,6 @@ const menuItems: IMenuItem[] = [
     title: "강의 찾기",
     href: "/finder",
   },
-  { title: "계정", href: "/credentials" },
 ];
 
 const MenuItem = ({ item }: { item: IMenuItem }) => {
@@ -49,9 +50,9 @@ const InvokeCommand = () => {
     >
       <p className="text-xs text-neutral-500">명령창</p>
       <div className="flex flex-row items-center space-x-0.5">
-        <CommandIcon className="rounded-md bg-neutral-300 stroke-neutral-600 p-1" />
+        <CommandIcon className="rounded-md bg-neutral-200 stroke-neutral-600 p-1" />
         {/* <Plus className="h-2.5 w-2.5 stroke-neutral-600" /> */}
-        <div className="flex h-6 w-6 flex-row items-center justify-center rounded-md bg-neutral-300 p-1 text-xs text-neutral-600">
+        <div className="flex h-6 w-6 flex-row items-center justify-center rounded-md bg-neutral-200 p-1 text-xs text-neutral-600">
           K
         </div>
       </div>
@@ -78,21 +79,22 @@ const SearchBar = () => {
         type="text"
         placeholder="검색"
       />
-      <button className="flex h-7 w-7 items-center justify-center rounded-md bg-neutral-200 hover:bg-neutral-300">
+      {/* <button className="flex h-7 w-7 items-center justify-center rounded-md bg-neutral-200 hover:bg-neutral-200">
         <Plus className="h-4 w-4 stroke-neutral-600" />
-      </button>
+      </button> */}
     </div>
   );
 };
 
 const Header = () => {
   return (
-    <nav className="sticky top-0 flex h-12 w-full flex-row items-center justify-between border-b bg-white/70 px-4 backdrop-blur-xl">
+    <nav className="sticky top-0 flex h-12 w-full flex-row items-center justify-between bg-white/70 px-4 backdrop-blur-xl">
       <div className="flex flex-row items-center space-x-4">
         <Title />
         <SearchBar />
       </div>
       <MenuItems />
+      {/* <Credentials /> */}
     </nav>
   );
 };

@@ -1,3 +1,10 @@
+import TimeTable from "@/components/time-table";
+
 export default function Home() {
-  return <main className="h-full w-full flex-col">asdfaf</main>;
+  return (
+    <main className="flex-col items-center w-full">
+      
+      {/* <TimeTable /> */}
+    </main>
+  );
 }
